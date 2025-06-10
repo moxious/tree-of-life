@@ -1,6 +1,6 @@
 # Tree of Life
 
-Etz Chaim
+Etz Chaim - deployed via GitHub pages [here](https://moxious.github.io/tree-of-life/)
 
 ## Getting Started
 
