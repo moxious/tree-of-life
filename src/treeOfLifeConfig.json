@@ -1,0 +1,578 @@
+{
+  "sephirot": {
+    "keter": {
+      "id": 1,
+      "name": "Keter",
+      "metadata": {
+        "hebrewName": "כתר",
+        "englishName": "Crown",
+        "planetaryCorrespondence": "Primum Mobile",
+        "planetarySymbol": "⚹",
+        "element": "Spirit"
+      },
+      "position": { "x": 400, "y": 50 },
+      "color": "#ffffff",
+      "image": "/images/briah-keter.png"
+    },
+    "chokmah": {
+      "id": 2,
+      "name": "Chokmah",
+      "metadata": {
+        "hebrewName": "חכמה",
+        "englishName": "Wisdom",
+        "planetaryCorrespondence": "Zodiac",
+        "planetarySymbol": "♌♍♎♏♐♑♒♓♈♉♊♋",
+        "element": "Fire"
+      }, 
+      "position": { "x": 550, "y": 150 },
+      "color": "#e3e3e3",
+      "image": "/images/briah-hockmah.png"
+    },
+    "binah": {
+      "id": 3,
+      "name": "Binah",
+      "metadata": {
+        "hebrewName": "בינה",
+        "englishName": "Understanding",
+        "planetaryCorrespondence": "Saturn",
+        "planetarySymbol": "♄",
+        "element": "Water"
+      },
+      "position": { "x": 250, "y": 150 },
+      "color": "#d1d1d1",
+      "image": "/images/briah-binah.png"
+    },
+    "daath": {
+      "id": 11,
+      "name": "Da'ath",
+      "metadata": {
+        "hebrewName": "דעת",
+        "englishName": "Knowledge",
+        "planetaryCorrespondence": "Abyss",
+        "planetarySymbol": "⚫",
+        "element": "Void"
+      },
+      "position": { "x": 400, "y": 225 },
+      "color": "#000000",
+      "image": null
+    },
+    "chesed": {
+      "id": 4,
+      "name": "Chesed",
+      "metadata": {
+        "hebrewName": "חסד",
+        "englishName": "Loving-Kindness",
+        "planetaryCorrespondence": "Jupiter",
+        "planetarySymbol": "♃",
+        "element": "Water"
+      },
+      "position": { "x": 550, "y": 300 },
+      "color": "#b8b8b8",
+      "image": "/images/briah-hesed.png"
+    },
+    "gevurah": {
+      "id": 5,
+      "name": "Gevurah",
+      "metadata": {
+        "hebrewName": "גבורה",
+        "englishName": "Severity",
+        "planetaryCorrespondence": "Mars",
+        "planetarySymbol": "♂",
+        "element": "Fire"
+      },
+      "position": { "x": 250, "y": 300 },
+      "color": "#a0a0a0",
+      "image": "/images/briah-gevurah.png"
+    },
+    "tiferet": {
+      "id": 6,
+      "name": "Tiferet",
+      "metadata": {
+        "hebrewName": "תפארת",
+        "englishName": "Beauty",
+        "planetaryCorrespondence": "Sun",
+        "planetarySymbol": "☉",
+        "element": "Air"
+      },
+      "position": { "x": 400, "y": 375 },
+      "color": "#888888",
+      "image": "/images/briah-tiferet.png"
+    },
+    "netzach": {
+      "id": 7,
+      "name": "Netzach",
+      "metadata": {
+        "hebrewName": "נצח",
+        "englishName": "Victory",
+        "planetaryCorrespondence": "Venus",
+        "planetarySymbol": "♀",
+        "element": "Fire"
+      },
+      "position": { "x": 550, "y": 450 },
+      "color": "#707070",
+      "image": "/images/briah-netzach.png"
+    },
+    "hod": {
+      "id": 8,
+      "name": "Hod",
+      "metadata": {
+        "hebrewName": "הוד",
+        "englishName": "Glory",
+        "planetaryCorrespondence": "Mercury",
+        "planetarySymbol": "☿",
+        "element": "Water"
+      },
+      "position": { "x": 250, "y": 450 },
+      "color": "#585858",
+      "image": "/images/briah-hod.png"
+    },
+    "yesod": {
+      "id": 9,
+      "name": "Yesod",
+      "metadata": {
+        "hebrewName": "יסוד",
+        "englishName": "Foundation",
+        "planetaryCorrespondence": "Moon",
+        "planetarySymbol": "☽",
+        "element": "Air"
+      },
+      "position": { "x": 400, "y": 525 },
+      "color": "#404040",
+      "image": "/images/briah-yesod.png"
+    },
+    "malkuth": {
+      "id": 10,
+      "name": "Malkuth",
+      "metadata": {
+        "hebrewName": "מלכות",
+        "englishName": "Kingdom",
+        "planetaryCorrespondence": "Earth",
+        "planetarySymbol": "🜃",
+        "element": "Earth"
+      },
+      "position": { "x": 400, "y": 620 },
+      "color": "#282828",
+      "image": "/images/briah-malkuth.png"
+    }
+  },
+  "worlds": {
+    "atziluth": {
+      "metadata": {
+        "hebrewName": "אצילות",
+        "englishName": "Emanation",
+        "description": "The Divine World - Pure divinity and emanation"
+      },
+      "images": {
+        "keter": "/images/atziluth-keter.png",
+        "chokmah": "/images/atziluth-hockmah.png",
+        "binah": "/images/atziluth-binah.png",
+        "daath": null,
+        "chesed": "/images/atziluth-hesed.png",
+        "gevurah": "/images/atziluth-gevurah.png",
+        "tiferet": "/images/atziluth-tiferet.png",
+        "netzach": "/images/atziluth-netzach.png",
+        "hod": "/images/atziluth-hod.png",
+        "yesod": "/images/atziluth-yesod.png",
+        "malkuth": "/images/atziluth-malkuth.png"
+      }
+    },
+    "briah": {
+      "metadata": {
+        "hebrewName": "בריאה",
+        "englishName": "Creation", 
+        "description": "The Archangelic World - Pure intellect and creation"
+      },
+      "images": {
+        "keter": "/images/briah-keter.png",
+        "chokmah": "/images/briah-hockmah.png",
+        "binah": "/images/briah-binah.png",
+        "daath": null,
+        "chesed": "/images/briah-hesed.png",
+        "gevurah": "/images/briah-gevurah.png",
+        "tiferet": "/images/briah-tiferet.png",
+        "netzach": "/images/briah-netzach.png",
+        "hod": "/images/briah-hod.png",
+        "yesod": "/images/briah-yesod.png",
+        "malkuth": "/images/briah-malkuth.png"
+      }
+    },
+    "yetzirah": {
+      "metadata": {
+        "hebrewName": "יצירה",
+        "englishName": "Formation",
+        "description": "The Angelic World - Emotion and psychological formation"
+      },
+      "images": {
+        "keter": "/images/yetzirah-keter.png",
+        "chokmah": "/images/yetzirah-hockmah.png",
+        "binah": "/images/yetzirah-binah.png",
+        "daath": null,
+        "chesed": "/images/yetzirah-hesed.png",
+        "gevurah": "/images/yetzirah-gevurah.png",
+        "tiferet": "/images/yetzirah-tiferet.png",
+        "netzach": "/images/yetzirah-netzach.png",
+        "hod": "/images/yetzirah-hod.png",
+        "yesod": "/images/yetzirah-yesod.png",
+        "malkuth": "/images/yetzirah-malkuth.png"
+      }
+    },
+    "assiah": {
+      "metadata": {
+        "hebrewName": "עשיה",
+        "englishName": "Action",
+        "description": "The Material World - Physical manifestation and action"
+      },
+      "images": {
+        "keter": "/images/assiah-keter.png",
+        "chokmah": "/images/assiah-hockmah.png",
+        "binah": "/images/assiah-binah.png",
+        "daath": null,
+        "chesed": "/images/assiah-hesed.png",
+        "gevurah": "/images/assiah-gevurah.png",
+        "tiferet": "/images/assiah-tiferet.png",
+        "netzach": "/images/assiah-netzach.png",
+        "hod": "/images/assiah-hod.png",
+        "yesod": "/images/assiah-yesod.png",
+        "malkuth": "/images/assiah-malkuth.png"
+      }
+    }
+  },
+  "paths": [
+    {
+      "from": "keter",
+      "to": "chokmah",
+      "pathNumber": 11,
+      "hebrewLetter": "א",
+      "hebrewLetterName": "Aleph",
+      "tarotCard": "The Fool",
+      "tarotNumber": 0,
+      "astrologicalSign": "Uranus",
+      "astrologicalSymbol": "⛢",
+      "element": "Air",
+      "letterMeaning": "Ox",
+      "musicalNote": "E",
+      "gematriaValue": 1
+    },
+    {
+      "from": "keter",
+      "to": "binah",
+      "pathNumber": 12,
+      "hebrewLetter": "ב",
+      "hebrewLetterName": "Beth",
+      "tarotCard": "The Magician",
+      "tarotNumber": 1,
+      "astrologicalSign": "Mercury",
+      "astrologicalSymbol": "☿",
+      "element": "Air",
+      "letterMeaning": "House",
+      "musicalNote": "E",
+      "gematriaValue": 2
+    },
+    {
+      "from": "keter",
+      "to": "tiferet",
+      "pathNumber": 13,
+      "hebrewLetter": "ג",
+      "hebrewLetterName": "Gimel",
+      "tarotCard": "The High Priestess",
+      "tarotNumber": 2,
+      "astrologicalSign": "Moon",
+      "astrologicalSymbol": "☽",
+      "element": "Water",
+      "letterMeaning": "Camel",
+      "musicalNote": "G♯",
+      "gematriaValue": 3
+    },
+    {
+      "from": "chokmah",
+      "to": "binah",
+      "pathNumber": 14,
+      "hebrewLetter": "ד",
+      "hebrewLetterName": "Daleth",
+      "tarotCard": "The Empress",
+      "tarotNumber": 3,
+      "astrologicalSign": "Venus",
+      "astrologicalSymbol": "♀",
+      "element": "Earth",
+      "letterMeaning": "Door",
+      "musicalNote": "F♯",
+      "gematriaValue": 4
+    },
+    {
+      "from": "chokmah",
+      "to": "chesed",
+      "pathNumber": 16,
+      "hebrewLetter": "ו",
+      "hebrewLetterName": "Vav",
+      "tarotCard": "The Hierophant",
+      "tarotNumber": 5,
+      "astrologicalSign": "Taurus",
+      "astrologicalSymbol": "♉︎",
+      "element": "Earth",
+      "letterMeaning": "Nail/Hook",
+      "musicalNote": "C♯",
+      "gematriaValue": 6
+    },
+    {
+      "from": "chokmah",
+      "to": "tiferet",
+      "pathNumber": 15,
+      "hebrewLetter": "ה",
+      "hebrewLetterName": "Heh",
+      "tarotCard": "The Emperor",
+      "tarotNumber": 4,
+      "astrologicalSign": "Aries",
+      "astrologicalSymbol": "♈︎",
+      "element": "Fire",
+      "letterMeaning": "Window",
+      "musicalNote": "C",
+      "gematriaValue": 5
+    },
+    {
+      "from": "binah",
+      "to": "gevurah",
+      "pathNumber": 17,
+      "hebrewLetter": "ז",
+      "hebrewLetterName": "Zayin",
+      "tarotCard": "The Lovers",
+      "tarotNumber": 6,
+      "astrologicalSign": "Gemini",
+      "astrologicalSymbol": "♊︎",
+      "element": "Air",
+      "letterMeaning": "Sword",
+      "musicalNote": "D",
+      "gematriaValue": 7
+    },
+    {
+      "from": "binah",
+      "to": "tiferet",
+      "pathNumber": 18,
+      "hebrewLetter": "ח",
+      "hebrewLetterName": "Cheth",
+      "tarotCard": "The Chariot",
+      "tarotNumber": 7,
+      "astrologicalSign": "Cancer",
+      "astrologicalSymbol": "♋︎",
+      "element": "Water",
+      "letterMeaning": "Fence",
+      "musicalNote": "D♯",
+      "gematriaValue": 8
+    },
+    {
+      "from": "chesed",
+      "to": "gevurah",
+      "pathNumber": 19,
+      "hebrewLetter": "ט",
+      "hebrewLetterName": "Teth",
+      "tarotCard": "Strength",
+      "tarotNumber": 8,
+      "astrologicalSign": "Leo",
+      "astrologicalSymbol": "♌︎",
+      "element": "Fire",
+      "letterMeaning": "Serpent",
+      "musicalNote": "E",
+      "gematriaValue": 9
+    },
+    {
+      "from": "chesed",
+      "to": "tiferet",
+      "pathNumber": 20,
+      "hebrewLetter": "י",
+      "hebrewLetterName": "Yod",
+      "tarotCard": "The Hermit",
+      "tarotNumber": 9,
+      "astrologicalSign": "Virgo",
+      "astrologicalSymbol": "♍︎",
+      "element": "Earth",
+      "letterMeaning": "Hand (open)",
+      "musicalNote": "F",
+      "gematriaValue": 10
+    },
+    {
+      "from": "chesed",
+      "to": "netzach",
+      "pathNumber": 21,
+      "hebrewLetter": "כ",
+      "hebrewLetterName": "Kaph",
+      "tarotCard": "Wheel of Fortune",
+      "tarotNumber": 10,
+      "astrologicalSign": "Jupiter",
+      "astrologicalSymbol": "♃",
+      "element": "Fire",
+      "letterMeaning": "Hand (closed)",
+      "musicalNote": "A♯",
+      "gematriaValue": 20
+    },
+    {
+      "from": "gevurah",
+      "to": "tiferet",
+      "pathNumber": 22,
+      "hebrewLetter": "ל",
+      "hebrewLetterName": "Lamed",
+      "tarotCard": "Justice",
+      "tarotNumber": 11,
+      "astrologicalSign": "Libra",
+      "astrologicalSymbol": "♎︎",
+      "element": "Air",
+      "letterMeaning": "Ox Goad",
+      "musicalNote": "F♯",
+      "gematriaValue": 30
+    },
+    {
+      "from": "gevurah",
+      "to": "hod",
+      "pathNumber": 23,
+      "hebrewLetter": "מ",
+      "hebrewLetterName": "Mem",
+      "tarotCard": "The Hanged Man",
+      "tarotNumber": 12,
+      "astrologicalSign": "Neptune",
+      "astrologicalSymbol": "♆",
+      "element": "Water",
+      "letterMeaning": "Water",
+      "musicalNote": "G♯",
+      "gematriaValue": 40
+    },
+    {
+      "from": "tiferet",
+      "to": "netzach",
+      "pathNumber": 24,
+      "hebrewLetter": "נ",
+      "hebrewLetterName": "Nun",
+      "tarotCard": "Death",
+      "tarotNumber": 13,
+      "astrologicalSign": "Scorpio",
+      "astrologicalSymbol": "♏︎",
+      "element": "Water",
+      "letterMeaning": "Fish",
+      "musicalNote": "G",
+      "gematriaValue": 50
+    },
+    {
+      "from": "tiferet",
+      "to": "hod",
+      "pathNumber": 25,
+      "hebrewLetter": "ס",
+      "hebrewLetterName": "Samekh",
+      "tarotCard": "Temperance",
+      "tarotNumber": 14,
+      "astrologicalSign": "Sagittarius",
+      "astrologicalSymbol": "♐︎",
+      "element": "Fire",
+      "letterMeaning": "Prop",
+      "musicalNote": "G♯",
+      "gematriaValue": 60
+    },
+    {
+      "from": "tiferet",
+      "to": "yesod",
+      "pathNumber": 26,
+      "hebrewLetter": "ע",
+      "hebrewLetterName": "Ayin",
+      "tarotCard": "The Devil",
+      "tarotNumber": 15,
+      "astrologicalSign": "Capricorn",
+      "astrologicalSymbol": "♑︎",
+      "element": "Earth",
+      "letterMeaning": "Eye",
+      "musicalNote": "A",
+      "gematriaValue": 70
+    },
+    {
+      "from": "netzach",
+      "to": "hod",
+      "pathNumber": 27,
+      "hebrewLetter": "פ",
+      "hebrewLetterName": "Peh",
+      "tarotCard": "The Tower",
+      "tarotNumber": 16,
+      "astrologicalSign": "Mars",
+      "astrologicalSymbol": "♂",
+      "element": "Fire",
+      "letterMeaning": "Mouth",
+      "musicalNote": "C",
+      "gematriaValue": 80
+    },
+    {
+      "from": "netzach",
+      "to": "yesod",
+      "pathNumber": 28,
+      "hebrewLetter": "צ",
+      "hebrewLetterName": "Tzaddi",
+      "tarotCard": "The Star",
+      "tarotNumber": 17,
+      "astrologicalSign": "Aquarius",
+      "astrologicalSymbol": "♒︎",
+      "element": "Air",
+      "letterMeaning": "Fish Hook",
+      "musicalNote": "A♯",
+      "gematriaValue": 90
+    },
+    {
+      "from": "netzach",
+      "to": "malkuth",
+      "pathNumber": 29,
+      "hebrewLetter": "ק",
+      "hebrewLetterName": "Qoph",
+      "tarotCard": "The Moon",
+      "tarotNumber": 18,
+      "astrologicalSign": "Pisces",
+      "astrologicalSymbol": "♓︎",
+      "element": "Water",
+      "letterMeaning": "Back of Head",
+      "musicalNote": "B",
+      "gematriaValue": 100
+    },
+    {
+      "from": "hod",
+      "to": "yesod",
+      "pathNumber": 30,
+      "hebrewLetter": "ר",
+      "hebrewLetterName": "Resh",
+      "tarotCard": "The Sun",
+      "tarotNumber": 19,
+      "astrologicalSign": "Sun",
+      "astrologicalSymbol": "☉",
+      "element": "Fire",
+      "letterMeaning": "Head",
+      "musicalNote": "D",
+      "gematriaValue": 200
+    },
+    {
+      "from": "hod",
+      "to": "malkuth",
+      "pathNumber": 31,
+      "hebrewLetter": "ש",
+      "hebrewLetterName": "Shin",
+      "tarotCard": "Judgement",
+      "tarotNumber": 20,
+      "astrologicalSign": "Pluto",
+      "astrologicalSymbol": "♇",
+      "element": "Fire",
+      "letterMeaning": "Tooth",
+      "musicalNote": "C",
+      "gematriaValue": 300
+    },
+    {
+      "from": "yesod",
+      "to": "malkuth",
+      "pathNumber": 32,
+      "hebrewLetter": "ת",
+      "hebrewLetterName": "Tau",
+      "tarotCard": "The World",
+      "tarotNumber": 21,
+      "astrologicalSign": "Saturn",
+      "astrologicalSymbol": "♄",
+      "element": "Earth",
+      "letterMeaning": "Mark",
+      "musicalNote": "A",
+      "gematriaValue": 400
+    }
+  ],
+  "styling": {
+    "circleRadius": 30,
+    "pathStroke": "#666666",
+    "pathStrokeWidth": 2,
+    "backgroundColor": "#1a1a1a"
+  }
+} 

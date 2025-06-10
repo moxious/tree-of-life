@@ -1,0 +1,412 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  overflow-x: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f 0%, #2d1b4e 50%, #1a1a1a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Tree of Life App Layout */
+.tree-of-life-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+}
+
+/* World Info Styles */
+.world-info {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.world-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.world-title-hebrew {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  direction: rtl;
+}
+
+.world-title-english {
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.world-description {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+/* World Selector Styles */
+.world-selector {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.world-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.world-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.world-button.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.world-hebrew {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  direction: rtl;
+}
+
+.world-english {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.world-button.active .world-hebrew {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.world-button.active .world-english {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Tree Container */
+.tree-of-life-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+}
+
+.tree-of-life-svg {
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.sephirah-group {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sephirah {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  transform-origin: center center;
+  transform-box: fill-box;
+}
+
+.sephirah-group:hover .sephirah {
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+  transform: scale(1.08);
+}
+
+/* Special styling for Da'ath (the hidden sephirah) */
+.sephirah-group[data-name="daath"] .sephirah {
+  filter: drop-shadow(0 0 6px rgba(128, 128, 128, 0.4));
+  opacity: 0.85;
+}
+
+.sephirah-group[data-name="daath"]:hover .sephirah {
+  filter: drop-shadow(0 0 12px rgba(128, 128, 128, 0.7));
+  transform: scale(1.06);
+  opacity: 1;
+}
+
+.sephirah-label {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+  pointer-events: none;
+}
+
+.sephirah-group:hover .sephirah-label {
+  opacity: 1;
+}
+
+/* Path styling */
+.path-group {
+  cursor: pointer;
+}
+
+.tree-path {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  stroke-width: 2;
+}
+
+.path-group:hover .tree-path {
+  opacity: 1;
+  filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8));
+  stroke-width: 3;
+}
+
+/* Hebrew letter styling on paths */
+.path-letter {
+  font-family: 'Arial Unicode MS', 'Lucida Grande', 'Tahoma', sans-serif;
+  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.8));
+  transition: all 0.3s ease;
+  pointer-events: none;
+  opacity: 0.9;
+  transform-origin: center center;
+}
+
+.path-group:hover .path-letter {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+  transform: scale(1.08);
+}
+
+/* Metadata Popup Styles */
+.metadata-popup {
+  position: absolute;
+  background: rgba(20, 20, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease-out;
+  min-width: 200px;
+}
+
+/* Path-specific popup styling */
+.metadata-popup.path-popup {
+  background: rgba(15, 25, 35, 0.95);
+  border: 1px solid rgba(102, 102, 102, 0.3);
+  min-width: 220px;
+}
+
+.metadata-popup.path-popup .popup-header {
+  border-bottom: 1px solid rgba(102, 102, 102, 0.2);
+}
+
+.metadata-popup.path-popup .popup-header h3 {
+  color: #e0e0e0;
+  font-size: 16px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-header {
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+.popup-header h3 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.metadata-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.metadata-table td {
+  padding: 6px 8px;
+  vertical-align: top;
+}
+
+.metadata-table .label {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  font-size: 13px;
+  text-align: right;
+  padding-right: 12px;
+  white-space: nowrap;
+}
+
+.metadata-table .value {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.hebrew-text {
+  font-size: 16px;
+  font-weight: 500;
+  direction: rtl;
+  text-align: left;
+}
+
+.metadata-table tr:not(:last-child) td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Path popup specific table styling */
+.path-popup .metadata-table .label {
+  color: rgba(224, 224, 224, 0.7);
+}
+
+.path-popup .metadata-table .value {
+  color: #e0e0e0;
+}
+
+.path-popup .metadata-table tr:not(:last-child) td {
+  border-bottom: 1px solid rgba(102, 102, 102, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .app {
+    padding: 10px;
+  }
+
+  .tree-of-life-app {
+    gap: 15px;
+  }
+
+  .world-title-hebrew {
+    font-size: 28px;
+  }
+
+  .world-title-english {
+    font-size: 20px;
+  }
+
+  .world-description {
+    font-size: 14px;
+  }
+
+  .world-selector {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .world-button {
+    min-width: 80px;
+    padding: 10px 12px;
+  }
+
+  .world-hebrew {
+    font-size: 14px;
+  }
+
+  .world-english {
+    font-size: 11px;
+  }
+  
+  .tree-of-life-svg {
+    max-width: 90vw;
+  }
+
+  .sephirah-label {
+    fontSize: 12px;
+  }
+
+  .path-letter {
+    fontSize: 14px;
+  }
+
+  .metadata-popup {
+    padding: 12px;
+    min-width: 180px;
+  }
+
+  .metadata-popup.path-popup {
+    min-width: 200px;
+  }
+
+  .popup-header h3 {
+    font-size: 16px;
+  }
+
+  .metadata-popup.path-popup .popup-header h3 {
+    font-size: 15px;
+  }
+
+  .metadata-table .label {
+    font-size: 12px;
+  }
+
+  .metadata-table .value {
+    font-size: 13px;
+  }
+
+  .hebrew-text {
+    font-size: 15px;
+  }
+}
