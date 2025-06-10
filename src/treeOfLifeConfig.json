@@ -12,7 +12,7 @@
       },
       "position": { "x": 400, "y": 50 },
       "color": "#ffffff",
-      "image": "/images/briah-keter.png"
+      "image": "images/briah-keter.png"
     },
     "chokmah": {
       "id": 2,
@@ -26,7 +26,7 @@
       }, 
       "position": { "x": 550, "y": 150 },
       "color": "#e3e3e3",
-      "image": "/images/briah-hockmah.png"
+      "image": "images/briah-hockmah.png"
     },
     "binah": {
       "id": 3,
@@ -40,7 +40,7 @@
       },
       "position": { "x": 250, "y": 150 },
       "color": "#d1d1d1",
-      "image": "/images/briah-binah.png"
+      "image": "images/briah-binah.png"
     },
     "daath": {
       "id": 11,
@@ -68,7 +68,7 @@
       },
       "position": { "x": 550, "y": 300 },
       "color": "#b8b8b8",
-      "image": "/images/briah-hesed.png"
+      "image": "images/briah-hesed.png"
     },
     "gevurah": {
       "id": 5,
@@ -82,7 +82,7 @@
       },
       "position": { "x": 250, "y": 300 },
       "color": "#a0a0a0",
-      "image": "/images/briah-gevurah.png"
+      "image": "images/briah-gevurah.png"
     },
     "tiferet": {
       "id": 6,
@@ -96,7 +96,7 @@
       },
       "position": { "x": 400, "y": 375 },
       "color": "#888888",
-      "image": "/images/briah-tiferet.png"
+      "image": "images/briah-tiferet.png"
     },
     "netzach": {
       "id": 7,
@@ -110,7 +110,7 @@
       },
       "position": { "x": 550, "y": 450 },
       "color": "#707070",
-      "image": "/images/briah-netzach.png"
+      "image": "images/briah-netzach.png"
     },
     "hod": {
       "id": 8,
@@ -124,7 +124,7 @@
       },
       "position": { "x": 250, "y": 450 },
       "color": "#585858",
-      "image": "/images/briah-hod.png"
+      "image": "images/briah-hod.png"
     },
     "yesod": {
       "id": 9,
@@ -138,7 +138,7 @@
       },
       "position": { "x": 400, "y": 525 },
       "color": "#404040",
-      "image": "/images/briah-yesod.png"
+      "image": "images/briah-yesod.png"
     },
     "malkuth": {
       "id": 10,
@@ -152,7 +152,7 @@
       },
       "position": { "x": 400, "y": 620 },
       "color": "#282828",
-      "image": "/images/briah-malkuth.png"
+      "image": "images/briah-malkuth.png"
     }
   },
   "worlds": {
@@ -163,17 +163,17 @@
         "description": "The Divine World - Pure divinity and emanation"
       },
       "images": {
-        "keter": "/images/atziluth-keter.png",
-        "chokmah": "/images/atziluth-hockmah.png",
-        "binah": "/images/atziluth-binah.png",
+        "keter": "images/atziluth-keter.png",
+        "chokmah": "images/atziluth-hockmah.png",
+        "binah": "images/atziluth-binah.png",
         "daath": null,
-        "chesed": "/images/atziluth-hesed.png",
-        "gevurah": "/images/atziluth-gevurah.png",
-        "tiferet": "/images/atziluth-tiferet.png",
-        "netzach": "/images/atziluth-netzach.png",
-        "hod": "/images/atziluth-hod.png",
-        "yesod": "/images/atziluth-yesod.png",
-        "malkuth": "/images/atziluth-malkuth.png"
+        "chesed": "images/atziluth-hesed.png",
+        "gevurah": "images/atziluth-gevurah.png",
+        "tiferet": "images/atziluth-tiferet.png",
+        "netzach": "images/atziluth-netzach.png",
+        "hod": "images/atziluth-hod.png",
+        "yesod": "images/atziluth-yesod.png",
+        "malkuth": "images/atziluth-malkuth.png"
       }
     },
     "briah": {
@@ -183,17 +183,17 @@
         "description": "The Archangelic World - Pure intellect and creation"
       },
       "images": {
-        "keter": "/images/briah-keter.png",
-        "chokmah": "/images/briah-hockmah.png",
-        "binah": "/images/briah-binah.png",
+        "keter": "images/briah-keter.png",
+        "chokmah": "images/briah-hockmah.png",
+        "binah": "images/briah-binah.png",
         "daath": null,
-        "chesed": "/images/briah-hesed.png",
-        "gevurah": "/images/briah-gevurah.png",
-        "tiferet": "/images/briah-tiferet.png",
-        "netzach": "/images/briah-netzach.png",
-        "hod": "/images/briah-hod.png",
-        "yesod": "/images/briah-yesod.png",
-        "malkuth": "/images/briah-malkuth.png"
+        "chesed": "images/briah-hesed.png",
+        "gevurah": "images/briah-gevurah.png",
+        "tiferet": "images/briah-tiferet.png",
+        "netzach": "images/briah-netzach.png",
+        "hod": "images/briah-hod.png",
+        "yesod": "images/briah-yesod.png",
+        "malkuth": "images/briah-malkuth.png"
       }
     },
     "yetzirah": {
@@ -203,17 +203,17 @@
         "description": "The Angelic World - Emotion and psychological formation"
       },
       "images": {
-        "keter": "/images/yetzirah-keter.png",
-        "chokmah": "/images/yetzirah-hockmah.png",
-        "binah": "/images/yetzirah-binah.png",
+        "keter": "images/yetzirah-keter.png",
+        "chokmah": "images/yetzirah-hockmah.png",
+        "binah": "images/yetzirah-binah.png",
         "daath": null,
-        "chesed": "/images/yetzirah-hesed.png",
-        "gevurah": "/images/yetzirah-gevurah.png",
-        "tiferet": "/images/yetzirah-tiferet.png",
-        "netzach": "/images/yetzirah-netzach.png",
-        "hod": "/images/yetzirah-hod.png",
-        "yesod": "/images/yetzirah-yesod.png",
-        "malkuth": "/images/yetzirah-malkuth.png"
+        "chesed": "images/yetzirah-hesed.png",
+        "gevurah": "images/yetzirah-gevurah.png",
+        "tiferet": "images/yetzirah-tiferet.png",
+        "netzach": "images/yetzirah-netzach.png",
+        "hod": "images/yetzirah-hod.png",
+        "yesod": "images/yetzirah-yesod.png",
+        "malkuth": "images/yetzirah-malkuth.png"
       }
     },
     "assiah": {
@@ -223,17 +223,17 @@
         "description": "The Material World - Physical manifestation and action"
       },
       "images": {
-        "keter": "/images/assiah-keter.png",
-        "chokmah": "/images/assiah-hockmah.png",
-        "binah": "/images/assiah-binah.png",
+        "keter": "images/assiah-keter.png",
+        "chokmah": "images/assiah-hockmah.png",
+        "binah": "images/assiah-binah.png",
         "daath": null,
-        "chesed": "/images/assiah-hesed.png",
-        "gevurah": "/images/assiah-gevurah.png",
-        "tiferet": "/images/assiah-tiferet.png",
-        "netzach": "/images/assiah-netzach.png",
-        "hod": "/images/assiah-hod.png",
-        "yesod": "/images/assiah-yesod.png",
-        "malkuth": "/images/assiah-malkuth.png"
+        "chesed": "images/assiah-hesed.png",
+        "gevurah": "images/assiah-gevurah.png",
+        "tiferet": "images/assiah-tiferet.png",
+        "netzach": "images/assiah-netzach.png",
+        "hod": "images/assiah-hod.png",
+        "yesod": "images/assiah-yesod.png",
+        "malkuth": "images/assiah-malkuth.png"
       }
     }
   },
@@ -558,13 +558,13 @@
       "to": "malkuth",
       "pathNumber": 32,
       "hebrewLetter": "ת",
-      "hebrewLetterName": "Tau",
+      "hebrewLetterName": "Tav",
       "tarotCard": "The World",
       "tarotNumber": 21,
       "astrologicalSign": "Saturn",
       "astrologicalSymbol": "♄",
       "element": "Earth",
-      "letterMeaning": "Mark",
+      "letterMeaning": "Cross",
       "musicalNote": "A",
       "gematriaValue": 400
     }
