@@ -14,7 +14,7 @@ interface SephirahProps {
     planetarySymbol: string;
     element: string;
   };
-  onHover: (sephirah: any, position: { x: number; y: number }) => void;
+  onHover: (sephirah: any) => void;
   onLeave: () => void;
 }
 
@@ -32,7 +32,7 @@ const Sephirah: React.FC<SephirahProps> = ({
     <g 
       className="sephirah-group"
       data-name={name}
-      onMouseEnter={() => onHover({ name, metadata }, position)}
+      onMouseEnter={() => onHover({ name, metadata })}
       onMouseLeave={onLeave}
     >
       <circle
@@ -91,7 +91,7 @@ interface PathProps {
     musicalNote: string;
     gematriaValue: number;
   };
-  onHover: (pathData: any, position: { x: number; y: number }) => void;
+  onHover: (pathData: any) => void;
   onLeave: () => void;
 }
 
@@ -160,7 +160,7 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
         stroke={stroke}
         strokeWidth={pathStrokeWidth}
         className="tree-path"
-        onMouseEnter={() => onHover(metadata, { x: midX, y: midY })}
+        onMouseEnter={() => onHover(metadata)}
         onMouseLeave={onLeave}
       />
       {/* Hebrew letter caption */}
@@ -180,7 +180,7 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
   );
 };
 
-interface MetadataPopupProps {
+interface InfoPanelProps {
   sephirah: {
     name: string;
     metadata: {
@@ -191,48 +191,6 @@ interface MetadataPopupProps {
       element: string;
     };
   } | null;
-  position: { x: number; y: number } | null;
-}
-
-const MetadataPopup: React.FC<MetadataPopupProps> = ({ sephirah, position }) => {
-  if (!sephirah || !position) return null;
-
-  return (
-    <div 
-      className="metadata-popup"
-      style={{
-        left: position.x + 40,
-        top: position.y - 80,
-      }}
-    >
-      <div className="popup-header">
-        <h3>{sephirah.name}</h3>
-      </div>
-      <table className="metadata-table">
-        <tbody>
-          <tr>
-            <td className="label">Hebrew:</td>
-            <td className="value hebrew-text">{sephirah.metadata.hebrewName}</td>
-          </tr>
-          <tr>
-            <td className="label">English:</td>
-            <td className="value">{sephirah.metadata.englishName}</td>
-          </tr>
-          <tr>
-            <td className="label">Planetary:</td>
-            <td className="value">{sephirah.metadata.planetarySymbol} {sephirah.metadata.planetaryCorrespondence}</td>
-          </tr>
-          <tr>
-            <td className="label">Element:</td>
-            <td className="value">{sephirah.metadata.element}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-};
-
-interface PathMetadataPopupProps {
   pathData: {
     pathNumber: number;
     hebrewLetter: string;
@@ -246,65 +204,105 @@ interface PathMetadataPopupProps {
     musicalNote: string;
     gematriaValue: number;
   } | null;
-  position: { x: number; y: number } | null;
 }
 
-const PathMetadataPopup: React.FC<PathMetadataPopupProps> = ({ pathData, position }) => {
-  if (!pathData || !position) return null;
-
-  return (
-    <div 
-      className="metadata-popup path-popup"
-      style={{
-        left: position.x + 40,
-        top: position.y - 120,
-      }}
-    >
-      <div className="popup-header">
-        <h3>Path {pathData.pathNumber}</h3>
+const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData }) => {
+  if (!sephirah && !pathData) {
+    return (
+      <div className="info-panel">
+        <div className="info-panel-content">
+          <h3>Tree of Life</h3>
+          <p>Hover over a sephirah or path to see its correspondences and metadata.</p>
+        </div>
       </div>
-      <table className="metadata-table">
-        <tbody>
-          <tr>
-            <td className="label">Hebrew Letter:</td>
-            <td className="value hebrew-text">{pathData.hebrewLetter}</td>
-          </tr>
-          <tr>
-            <td className="label">Letter Name:</td>
-            <td className="value">{pathData.hebrewLetterName}</td>
-          </tr>
-          <tr>
-            <td className="label">Letter Meaning:</td>
-            <td className="value">{pathData.letterMeaning}</td>
-          </tr>
-          <tr>
-            <td className="label">Gematria Value:</td>
-            <td className="value">{pathData.gematriaValue}</td>
-          </tr>
-          <tr>
-            <td className="label">Tarot Card:</td>
-            <td className="value">{pathData.tarotCard}</td>
-          </tr>
-          <tr>
-            <td className="label">Tarot Number:</td>
-            <td className="value">{pathData.tarotNumber}</td>
-          </tr>
-          <tr>
-            <td className="label">Astrological:</td>
-            <td className="value">{pathData.astrologicalSymbol} {pathData.astrologicalSign}</td>
-          </tr>
-          <tr>
-            <td className="label">Element:</td>
-            <td className="value">{pathData.element}</td>
-          </tr>
-          <tr>
-            <td className="label">Musical Note:</td>
-            <td className="value">{pathData.musicalNote}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
+    );
+  }
+
+  if (sephirah) {
+    return (
+      <div className="info-panel">
+        <div className="info-panel-content">
+          <div className="info-header">
+            <h3>{sephirah.name}</h3>
+          </div>
+          <table className="info-table">
+            <tbody>
+              <tr>
+                <td className="label">Hebrew:</td>
+                <td className="value hebrew-text">{sephirah.metadata.hebrewName}</td>
+              </tr>
+              <tr>
+                <td className="label">English:</td>
+                <td className="value">{sephirah.metadata.englishName}</td>
+              </tr>
+              <tr>
+                <td className="label">Planetary:</td>
+                <td className="value">{sephirah.metadata.planetarySymbol} {sephirah.metadata.planetaryCorrespondence}</td>
+              </tr>
+              <tr>
+                <td className="label">Element:</td>
+                <td className="value">{sephirah.metadata.element}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+
+  if (pathData) {
+    return (
+      <div className="info-panel">
+        <div className="info-panel-content">
+          <div className="info-header">
+            <h3>Path {pathData.pathNumber}</h3>
+          </div>
+          <table className="info-table">
+            <tbody>
+              <tr>
+                <td className="label">Hebrew Letter:</td>
+                <td className="value hebrew-text">{pathData.hebrewLetter}</td>
+              </tr>
+              <tr>
+                <td className="label">Letter Name:</td>
+                <td className="value">{pathData.hebrewLetterName}</td>
+              </tr>
+              <tr>
+                <td className="label">Letter Meaning:</td>
+                <td className="value">{pathData.letterMeaning}</td>
+              </tr>
+              <tr>
+                <td className="label">Gematria Value:</td>
+                <td className="value">{pathData.gematriaValue}</td>
+              </tr>
+              <tr>
+                <td className="label">Tarot Card:</td>
+                <td className="value">{pathData.tarotCard}</td>
+              </tr>
+              <tr>
+                <td className="label">Tarot Number:</td>
+                <td className="value">{pathData.tarotNumber}</td>
+              </tr>
+              <tr>
+                <td className="label">Astrological:</td>
+                <td className="value">{pathData.astrologicalSymbol} {pathData.astrologicalSign}</td>
+              </tr>
+              <tr>
+                <td className="label">Element:</td>
+                <td className="value">{pathData.element}</td>
+              </tr>
+              <tr>
+                <td className="label">Musical Note:</td>
+                <td className="value">{pathData.musicalNote}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 };
 
 interface WorldSelectorProps {
@@ -370,7 +368,6 @@ const TreeOfLife: React.FC = () => {
       element: string;
     };
   } | null>(null);
-  const [sephirahPopupPosition, setSephirahPopupPosition] = useState<{ x: number; y: number } | null>(null);
   
   const [hoveredPath, setHoveredPath] = useState<{
     pathNumber: number;
@@ -385,7 +382,6 @@ const TreeOfLife: React.FC = () => {
     musicalNote: string;
     gematriaValue: number;
   } | null>(null);
-  const [pathPopupPosition, setPathPopupPosition] = useState<{ x: number; y: number } | null>(null);
 
   const handleSephirahHover = (
     sephirah: { 
@@ -397,19 +393,15 @@ const TreeOfLife: React.FC = () => {
         planetarySymbol: string;
         element: string;
       } 
-    }, 
-    position: { x: number; y: number }
+    }
   ) => {
     setHoveredSephirah(sephirah);
-    setSephirahPopupPosition(position);
-    // Clear path popup when hovering sephirah
+    // Clear path when hovering sephirah
     setHoveredPath(null);
-    setPathPopupPosition(null);
   };
 
   const handleSephirahLeave = () => {
     setHoveredSephirah(null);
-    setSephirahPopupPosition(null);
   };
 
   const handlePathHover = (
@@ -425,19 +417,15 @@ const TreeOfLife: React.FC = () => {
       letterMeaning: string;
       musicalNote: string;
       gematriaValue: number;
-    },
-    position: { x: number; y: number }
+    }
   ) => {
     setHoveredPath(pathData);
-    setPathPopupPosition(position);
-    // Clear sephirah popup when hovering path
+    // Clear sephirah when hovering path
     setHoveredSephirah(null);
-    setSephirahPopupPosition(null);
   };
 
   const handlePathLeave = () => {
     setHoveredPath(null);
-    setPathPopupPosition(null);
   };
 
   const handleWorldChange = (world: string) => {
@@ -453,81 +441,81 @@ const TreeOfLife: React.FC = () => {
 
   return (
     <div className="tree-of-life-app">
-      {/* World Info */}
-      <WorldInfo world={currentWorld} />
-      
-      {/* World Selector */}
-      <WorldSelector 
-        selectedWorld={selectedWorld}
-        onWorldChange={handleWorldChange}
-        worlds={worlds}
-      />
-
-      {/* Tree of Life */}
-      <div className="tree-of-life-container">
-        <svg
-          width="800"
-          height="700"
-          viewBox="0 0 800 700"
-          className="tree-of-life-svg"
-        >
-          {/* Render paths first so they appear behind circles */}
-          {paths.map((path, index) => {
-            const fromSephirah = sephirot[path.from as keyof typeof sephirot];
-            const toSephirah = sephirot[path.to as keyof typeof sephirot];
-            
-            return (
-              <Path
-                key={index}
-                from={fromSephirah.position}
-                to={toSephirah.position}
-                stroke={styling.pathStroke}
-                strokeWidth={styling.pathStrokeWidth}
-                metadata={{
-                  pathNumber: path.pathNumber,
-                  hebrewLetter: path.hebrewLetter,
-                  hebrewLetterName: path.hebrewLetterName,
-                  tarotCard: path.tarotCard,
-                  tarotNumber: path.tarotNumber,
-                  astrologicalSign: path.astrologicalSign,
-                  astrologicalSymbol: path.astrologicalSymbol,
-                  element: path.element,
-                  letterMeaning: path.letterMeaning,
-                  musicalNote: path.musicalNote,
-                  gematriaValue: path.gematriaValue
-                }}
-                onHover={handlePathHover}
-                onLeave={handlePathLeave}
-              />
-            );
-          })}
-          
-          {/* Render circles */}
-          {Object.entries(sephirot).map(([key, sephirah]) => (
-            <Sephirah
-              key={key}
-              name={key}
-              position={sephirah.position}
-              color={sephirah.color}
-              image={currentImages[key as keyof typeof currentImages] || sephirah.image}
-              radius={styling.circleRadius}
-              metadata={sephirah.metadata}
-              onHover={handleSephirahHover}
-              onLeave={handleSephirahLeave}
-            />
-          ))}
-        </svg>
+      {/* Header */}
+      <div className="app-header">
+        {/* World Info */}
+        <WorldInfo world={currentWorld} />
         
-        {/* Sephirah Metadata Popup */}
-        <MetadataPopup 
-          sephirah={hoveredSephirah} 
-          position={sephirahPopupPosition}
+        {/* World Selector */}
+        <WorldSelector 
+          selectedWorld={selectedWorld}
+          onWorldChange={handleWorldChange}
+          worlds={worlds}
         />
+      </div>
+
+      {/* Main Content */}
+      <div className="app-main">
+        {/* Tree of Life */}
+        <div className="tree-of-life-container">
+          <svg
+            width="800"
+            height="700"
+            viewBox="0 0 800 700"
+            className="tree-of-life-svg"
+          >
+            {/* Render paths first so they appear behind circles */}
+            {paths.map((path, index) => {
+              const fromSephirah = sephirot[path.from as keyof typeof sephirot];
+              const toSephirah = sephirot[path.to as keyof typeof sephirot];
+              
+              return (
+                <Path
+                  key={index}
+                  from={fromSephirah.position}
+                  to={toSephirah.position}
+                  stroke={styling.pathStroke}
+                  strokeWidth={styling.pathStrokeWidth}
+                  metadata={{
+                    pathNumber: path.pathNumber,
+                    hebrewLetter: path.hebrewLetter,
+                    hebrewLetterName: path.hebrewLetterName,
+                    tarotCard: path.tarotCard,
+                    tarotNumber: path.tarotNumber,
+                    astrologicalSign: path.astrologicalSign,
+                    astrologicalSymbol: path.astrologicalSymbol,
+                    element: path.element,
+                    letterMeaning: path.letterMeaning,
+                    musicalNote: path.musicalNote,
+                    gematriaValue: path.gematriaValue
+                  }}
+                  onHover={handlePathHover}
+                  onLeave={handlePathLeave}
+                />
+              );
+            })}
+            
+            {/* Render circles */}
+            {Object.entries(sephirot).map(([key, sephirah]) => (
+              <Sephirah
+                key={key}
+                name={key}
+                position={sephirah.position}
+                color={sephirah.color}
+                image={currentImages[key as keyof typeof currentImages] || sephirah.image}
+                radius={styling.circleRadius}
+                metadata={sephirah.metadata}
+                onHover={handleSephirahHover}
+                onLeave={handleSephirahLeave}
+              />
+            ))}
+          </svg>
+        </div>
         
-        {/* Path Metadata Popup */}
-        <PathMetadataPopup
+        {/* Info Panel */}
+        <InfoPanel 
+          sephirah={hoveredSephirah} 
           pathData={hoveredPath}
-          position={pathPopupPosition}
         />
       </div>
     </div>

@@ -15,7 +15,7 @@ body {
   background: linear-gradient(135deg, #0f0f0f 0%, #2d1b4e 50%, #1a1a1a 100%);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px;
 }
 
@@ -26,7 +26,27 @@ body {
   align-items: center;
   gap: 20px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1400px;
+  min-height: 100vh;
+}
+
+/* App Header */
+.app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* App Main Content */
+.app-main {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  flex: 1;
+  align-items: flex-start;
 }
 
 /* World Info Styles */
@@ -76,7 +96,6 @@ body {
   border-radius: 16px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 20px;
 }
 
 .world-button {
@@ -134,8 +153,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 800px;
+  flex: 1;
   position: relative;
 }
 
@@ -222,119 +240,119 @@ body {
   transform: scale(1.08);
 }
 
-/* Metadata Popup Styles */
-.metadata-popup {
-  position: absolute;
+/* Info Panel Styles */
+.info-panel {
+  width: 350px;
+  min-height: 400px;
   background: rgba(20, 20, 30, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 16px;
+  padding: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  z-index: 1000;
-  pointer-events: none;
-  animation: fadeIn 0.2s ease-out;
-  min-width: 200px;
+  position: sticky;
+  top: 20px;
+  transition: all 0.3s ease;
 }
 
-/* Path-specific popup styling */
-.metadata-popup.path-popup {
-  background: rgba(15, 25, 35, 0.95);
-  border: 1px solid rgba(102, 102, 102, 0.3);
-  min-width: 220px;
+.info-panel-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.metadata-popup.path-popup .popup-header {
-  border-bottom: 1px solid rgba(102, 102, 102, 0.2);
-}
-
-.metadata-popup.path-popup .popup-header h3 {
-  color: #e0e0e0;
-  font-size: 16px;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.popup-header {
-  margin-bottom: 12px;
+.info-header {
+  margin-bottom: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 8px;
+  padding-bottom: 12px;
 }
 
-.popup-header h3 {
+.info-header h3 {
   color: #ffffff;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   margin: 0;
   text-transform: capitalize;
 }
 
-.metadata-table {
+.info-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.metadata-table td {
-  padding: 6px 8px;
+.info-table td {
+  padding: 8px 10px;
   vertical-align: top;
 }
 
-.metadata-table .label {
+.info-table .label {
   color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
-  font-size: 13px;
+  font-size: 14px;
   text-align: right;
-  padding-right: 12px;
+  padding-right: 15px;
   white-space: nowrap;
+  width: 40%;
 }
 
-.metadata-table .value {
+.info-table .value {
   color: #ffffff;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
+  width: 60%;
 }
 
 .hebrew-text {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   direction: rtl;
   text-align: left;
 }
 
-.metadata-table tr:not(:last-child) td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.info-table tr:not(:last-child) td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Path popup specific table styling */
-.path-popup .metadata-table .label {
-  color: rgba(224, 224, 224, 0.7);
-}
-
-.path-popup .metadata-table .value {
-  color: #e0e0e0;
-}
-
-.path-popup .metadata-table tr:not(:last-child) td {
-  border-bottom: 1px solid rgba(102, 102, 102, 0.1);
+/* Default state when no item is hovered */
+.info-panel-content p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Responsive design */
+@media (max-width: 1200px) {
+  .app-main {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .info-panel {
+    width: 100%;
+    max-width: 600px;
+    position: static;
+    min-height: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .app {
     padding: 10px;
   }
 
   .tree-of-life-app {
+    gap: 15px;
+  }
+
+  .app-header {
+    gap: 15px;
+  }
+
+  .app-main {
     gap: 15px;
   }
 
@@ -381,32 +399,27 @@ body {
     fontSize: 14px;
   }
 
-  .metadata-popup {
-    padding: 12px;
-    min-width: 180px;
+  .info-panel {
+    padding: 16px;
   }
 
-  .metadata-popup.path-popup {
-    min-width: 200px;
+  .info-header h3 {
+    font-size: 18px;
   }
 
-  .popup-header h3 {
-    font-size: 16px;
-  }
-
-  .metadata-popup.path-popup .popup-header h3 {
-    font-size: 15px;
-  }
-
-  .metadata-table .label {
-    font-size: 12px;
-  }
-
-  .metadata-table .value {
+  .info-table .label {
     font-size: 13px;
   }
 
+  .info-table .value {
+    font-size: 14px;
+  }
+
   .hebrew-text {
-    font-size: 15px;
+    font-size: 16px;
+  }
+
+  .info-panel-content p {
+    font-size: 14px;
   }
 }
