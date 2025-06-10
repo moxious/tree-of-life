@@ -160,7 +160,7 @@
       "metadata": {
         "hebrewName": "אצילות",
         "englishName": "Emanation",
-        "description": "The Divine World - Pure divinity and emanation"
+        "description": "Pure divinity and emanation"
       },
       "images": {
         "keter": "images/atziluth-keter.png",
@@ -180,7 +180,7 @@
       "metadata": {
         "hebrewName": "בריאה",
         "englishName": "Creation", 
-        "description": "The Archangelic World - Pure intellect and creation"
+        "description": "Pure intellect and creation"
       },
       "images": {
         "keter": "images/briah-keter.png",
@@ -200,7 +200,7 @@
       "metadata": {
         "hebrewName": "יצירה",
         "englishName": "Formation",
-        "description": "The Angelic World - Emotion and psychological formation"
+        "description": "Emotion and psychological formation"
       },
       "images": {
         "keter": "images/yetzirah-keter.png",
