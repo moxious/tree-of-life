@@ -212,7 +212,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData }) => {
       <div className="info-panel">
         <div className="info-panel-content">
           <h3>Tree of Life</h3>
-          <p>Hover over a sephirah or path to see its correspondences and metadata.</p>
+          <p>Hover over a sephirah or path to see its correspondences.</p>
         </div>
       </div>
     );
