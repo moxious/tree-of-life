@@ -129,11 +129,11 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
   const isLightningFlash = (from: { x: number; y: number }, to: { x: number; y: number }) => {
     // Define the Lightning Flash path connections based on positions
     const lightningFlashPaths = [
-      // Keter to Chokmah
+      // Keter to Hockmah
       { fromPos: { x: 400, y: 50 }, toPos: { x: 550, y: 150 } },
-      // Chokmah to Binah  
+      // Hockmah to Binah  
       { fromPos: { x: 550, y: 150 }, toPos: { x: 250, y: 150 } },
-      // Chesed to Gevurah (Lightning Flash crosses the abyss conceptually)
+      // Hesed to Gevurah (Lightning Flash crosses the abyss conceptually)
       { fromPos: { x: 550, y: 300 }, toPos: { x: 250, y: 300 } },
       // Gevurah to Tiferet
       { fromPos: { x: 250, y: 300 }, toPos: { x: 400, y: 375 } },

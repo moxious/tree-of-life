@@ -20,9 +20,9 @@
         "atziluth": { "color": "brilliance" }
       }
     },
-    "chokmah": {
+    "hockmah": {
       "id": 2,
-      "name": "Chokmah",
+      "name": "Hockmah",
       "metadata": {
         "hebrewName": "חכמה",
         "englishName": "Wisdom",
@@ -80,9 +80,9 @@
         "atziluth": { "color": "black" }
       }
     },
-    "chesed": {
+    "hesed": {
       "id": 4,
-      "name": "Chesed",
+      "name": "Hesed",
       "metadata": {
         "hebrewName": "חסד",
         "englishName": "Loving-Kindness",
@@ -230,10 +230,10 @@
       },
       "images": {
         "keter": "images/atziluth-keter.png",
-        "chokmah": "images/atziluth-hockmah.png",
+        "hockmah": "images/atziluth-hockmah.png",
         "binah": "images/atziluth-binah.png",
         "daath": null,
-        "chesed": "images/atziluth-hesed.png",
+        "hesed": "images/atziluth-hesed.png",
         "gevurah": "images/atziluth-gevurah.png",
         "tiferet": "images/atziluth-tiferet.png",
         "netzach": "images/atziluth-netzach.png",
@@ -250,10 +250,10 @@
       },
       "images": {
         "keter": "images/briah-keter.png",
-        "chokmah": "images/briah-hockmah.png",
+        "hockmah": "images/briah-hockmah.png",
         "binah": "images/briah-binah.png",
         "daath": null,
-        "chesed": "images/briah-hesed.png",
+        "hesed": "images/briah-hesed.png",
         "gevurah": "images/briah-gevurah.png",
         "tiferet": "images/briah-tiferet.png",
         "netzach": "images/briah-netzach.png",
@@ -270,10 +270,10 @@
       },
       "images": {
         "keter": "images/yetzirah-keter.png",
-        "chokmah": "images/yetzirah-hockmah.png",
+        "hockmah": "images/yetzirah-hockmah.png",
         "binah": "images/yetzirah-binah.png",
         "daath": null,
-        "chesed": "images/yetzirah-hesed.png",
+        "hesed": "images/yetzirah-hesed.png",
         "gevurah": "images/yetzirah-gevurah.png",
         "tiferet": "images/yetzirah-tiferet.png",
         "netzach": "images/yetzirah-netzach.png",
@@ -290,10 +290,10 @@
       },
       "images": {
         "keter": "images/assiah-keter.png",
-        "chokmah": "images/assiah-hockmah.png",
+        "hockmah": "images/assiah-hockmah.png",
         "binah": "images/assiah-binah.png",
         "daath": null,
-        "chesed": "images/assiah-hesed.png",
+        "hesed": "images/assiah-hesed.png",
         "gevurah": "images/assiah-gevurah.png",
         "tiferet": "images/assiah-tiferet.png",
         "netzach": "images/assiah-netzach.png",
@@ -306,7 +306,7 @@
   "paths": [
     {
       "from": "keter",
-      "to": "chokmah",
+      "to": "hockmah",
       "pathNumber": 11,
       "hebrewLetter": "א",
       "hebrewLetterName": "Aleph",
@@ -350,7 +350,7 @@
       "gematriaValue": 3
     },
     {
-      "from": "chokmah",
+      "from": "hockmah",
       "to": "binah",
       "pathNumber": 14,
       "hebrewLetter": "ד",
@@ -365,8 +365,8 @@
       "gematriaValue": 4
     },
     {
-      "from": "chokmah",
-      "to": "chesed",
+      "from": "hockmah",
+      "to": "hesed",
       "pathNumber": 16,
       "hebrewLetter": "ו",
       "hebrewLetterName": "Vav",
@@ -380,7 +380,7 @@
       "gematriaValue": 6
     },
     {
-      "from": "chokmah",
+      "from": "hockmah",
       "to": "tiferet",
       "pathNumber": 15,
       "hebrewLetter": "ה",
@@ -425,7 +425,7 @@
       "gematriaValue": 8
     },
     {
-      "from": "chesed",
+      "from": "hesed",
       "to": "gevurah",
       "pathNumber": 19,
       "hebrewLetter": "ט",
@@ -440,7 +440,7 @@
       "gematriaValue": 9
     },
     {
-      "from": "chesed",
+      "from": "hesed",
       "to": "tiferet",
       "pathNumber": 20,
       "hebrewLetter": "י",
@@ -455,7 +455,7 @@
       "gematriaValue": 10
     },
     {
-      "from": "chesed",
+      "from": "hesed",
       "to": "netzach",
       "pathNumber": 21,
       "hebrewLetter": "כ",
