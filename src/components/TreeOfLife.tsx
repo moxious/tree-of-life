@@ -15,6 +15,12 @@ interface SephirahProps {
     planetarySymbol: string;
     element: string;
   };
+  worldColors: {
+    assiah: { color: string };
+    yetzirah: { color: string };
+    briah: { color: string };
+    atziluth: { color: string };
+  };
   onHover: (sephirah: any) => void;
   onLeave: () => void;
 }
@@ -26,6 +32,7 @@ const Sephirah: React.FC<SephirahProps> = ({
   image, 
   radius, 
   metadata, 
+  worldColors,
   onHover, 
   onLeave 
 }) => {
@@ -33,7 +40,7 @@ const Sephirah: React.FC<SephirahProps> = ({
     <g 
       className="sephirah-group"
       data-name={name}
-      onMouseEnter={() => onHover({ name, metadata })}
+      onMouseEnter={() => onHover({ name, metadata, worldColors })}
       onMouseLeave={onLeave}
     >
       <circle
@@ -245,6 +252,12 @@ const TreeOfLife: React.FC = () => {
       planetarySymbol: string;
       element: string;
     };
+    worldColors: {
+      assiah: { color: string };
+      yetzirah: { color: string };
+      briah: { color: string };
+      atziluth: { color: string };
+    };
   } | null>(null);
   
   const [hoveredPath, setHoveredPath] = useState<{
@@ -270,7 +283,13 @@ const TreeOfLife: React.FC = () => {
         planetaryCorrespondence: string;
         planetarySymbol: string;
         element: string;
-      } 
+      };
+      worldColors: {
+        assiah: { color: string };
+        yetzirah: { color: string };
+        briah: { color: string };
+        atziluth: { color: string };
+      };
     }
   ) => {
     setHoveredSephirah(sephirah);
@@ -383,6 +402,7 @@ const TreeOfLife: React.FC = () => {
                 image={currentImages[key as keyof typeof currentImages] || sephirah.image}
                 radius={styling.circleRadius}
                 metadata={sephirah.metadata}
+                worldColors={sephirah.in}
                 onHover={handleSephirahHover}
                 onLeave={handleSephirahLeave}
               />
@@ -394,6 +414,7 @@ const TreeOfLife: React.FC = () => {
         <InfoPanel 
           sephirah={hoveredSephirah} 
           pathData={hoveredPath}
+          selectedWorld={selectedWorld}
         />
       </div>
     </div>

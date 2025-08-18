@@ -10,6 +10,12 @@ interface InfoPanelProps {
       planetarySymbol: string;
       element: string;
     };
+    worldColors: {
+      assiah: { color: string };
+      yetzirah: { color: string };
+      briah: { color: string };
+      atziluth: { color: string };
+    };
   } | null;
   pathData: {
     pathNumber: number;
@@ -24,9 +30,10 @@ interface InfoPanelProps {
     musicalNote: string;
     gematriaValue: number;
   } | null;
+  selectedWorld: string;
 }
 
-const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData }) => {
+const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, selectedWorld }) => {
   if (!sephirah && !pathData) {
     return (
       <div className="info-panel">
@@ -39,6 +46,9 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData }) => {
   }
 
   if (sephirah) {
+    // Get the color for the selected world
+    const worldColor = sephirah.worldColors[selectedWorld as keyof typeof sephirah.worldColors]?.color || 'Unknown';
+    
     return (
       <div className="info-panel">
         <div className="info-panel-content">
@@ -62,6 +72,10 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData }) => {
               <tr>
                 <td className="label">Element:</td>
                 <td className="value">{sephirah.metadata.element}</td>
+              </tr>
+              <tr>
+                <td className="label">Color ({selectedWorld}):</td>
+                <td className="value">{worldColor}</td>
               </tr>
             </tbody>
           </table>
