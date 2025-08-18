@@ -12,7 +12,13 @@
       },
       "position": { "x": 400, "y": 50 },
       "color": "#ffffff",
-      "image": "images/briah-keter.png"
+      "image": "images/briah-keter.png",
+      "in": {
+        "assiah": { "color": "white, flecked with gold" },
+        "yetzirah": { "color": "pure white brilliance" },
+        "briah": { "color": "pure white brilliance" },
+        "atziluth": { "color": "brilliance" }
+      }
     },
     "chokmah": {
       "id": 2,
@@ -26,7 +32,13 @@
       }, 
       "position": { "x": 550, "y": 150 },
       "color": "#e3e3e3",
-      "image": "images/briah-hockmah.png"
+      "image": "images/briah-hockmah.png",
+      "in": {
+        "assiah": { "color": "white, flecked with red, blue, and yellow" },
+        "yetzirah": { "color": "iridescent pearl gray" },
+        "briah": { "color": "pearly white" },
+        "atziluth": { "color": "pure soft blue" }
+      }
     },
     "binah": {
       "id": 3,
@@ -40,7 +52,13 @@
       },
       "position": { "x": 250, "y": 150 },
       "color": "#d1d1d1",
-      "image": "images/briah-binah.png"
+      "image": "images/briah-binah.png",
+      "in": {
+        "assiah": { "color": "gray, flecked with pink" },
+        "yetzirah": { "color": "dark brown" },
+        "briah": { "color": "black" },
+        "atziluth": { "color": "crimson" }
+      }
     },
     "daath": {
       "id": 11,
@@ -54,7 +72,13 @@
       },
       "position": { "x": 400, "y": 225 },
       "color": "#000000",
-      "image": null
+      "image": null,
+      "in": {
+        "assiah": { "color": "black" },
+        "yetzirah": { "color": "black" },
+        "briah": { "color": "black" },
+        "atziluth": { "color": "black" }
+      }
     },
     "chesed": {
       "id": 4,
@@ -68,7 +92,13 @@
       },
       "position": { "x": 550, "y": 300 },
       "color": "#b8b8b8",
-      "image": "images/briah-hesed.png"
+      "image": "images/briah-hesed.png",
+      "in": {
+        "assiah": { "color": "deep azure, flecked with yellow" },
+        "yetzirah": { "color": "deep purple" },
+        "briah": { "color": "blue" },
+        "atziluth": { "color": "deep violet" }
+      }
     },
     "gevurah": {
       "id": 5,
@@ -82,7 +112,13 @@
       },
       "position": { "x": 250, "y": 300 },
       "color": "#a0a0a0",
-      "image": "images/briah-gevurah.png"
+      "image": "images/briah-gevurah.png",
+      "in": {
+        "assiah": { "color": "red, flecked with black" },
+        "yetzirah": { "color": "bright scarlet" },
+        "briah": { "color": "scarlet" },
+        "atziluth": { "color": "orange" }
+      }
     },
     "tiferet": {
       "id": 6,
@@ -96,7 +132,13 @@
       },
       "position": { "x": 400, "y": 375 },
       "color": "#888888",
-      "image": "images/briah-tiferet.png"
+      "image": "images/briah-tiferet.png",
+      "in": {
+        "assiah": { "color": "golden amber" },
+        "yetzirah": { "color": "salmon" },
+        "briah": { "color": "yellow" },
+        "atziluth": { "color": "clear rose-pink" }
+      }
     },
     "netzach": {
       "id": 7,
@@ -110,7 +152,13 @@
       },
       "position": { "x": 550, "y": 450 },
       "color": "#707070",
-      "image": "images/briah-netzach.png"
+      "image": "images/briah-netzach.png",
+      "in": {
+        "assiah": { "color": "olive, flecked with gold" },
+        "yetzirah": { "color": "bright yellowish green" },
+        "briah": { "color": "emerald" },
+        "atziluth": { "color": "amber" }
+      }
     },
     "hod": {
       "id": 8,
@@ -124,7 +172,13 @@
       },
       "position": { "x": 250, "y": 450 },
       "color": "#585858",
-      "image": "images/briah-hod.png"
+      "image": "images/briah-hod.png",
+      "in": {
+        "assiah": { "color": "yellowish black, flecked with white" },
+        "yetzirah": { "color": "russet-red" },
+        "briah": { "color": "orange" },
+        "atziluth": { "color": "violet purple" }
+      }
     },
     "yesod": {
       "id": 9,
@@ -138,7 +192,13 @@
       },
       "position": { "x": 400, "y": 525 },
       "color": "#404040",
-      "image": "images/briah-yesod.png"
+      "image": "images/briah-yesod.png",
+      "in": {
+        "assiah": { "color": "citrine, flecked with azure" },
+        "yetzirah": { "color": "very dark purple" },
+        "briah": { "color": "violet" },
+        "atziluth": { "color": "indigo" }
+      }
     },
     "malkuth": {
       "id": 10,
@@ -152,7 +212,13 @@
       },
       "position": { "x": 400, "y": 620 },
       "color": "#282828",
-      "image": "images/briah-malkuth.png"
+      "image": "images/briah-malkuth.png",
+      "in": {
+        "assiah": { "color": "black rayed with yellow" },
+        "yetzirah": { "color": "citrine, olive, russet, black flecked with gold" },
+        "briah": { "color": "citrine, olive, russet, black" },
+        "atziluth": { "color": "yellow" }
+      }
     }
   },
   "worlds": {
