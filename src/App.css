@@ -183,7 +183,7 @@ body {
 
 .sephirah-group:hover .sephirah {
   filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
-  transform: scale(1.08);
+  transform: scale(2);
 }
 
 /* Special styling for Da'ath (the hidden sephirah) */
@@ -194,7 +194,7 @@ body {
 
 .sephirah-group[data-name="daath"]:hover .sephirah {
   filter: drop-shadow(0 0 12px rgba(128, 128, 128, 0.7));
-  transform: scale(1.06);
+  transform: scale(2);
   opacity: 1;
 }
 
@@ -239,7 +239,7 @@ body {
 .path-group:hover .path-letter {
   opacity: 1;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-  transform: scale(1.08);
+  transform: scale(2);
 }
 
 /* Info Panel Styles */
