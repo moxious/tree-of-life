@@ -188,20 +188,22 @@ body {
 
 /* Special styling for Da'ath (the hidden sephirah) */
 .sephirah-group[data-name="daath"] .sephirah {
-  filter: drop-shadow(0 0 6px rgba(128, 128, 128, 0.4));
+  /* filter: drop-shadow(0 0 6px rgba(128, 128, 128, 0.4)); */
   opacity: 0.85;
+  z-index: 1; /* Ensure Da'ath is below paths */
 }
 
 .sephirah-group[data-name="daath"]:hover .sephirah {
-  filter: drop-shadow(0 0 12px rgba(128, 128, 128, 0.7));
+  /* filter: drop-shadow(0 0 12px rgba(128, 128, 128, 0.7)); */
   transform: scale(2);
   opacity: 1;
+  z-index: 1; /* Ensure Da'ath is below paths */
 }
 
 .sephirah-label {
   opacity: 0;
   transition: opacity 0.3s ease;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
+  /* filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8)); */
   pointer-events: none;
 }
 
@@ -212,24 +214,26 @@ body {
 /* Path styling */
 .path-group {
   cursor: pointer;
+  z-index: 10; /* Ensure paths are above labels */
 }
 
 .tree-path {
   opacity: 0.7;
   transition: opacity 0.3s ease;
   stroke-width: 2;
+  z-index: 10; /* Ensure paths are above labels */
 }
 
 .path-group:hover .tree-path {
   opacity: 1;
-  filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8));
+  /* filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8)); */
   stroke-width: 3;
 }
 
 /* Hebrew letter styling on paths */
 .path-letter {
   font-family: 'Arial Unicode MS', 'Lucida Grande', 'Tahoma', sans-serif;
-  filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.8));
+  /* filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.8)); */
   transition: all 0.3s ease;
   pointer-events: none;
   opacity: 0.9;
@@ -238,8 +242,9 @@ body {
 
 .path-group:hover .path-letter {
   opacity: 1;
-  filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8));
-  transform: scale(1.2);
+  /* filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8)); */
+  /* transform: scale(1.2); */
+  font-size: 3em;
 }
 
 /* Info Panel Styles */
