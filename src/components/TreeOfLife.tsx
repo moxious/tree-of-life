@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import treeConfig from '../treeOfLifeConfig.json';
 import InfoPanel from './InfoPanel';
+import VisualizationPicker from './VisualizationPicker';
 
 interface SephirahProps {
   name: string;
@@ -224,6 +225,7 @@ const WorldSelector: React.FC<WorldSelectorProps> = ({ selectedWorld, onWorldCha
   );
 };
 
+
 interface WorldInfoProps {
   world: any;
 }
@@ -243,6 +245,7 @@ const WorldInfo: React.FC<WorldInfoProps> = ({ world }) => {
 const TreeOfLife: React.FC = () => {
   const { sephirot, paths, styling, worlds } = treeConfig;
   const [selectedWorld, setSelectedWorld] = useState<string>('briah');
+  const [viewMode, setViewMode] = useState<string>('sphere');
   const [hoveredSephirah, setHoveredSephirah] = useState<{
     name: string;
     metadata: {
@@ -329,8 +332,15 @@ const TreeOfLife: React.FC = () => {
     setSelectedWorld(world);
   };
 
+  const handleViewModeChange = (mode: string) => {
+    setViewMode(mode);
+  };
+
   const getCurrentWorldImages = () => {
-    return worlds[selectedWorld as keyof typeof worlds]?.images || {};
+    const world = worlds[selectedWorld as keyof typeof worlds];
+    if (!world) return {};
+    
+    return viewMode === 'card' ? world.tarotCards || {} : world.images || {};
   };
 
   const currentWorld = worlds[selectedWorld as keyof typeof worlds];
@@ -343,12 +353,21 @@ const TreeOfLife: React.FC = () => {
         {/* World Info */}
         <WorldInfo world={currentWorld} />
         
-        {/* World Selector */}
-        <WorldSelector 
-          selectedWorld={selectedWorld}
-          onWorldChange={handleWorldChange}
-          worlds={worlds}
-        />
+        {/* Controls */}
+        <div className="controls">
+          {/* World Selector */}
+          <WorldSelector 
+            selectedWorld={selectedWorld}
+            onWorldChange={handleWorldChange}
+            worlds={worlds}
+          />
+          
+          {/* Visualization Picker */}
+          <VisualizationPicker 
+            viewMode={viewMode}
+            onViewModeChange={handleViewModeChange}
+          />
+        </div>
       </div>
 
       {/* Main Content */}

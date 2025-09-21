@@ -88,8 +88,26 @@ body {
   line-height: 1.5;
 }
 
+/* Controls Layout */
+.controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
 /* World Selector Styles */
 .world-selector {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Visualization Picker Styles */
+.visualization-picker {
   display: flex;
   gap: 12px;
   padding: 16px;
@@ -386,7 +404,18 @@ body {
     font-size: 14px;
   }
 
+  .controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+
   .world-selector {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .visualization-picker {
     flex-wrap: wrap;
     gap: 8px;
     padding: 12px;
@@ -410,11 +439,11 @@ body {
   }
 
   .sephirah-label {
-    fontSize: 12px;
+    font-size: 12px;
   }
 
   .path-letter {
-    fontSize: 14px;
+    font-size: 14px;
   }
 
   .info-panel {
