@@ -10,14 +10,25 @@
         "planetarySymbol": "⚹",
         "element": "Spirit"
       },
-      "position": { "x": 400, "y": 50 },
+      "position": {
+        "x": 400,
+        "y": 50
+      },
       "color": "#ffffff",
       "image": "images/briah-keter.png",
       "in": {
-        "assiah": { "color": "white, flecked with gold" },
-        "yetzirah": { "color": "pure white brilliance" },
-        "briah": { "color": "pure white brilliance" },
-        "atziluth": { "color": "brilliance" }
+        "assiah": {
+          "color": "white, flecked with gold"
+        },
+        "yetzirah": {
+          "color": "pure white brilliance"
+        },
+        "briah": {
+          "color": "pure white brilliance"
+        },
+        "atziluth": {
+          "color": "brilliance"
+        }
       }
     },
     "hockmah": {
@@ -29,15 +40,26 @@
         "planetaryCorrespondence": "Zodiac",
         "planetarySymbol": "♌♍♎♏♐♑♒♓♈♉♊♋",
         "element": "Fire"
-      }, 
-      "position": { "x": 550, "y": 150 },
+      },
+      "position": {
+        "x": 550,
+        "y": 150
+      },
       "color": "#e3e3e3",
       "image": "images/briah-hockmah.png",
       "in": {
-        "assiah": { "color": "white, flecked with red, blue, and yellow" },
-        "yetzirah": { "color": "iridescent pearl gray" },
-        "briah": { "color": "pearly white" },
-        "atziluth": { "color": "pure soft blue" }
+        "assiah": {
+          "color": "white, flecked with red, blue, and yellow"
+        },
+        "yetzirah": {
+          "color": "iridescent pearl gray"
+        },
+        "briah": {
+          "color": "pearly white"
+        },
+        "atziluth": {
+          "color": "pure soft blue"
+        }
       }
     },
     "binah": {
@@ -50,14 +72,25 @@
         "planetarySymbol": "♄",
         "element": "Water"
       },
-      "position": { "x": 250, "y": 150 },
+      "position": {
+        "x": 250,
+        "y": 150
+      },
       "color": "#d1d1d1",
       "image": "images/briah-binah.png",
       "in": {
-        "assiah": { "color": "gray, flecked with pink" },
-        "yetzirah": { "color": "dark brown" },
-        "briah": { "color": "black" },
-        "atziluth": { "color": "crimson" }
+        "assiah": {
+          "color": "gray, flecked with pink"
+        },
+        "yetzirah": {
+          "color": "dark brown"
+        },
+        "briah": {
+          "color": "black"
+        },
+        "atziluth": {
+          "color": "crimson"
+        }
       }
     },
     "daath": {
@@ -70,14 +103,25 @@
         "planetarySymbol": "⚫",
         "element": "Void"
       },
-      "position": { "x": 400, "y": 225 },
+      "position": {
+        "x": 400,
+        "y": 225
+      },
       "color": "#000000",
       "image": null,
       "in": {
-        "assiah": { "color": "black" },
-        "yetzirah": { "color": "black" },
-        "briah": { "color": "black" },
-        "atziluth": { "color": "black" }
+        "assiah": {
+          "color": "black"
+        },
+        "yetzirah": {
+          "color": "black"
+        },
+        "briah": {
+          "color": "black"
+        },
+        "atziluth": {
+          "color": "black"
+        }
       }
     },
     "hesed": {
@@ -90,14 +134,25 @@
         "planetarySymbol": "♃",
         "element": "Water"
       },
-      "position": { "x": 550, "y": 300 },
+      "position": {
+        "x": 550,
+        "y": 300
+      },
       "color": "#b8b8b8",
       "image": "images/briah-hesed.png",
       "in": {
-        "assiah": { "color": "deep azure, flecked with yellow" },
-        "yetzirah": { "color": "deep purple" },
-        "briah": { "color": "blue" },
-        "atziluth": { "color": "deep violet" }
+        "assiah": {
+          "color": "deep azure, flecked with yellow"
+        },
+        "yetzirah": {
+          "color": "deep purple"
+        },
+        "briah": {
+          "color": "blue"
+        },
+        "atziluth": {
+          "color": "deep violet"
+        }
       }
     },
     "gevurah": {
@@ -110,14 +165,25 @@
         "planetarySymbol": "♂",
         "element": "Fire"
       },
-      "position": { "x": 250, "y": 300 },
+      "position": {
+        "x": 250,
+        "y": 300
+      },
       "color": "#a0a0a0",
       "image": "images/briah-gevurah.png",
       "in": {
-        "assiah": { "color": "red, flecked with black" },
-        "yetzirah": { "color": "bright scarlet" },
-        "briah": { "color": "scarlet" },
-        "atziluth": { "color": "orange" }
+        "assiah": {
+          "color": "red, flecked with black"
+        },
+        "yetzirah": {
+          "color": "bright scarlet"
+        },
+        "briah": {
+          "color": "scarlet"
+        },
+        "atziluth": {
+          "color": "orange"
+        }
       }
     },
     "tiferet": {
@@ -130,14 +196,25 @@
         "planetarySymbol": "☉",
         "element": "Air"
       },
-      "position": { "x": 400, "y": 375 },
+      "position": {
+        "x": 400,
+        "y": 375
+      },
       "color": "#888888",
       "image": "images/briah-tiferet.png",
       "in": {
-        "assiah": { "color": "golden amber" },
-        "yetzirah": { "color": "salmon" },
-        "briah": { "color": "yellow" },
-        "atziluth": { "color": "clear rose-pink" }
+        "assiah": {
+          "color": "golden amber"
+        },
+        "yetzirah": {
+          "color": "salmon"
+        },
+        "briah": {
+          "color": "yellow"
+        },
+        "atziluth": {
+          "color": "clear rose-pink"
+        }
       }
     },
     "netzach": {
@@ -150,14 +227,25 @@
         "planetarySymbol": "♀",
         "element": "Fire"
       },
-      "position": { "x": 550, "y": 450 },
+      "position": {
+        "x": 550,
+        "y": 450
+      },
       "color": "#707070",
       "image": "images/briah-netzach.png",
       "in": {
-        "assiah": { "color": "olive, flecked with gold" },
-        "yetzirah": { "color": "bright yellowish green" },
-        "briah": { "color": "emerald" },
-        "atziluth": { "color": "amber" }
+        "assiah": {
+          "color": "olive, flecked with gold"
+        },
+        "yetzirah": {
+          "color": "bright yellowish green"
+        },
+        "briah": {
+          "color": "emerald"
+        },
+        "atziluth": {
+          "color": "amber"
+        }
       }
     },
     "hod": {
@@ -170,14 +258,25 @@
         "planetarySymbol": "☿",
         "element": "Water"
       },
-      "position": { "x": 250, "y": 450 },
+      "position": {
+        "x": 250,
+        "y": 450
+      },
       "color": "#585858",
       "image": "images/briah-hod.png",
       "in": {
-        "assiah": { "color": "yellowish black, flecked with white" },
-        "yetzirah": { "color": "russet-red" },
-        "briah": { "color": "orange" },
-        "atziluth": { "color": "violet purple" }
+        "assiah": {
+          "color": "yellowish black, flecked with white"
+        },
+        "yetzirah": {
+          "color": "russet-red"
+        },
+        "briah": {
+          "color": "orange"
+        },
+        "atziluth": {
+          "color": "violet purple"
+        }
       }
     },
     "yesod": {
@@ -190,14 +289,25 @@
         "planetarySymbol": "☽",
         "element": "Air"
       },
-      "position": { "x": 400, "y": 525 },
+      "position": {
+        "x": 400,
+        "y": 525
+      },
       "color": "#404040",
       "image": "images/briah-yesod.png",
       "in": {
-        "assiah": { "color": "citrine, flecked with azure" },
-        "yetzirah": { "color": "very dark purple" },
-        "briah": { "color": "violet" },
-        "atziluth": { "color": "indigo" }
+        "assiah": {
+          "color": "citrine, flecked with azure"
+        },
+        "yetzirah": {
+          "color": "very dark purple"
+        },
+        "briah": {
+          "color": "violet"
+        },
+        "atziluth": {
+          "color": "indigo"
+        }
       }
     },
     "malkuth": {
@@ -210,14 +320,25 @@
         "planetarySymbol": "🜃",
         "element": "Earth"
       },
-      "position": { "x": 400, "y": 620 },
+      "position": {
+        "x": 400,
+        "y": 620
+      },
       "color": "#282828",
       "image": "images/briah-malkuth.png",
       "in": {
-        "assiah": { "color": "black rayed with yellow" },
-        "yetzirah": { "color": "citrine, olive, russet, black flecked with gold" },
-        "briah": { "color": "citrine, olive, russet, black" },
-        "atziluth": { "color": "yellow" }
+        "assiah": {
+          "color": "black rayed with yellow"
+        },
+        "yetzirah": {
+          "color": "citrine, olive, russet, black flecked with gold"
+        },
+        "briah": {
+          "color": "citrine, olive, russet, black"
+        },
+        "atziluth": {
+          "color": "yellow"
+        }
       }
     }
   },
@@ -240,12 +361,25 @@
         "hod": "images/atziluth-hod.png",
         "yesod": "images/atziluth-yesod.png",
         "malkuth": "images/atziluth-malkuth.png"
+      },
+      "tarotCards": {
+        "keter": "images/rws-tarot/wands/RWSa-W-0A.png",
+        "hockmah": "images/rws-tarot/wands/RWSa-W-02.png",
+        "binah": "images/rws-tarot/wands/RWSa-W-03.png",
+        "daath": null,
+        "hesed": "images/rws-tarot/wands/RWSa-W-04.png",
+        "gevurah": "images/rws-tarot/wands/RWSa-W-05.png",
+        "tiferet": "images/rws-tarot/wands/RWSa-W-06.png",
+        "netzach": "images/rws-tarot/wands/RWSa-W-07.png",
+        "hod": "images/rws-tarot/wands/RWSa-W-08.png",
+        "yesod": "images/rws-tarot/wands/RWSa-W-09.png",
+        "malkuth": "images/rws-tarot/wands/RWSa-W-10.png"
       }
     },
     "briah": {
       "metadata": {
         "hebrewName": "בריאה",
-        "englishName": "Creation", 
+        "englishName": "Creation",
         "description": "Pure intellect and creation"
       },
       "images": {
@@ -260,6 +394,19 @@
         "hod": "images/briah-hod.png",
         "yesod": "images/briah-yesod.png",
         "malkuth": "images/briah-malkuth.png"
+      },
+      "tarotCards": {
+        "keter": "images/rws-tarot/cups/RWSa-C-0A.png",
+        "hockmah": "images/rws-tarot/cups/RWSa-C-02.png",
+        "binah": "images/rws-tarot/cups/RWSa-C-03.png",
+        "daath": null,
+        "hesed": "images/rws-tarot/cups/RWSa-C-04.png",
+        "gevurah": "images/rws-tarot/cups/RWSa-C-05.png",
+        "tiferet": "images/rws-tarot/cups/RWSa-C-06.png",
+        "netzach": "images/rws-tarot/cups/RWSa-C-07.png",
+        "hod": "images/rws-tarot/cups/RWSa-C-08.png",
+        "yesod": "images/rws-tarot/cups/RWSa-C-09.png",
+        "malkuth": "images/rws-tarot/cups/RWSa-C-10.png"
       }
     },
     "yetzirah": {
@@ -280,6 +427,19 @@
         "hod": "images/yetzirah-hod.png",
         "yesod": "images/yetzirah-yesod.png",
         "malkuth": "images/yetzirah-malkuth.png"
+      },
+      "tarotCards": {
+        "keter": "images/rws-tarot/swords/RWSa-S-0A.png",
+        "hockmah": "images/rws-tarot/swords/RWSa-S-02.png",
+        "binah": "images/rws-tarot/swords/RWSa-S-03.png",
+        "daath": null,
+        "hesed": "images/rws-tarot/swords/RWSa-S-04.png",
+        "gevurah": "images/rws-tarot/swords/RWSa-S-05.png",
+        "tiferet": "images/rws-tarot/swords/RWSa-S-06.png",
+        "netzach": "images/rws-tarot/swords/RWSa-S-07.png",
+        "hod": "images/rws-tarot/swords/RWSa-S-08.png",
+        "yesod": "images/rws-tarot/swords/RWSa-S-09.png",
+        "malkuth": "images/rws-tarot/swords/RWSa-S-10.png"
       }
     },
     "assiah": {
@@ -300,6 +460,19 @@
         "hod": "images/assiah-hod.png",
         "yesod": "images/assiah-yesod.png",
         "malkuth": "images/assiah-malkuth.png"
+      },
+      "tarotCards": {
+        "keter": "images/rws-tarot/pentacles/RWSa-P-0A.png",
+        "hockmah": "images/rws-tarot/pentacles/RWSa-P-02.png",
+        "binah": "images/rws-tarot/pentacles/RWSa-P-03.png",
+        "daath": null,
+        "hesed": "images/rws-tarot/pentacles/RWSa-P-04.png",
+        "gevurah": "images/rws-tarot/pentacles/RWSa-P-05.png",
+        "tiferet": "images/rws-tarot/pentacles/RWSa-P-06.png",
+        "netzach": "images/rws-tarot/pentacles/RWSa-P-07.png",
+        "hod": "images/rws-tarot/pentacles/RWSa-P-08.png",
+        "yesod": "images/rws-tarot/pentacles/RWSa-P-09.png",
+        "malkuth": "images/rws-tarot/pentacles/RWSa-P-10.png"
       }
     }
   },
@@ -641,4 +814,4 @@
     "pathStrokeWidth": 2,
     "backgroundColor": "#1a1a1a"
   }
-} 
+}
