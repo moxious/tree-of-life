@@ -6,6 +6,7 @@ import WorldSelector from './WorldSelector';
 import WorldInfo from './WorldInfo';
 import Sephirah from './Sephirah';
 import Path from './Path';
+import AudioService from './AudioService';
 
 const TreeOfLife: React.FC = () => {
   const { sephirot, paths, styling, worlds } = treeConfig;
@@ -139,6 +140,20 @@ const TreeOfLife: React.FC = () => {
     musicalNote: string;
     gematriaValue: number;
   }) => {
+    console.log('🎵 TreeOfLife: Path clicked!', {
+      pathNumber: pathData.pathNumber,
+      hebrewLetter: pathData.hebrewLetter,
+      musicalNote: pathData.musicalNote
+    });
+    
+    // Play audio for the musical note
+    if (typeof (window as any).playTreeOfLifeNote === 'function') {
+      console.log('🎵 TreeOfLife: Calling playTreeOfLifeNote with note:', pathData.musicalNote);
+      (window as any).playTreeOfLifeNote(pathData.musicalNote);
+    } else {
+      console.error('🎵 TreeOfLife: playTreeOfLifeNote function not found on window object');
+    }
+    
     if (pinnedPath && pinnedPath.pathNumber === pathData.pathNumber) {
       // Unpin if clicking the same path
       setPinnedPath(null);
@@ -175,6 +190,9 @@ const TreeOfLife: React.FC = () => {
 
   return (
     <div className="tree-of-life-app">
+      {/* Audio Service */}
+      <AudioService />
+      
       {/* Header */}
       <div className="app-header">
         {/* World Info */}
