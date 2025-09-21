@@ -493,3 +493,17 @@ body {
     font-size: 14px;
   }
 }
+
+/* Tarot Image Styles */
+.tarot-image-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.tarot-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

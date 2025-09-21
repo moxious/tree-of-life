@@ -23,6 +23,7 @@ interface InfoPanelProps {
     hebrewLetterName: string;
     tarotCard: string;
     tarotNumber: number;
+    tarotImage: string | null;
     astrologicalSign: string;
     astrologicalSymbol: string;
     element: string;
@@ -131,6 +132,17 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, selectedWorld
               </tr>
             </tbody>
           </table>
+          
+          {/* Tarot Image */}
+          {pathData.tarotImage && (
+            <div className="tarot-image-container">
+              <img 
+                src={pathData.tarotImage} 
+                alt={`${pathData.tarotCard} tarot card`}
+                className="tarot-image"
+              />
+            </div>
+          )}
         </div>
       </div>
     );

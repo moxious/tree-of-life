@@ -11,6 +11,7 @@ interface PathProps {
     hebrewLetterName: string;
     tarotCard: string;
     tarotNumber: number;
+    tarotImage: string | null;
     astrologicalSign: string;
     astrologicalSymbol: string;
     element: string;

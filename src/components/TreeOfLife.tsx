@@ -34,6 +34,7 @@ const TreeOfLife: React.FC = () => {
     hebrewLetterName: string;
     tarotCard: string;
     tarotNumber: number;
+    tarotImage: string | null;
     astrologicalSign: string;
     astrologicalSymbol: string;
     element: string;
@@ -76,6 +77,7 @@ const TreeOfLife: React.FC = () => {
       hebrewLetterName: string; 
       tarotCard: string; 
       tarotNumber: number;
+      tarotImage: string | null;
       astrologicalSign: string;
       astrologicalSymbol: string;
       element: string;
@@ -163,6 +165,7 @@ const TreeOfLife: React.FC = () => {
                     hebrewLetterName: path.hebrewLetterName,
                     tarotCard: path.tarotCard,
                     tarotNumber: path.tarotNumber,
+                    tarotImage: path.tarotImage,
                     astrologicalSign: path.astrologicalSign,
                     astrologicalSymbol: path.astrologicalSymbol,
                     element: path.element,
