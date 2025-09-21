@@ -22,9 +22,11 @@ interface PathProps {
   };
   onHover: (pathData: any) => void;
   onLeave: () => void;
+  onPathClick: (pathData: any) => void;
+  isPinned: boolean;
 }
 
-const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, onHover, onLeave }) => {
+const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, onHover, onLeave, onPathClick, isPinned }) => {
   const midX = (from.x + to.x) / 2;
   const midY = (from.y + to.y) / 2;
 
@@ -81,6 +83,20 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
 
   return (
     <g className="path-group">
+      {/* Invisible wide stroke for better hover detection */}
+      <line
+        x1={from.x}
+        y1={from.y}
+        x2={to.x}
+        y2={to.y}
+        stroke="transparent"
+        strokeWidth="12"
+        className="path-hit-area"
+        onMouseEnter={() => onHover(metadata)}
+        onMouseLeave={onLeave}
+        onClick={() => onPathClick(metadata)}
+      />
+      {/* Visible path line */}
       <line
         x1={from.x}
         y1={from.y}
@@ -88,9 +104,7 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
         y2={to.y}
         stroke={stroke}
         strokeWidth={pathStrokeWidth}
-        className="tree-path"
-        onMouseEnter={() => onHover(metadata)}
-        onMouseLeave={onLeave}
+        className={`tree-path ${isPinned ? 'pinned' : ''}`}
       />
       {/* Hebrew letter caption */}
       <text

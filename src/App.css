@@ -167,6 +167,25 @@ body {
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* Unpin button styling */
+.unpin-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+}
+
+.unpin-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
 /* Tree Container */
 .tree-of-life-container {
   display: flex;
@@ -283,17 +302,32 @@ body {
   z-index: 10; /* Ensure paths are above labels */
 }
 
+/* Invisible wide stroke for better hover detection */
+.path-hit-area {
+  stroke-width: 12;
+  opacity: 0;
+  pointer-events: stroke;
+}
+
 .tree-path {
   opacity: 0.7;
   transition: opacity 0.3s ease;
   stroke-width: 2;
   z-index: 10; /* Ensure paths are above labels */
+  pointer-events: none;
 }
 
 .path-group:hover .tree-path {
   opacity: 1;
   /* filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8)); */
   stroke-width: 3;
+}
+
+/* Pinned path styling */
+.tree-path.pinned {
+  stroke-width: 4;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  opacity: 1;
 }
 
 /* Hebrew letter styling on paths */

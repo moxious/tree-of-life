@@ -32,10 +32,12 @@ interface InfoPanelProps {
     musicalNote: string;
     gematriaValue: number;
   } | null;
+  isPathPinned: boolean;
+  onUnpinPath: () => void;
   selectedWorld: string;
 }
 
-const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, selectedWorld }) => {
+const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned, onUnpinPath, selectedWorld }) => {
   if (!sephirah && !pathData) {
     return (
       <div className="info-panel">
@@ -92,6 +94,15 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, selectedWorld
         <div className="info-panel-content">
           <div className="info-header">
             <h3>Path {pathData.pathNumber} {pathData.hebrewLetterName} <strong style={{ fontSize: '1.2em' }}>{pathData.hebrewLetter}</strong></h3>
+            {isPathPinned && (
+              <button 
+                className="unpin-button" 
+                onClick={onUnpinPath}
+                title="Click to unpin this path"
+              >
+                ✕ 
+              </button>
+            )}
           </div>
 
           {/* Tarot Image */}

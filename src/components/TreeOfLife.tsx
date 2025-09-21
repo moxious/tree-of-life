@@ -46,6 +46,24 @@ const TreeOfLife: React.FC = () => {
     gematriaValue: number;
   } | null>(null);
 
+  const [pinnedPath, setPinnedPath] = useState<{
+    pathNumber: number;
+    hebrewLetter: string;
+    hebrewLetterName: string;
+    tarotCard: string;
+    tarotNumber: number;
+    tarotImage: string | null;
+    astrologicalSign: string;
+    astrologicalSymbol: string;
+    element: string;
+    elementSymbol: string;
+    letterMeaning: string;
+    musicalNote: string;
+    gematriaValue: number;
+  } | null>(null);
+
+  const [isPathPinned, setIsPathPinned] = useState<boolean>(false);
+
   const handleSephirahHover = (
     sephirah: { 
       name: string; 
@@ -104,6 +122,37 @@ const TreeOfLife: React.FC = () => {
 
   const handlePathLeave = () => {
     setHoveredPath(null);
+  };
+
+  const handlePathClick = (pathData: {
+    pathNumber: number;
+    hebrewLetter: string;
+    hebrewLetterName: string;
+    tarotCard: string;
+    tarotNumber: number;
+    tarotImage: string | null;
+    astrologicalSign: string;
+    astrologicalSymbol: string;
+    element: string;
+    elementSymbol: string;
+    letterMeaning: string;
+    musicalNote: string;
+    gematriaValue: number;
+  }) => {
+    if (pinnedPath && pinnedPath.pathNumber === pathData.pathNumber) {
+      // Unpin if clicking the same path
+      setPinnedPath(null);
+      setIsPathPinned(false);
+    } else {
+      // Pin new path
+      setPinnedPath(pathData);
+      setIsPathPinned(true);
+    }
+  };
+
+  const handleUnpinPath = () => {
+    setPinnedPath(null);
+    setIsPathPinned(false);
   };
 
   const handleWorldChange = (world: string) => {
@@ -187,6 +236,8 @@ const TreeOfLife: React.FC = () => {
                   }}
                   onHover={handlePathHover}
                   onLeave={handlePathLeave}
+                  onPathClick={handlePathClick}
+                  isPinned={pinnedPath?.pathNumber === path.pathNumber}
                 />
               );
             })}
@@ -213,7 +264,9 @@ const TreeOfLife: React.FC = () => {
         {/* Info Panel */}
         <InfoPanel 
           sephirah={hoveredSephirah} 
-          pathData={hoveredPath}
+          pathData={isPathPinned ? pinnedPath : hoveredPath}
+          isPathPinned={isPathPinned}
+          onUnpinPath={handleUnpinPath}
           selectedWorld={selectedWorld}
         />
       </div>
