@@ -166,24 +166,18 @@ const TreeOfLife: React.FC = () => {
 
   return (
     <div className="tree-of-life-app">
-      {/* Audio Service */}
       <AudioService />
       
-      {/* Header */}
       <div className="app-header">
-        {/* World Info */}
         <WorldInfo world={currentWorld} />
         
-        {/* Controls */}
         <div className="controls">
-          {/* World Selector */}
           <WorldSelector 
             selectedWorld={selectedWorld}
             onWorldChange={handleWorldChange}
             worlds={worlds}
           />
           
-          {/* Visualization Picker */}
           <VisualizationPicker 
             viewMode={viewMode}
             onViewModeChange={handleViewModeChange}
@@ -191,9 +185,7 @@ const TreeOfLife: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="app-main">
-        {/* Tree of Life */}
         <div className="tree-of-life-container">
           <svg
             width="800"
@@ -257,7 +249,6 @@ const TreeOfLife: React.FC = () => {
           </svg>
         </div>
         
-        {/* Info Panel */}
         <InfoPanel 
           sephirah={pinnedState.isSephirahPinned ? pinnedState.sephirah : hoverState.sephirah} 
           pathData={pinnedState.isPathPinned ? pinnedState.path : hoverState.path}
