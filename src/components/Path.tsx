@@ -15,6 +15,7 @@ interface PathProps {
     astrologicalSign: string;
     astrologicalSymbol: string;
     element: string;
+    elementSymbol: string;
     letterMeaning: string;
     musicalNote: string;
     gematriaValue: number;

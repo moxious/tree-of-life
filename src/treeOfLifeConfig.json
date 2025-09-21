@@ -489,6 +489,7 @@
       "astrologicalSign": "Uranus",
       "astrologicalSymbol": "⛢",
       "element": "Air",
+      "elementSymbol": "🜁",
       "letterMeaning": "Ox",
       "musicalNote": "E",
       "gematriaValue": 1
@@ -505,6 +506,7 @@
       "astrologicalSign": "Mercury",
       "astrologicalSymbol": "☿",
       "element": "Air",
+      "elementSymbol": "🜁",
       "letterMeaning": "House",
       "musicalNote": "E",
       "gematriaValue": 2
@@ -521,6 +523,7 @@
       "astrologicalSign": "Moon",
       "astrologicalSymbol": "☽",
       "element": "Water",
+      "elementSymbol": "🜄",
       "letterMeaning": "Camel",
       "musicalNote": "G♯",
       "gematriaValue": 3
@@ -537,6 +540,7 @@
       "astrologicalSign": "Venus",
       "astrologicalSymbol": "♀",
       "element": "Earth",
+      "elementSymbol": "🜃",
       "letterMeaning": "Door",
       "musicalNote": "F♯",
       "gematriaValue": 4
@@ -553,6 +557,7 @@
       "astrologicalSign": "Taurus",
       "astrologicalSymbol": "♉︎",
       "element": "Earth",
+      "elementSymbol": "🜃",
       "letterMeaning": "Nail/Hook",
       "musicalNote": "C♯",
       "gematriaValue": 6
@@ -569,6 +574,7 @@
       "astrologicalSign": "Aries",
       "astrologicalSymbol": "♈︎",
       "element": "Fire",
+      "elementSymbol": "🜂",
       "letterMeaning": "Window",
       "musicalNote": "C",
       "gematriaValue": 5
@@ -585,6 +591,7 @@
       "astrologicalSign": "Gemini",
       "astrologicalSymbol": "♊︎",
       "element": "Air",
+      "elementSymbol": "🜁",
       "letterMeaning": "Sword",
       "musicalNote": "D",
       "gematriaValue": 7
@@ -601,6 +608,7 @@
       "astrologicalSign": "Cancer",
       "astrologicalSymbol": "♋︎",
       "element": "Water",
+      "elementSymbol": "🜄",
       "letterMeaning": "Fence",
       "musicalNote": "D♯",
       "gematriaValue": 8
@@ -617,6 +625,7 @@
       "astrologicalSign": "Leo",
       "astrologicalSymbol": "♌︎",
       "element": "Fire",
+      "elementSymbol": "🜂",
       "letterMeaning": "Serpent",
       "musicalNote": "E",
       "gematriaValue": 9
@@ -633,6 +642,7 @@
       "astrologicalSign": "Virgo",
       "astrologicalSymbol": "♍︎",
       "element": "Earth",
+      "elementSymbol": "🜃",
       "letterMeaning": "Hand (open)",
       "musicalNote": "F",
       "gematriaValue": 10
@@ -649,6 +659,7 @@
       "astrologicalSign": "Jupiter",
       "astrologicalSymbol": "♃",
       "element": "Fire",
+      "elementSymbol": "🜂",
       "letterMeaning": "Hand (closed)",
       "musicalNote": "A♯",
       "gematriaValue": 20
@@ -665,6 +676,7 @@
       "astrologicalSign": "Libra",
       "astrologicalSymbol": "♎︎",
       "element": "Air",
+      "elementSymbol": "🜁",
       "letterMeaning": "Ox Goad",
       "musicalNote": "F♯",
       "gematriaValue": 30
@@ -681,6 +693,7 @@
       "astrologicalSign": "Neptune",
       "astrologicalSymbol": "♆",
       "element": "Water",
+      "elementSymbol": "🜄",
       "letterMeaning": "Water",
       "musicalNote": "G♯",
       "gematriaValue": 40
@@ -697,6 +710,7 @@
       "astrologicalSign": "Scorpio",
       "astrologicalSymbol": "♏︎",
       "element": "Water",
+      "elementSymbol": "🜄",
       "letterMeaning": "Fish",
       "musicalNote": "G",
       "gematriaValue": 50
@@ -713,6 +727,7 @@
       "astrologicalSign": "Sagittarius",
       "astrologicalSymbol": "♐︎",
       "element": "Fire",
+      "elementSymbol": "🜂",
       "letterMeaning": "Prop",
       "musicalNote": "G♯",
       "gematriaValue": 60
@@ -729,6 +744,7 @@
       "astrologicalSign": "Capricorn",
       "astrologicalSymbol": "♑︎",
       "element": "Earth",
+      "elementSymbol": "🜃",
       "letterMeaning": "Eye",
       "musicalNote": "A",
       "gematriaValue": 70
@@ -745,6 +761,7 @@
       "astrologicalSign": "Mars",
       "astrologicalSymbol": "♂",
       "element": "Fire",
+      "elementSymbol": "🜂",
       "letterMeaning": "Mouth",
       "musicalNote": "C",
       "gematriaValue": 80
@@ -761,6 +778,7 @@
       "astrologicalSign": "Aquarius",
       "astrologicalSymbol": "♒︎",
       "element": "Air",
+      "elementSymbol": "🜁",
       "letterMeaning": "Fish Hook",
       "musicalNote": "A♯",
       "gematriaValue": 90
@@ -777,6 +795,7 @@
       "astrologicalSign": "Pisces",
       "astrologicalSymbol": "♓︎",
       "element": "Water",
+      "elementSymbol": "🜄",
       "letterMeaning": "Back of Head",
       "musicalNote": "B",
       "gematriaValue": 100
@@ -793,6 +812,7 @@
       "astrologicalSign": "Sun",
       "astrologicalSymbol": "☉",
       "element": "Fire",
+      "elementSymbol": "🜂",
       "letterMeaning": "Head",
       "musicalNote": "D",
       "gematriaValue": 200
@@ -809,6 +829,7 @@
       "astrologicalSign": "Pluto",
       "astrologicalSymbol": "♇",
       "element": "Fire",
+      "elementSymbol": "🜂",
       "letterMeaning": "Tooth",
       "musicalNote": "C",
       "gematriaValue": 300
@@ -825,6 +846,7 @@
       "astrologicalSign": "Saturn",
       "astrologicalSymbol": "♄",
       "element": "Earth",
+      "elementSymbol": "🜃",
       "letterMeaning": "Cross",
       "musicalNote": "A",
       "gematriaValue": 400

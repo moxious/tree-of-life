@@ -27,6 +27,7 @@ interface InfoPanelProps {
     astrologicalSign: string;
     astrologicalSymbol: string;
     element: string;
+    elementSymbol: string;
     letterMeaning: string;
     musicalNote: string;
     gematriaValue: number;
@@ -49,7 +50,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, selectedWorld
   if (sephirah) {
     // Get the color for the selected world
     const worldColor = sephirah.worldColors[selectedWorld as keyof typeof sephirah.worldColors]?.color || 'Unknown';
-    
+
     return (
       <div className="info-panel">
         <div className="info-panel-content">
@@ -90,41 +91,41 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, selectedWorld
       <div className="info-panel">
         <div className="info-panel-content">
           <div className="info-header">
-            <h3>Path {pathData.pathNumber}</h3>
+            <h3>Path {pathData.pathNumber} {pathData.hebrewLetterName} <strong style={{ fontSize: '1.2em' }}>{pathData.hebrewLetter}</strong></h3>
           </div>
+
+          {/* Tarot Image */}
+          {pathData.tarotImage && (
+            <div className="tarot-image-container">
+              <img
+                src={pathData.tarotImage}
+                alt={`${pathData.tarotCard} tarot card`}
+                className="tarot-image"
+              />
+            </div>
+          )}
+
           <table className="info-table">
             <tbody>
               <tr>
-                <td className="label">Hebrew Letter:</td>
-                <td className="value hebrew-text">{pathData.hebrewLetter}</td>
-              </tr>
-              <tr>
-                <td className="label">Letter Name:</td>
-                <td className="value">{pathData.hebrewLetterName}</td>
-              </tr>
-              <tr>
-                <td className="label">Letter Meaning:</td>
-                <td className="value">{pathData.letterMeaning}</td>
+                <td className="label">Letter Meaning</td>
+                <td className="value hebrew-text">{pathData.letterMeaning}</td>
               </tr>
               <tr>
                 <td className="label">Gematria Value:</td>
                 <td className="value">{pathData.gematriaValue}</td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td className="label">Tarot Card:</td>
                 <td className="value">{pathData.tarotCard}</td>
-              </tr>
-              <tr>
-                <td className="label">Tarot Number:</td>
-                <td className="value">{pathData.tarotNumber}</td>
-              </tr>
+              </tr> */}
               <tr>
                 <td className="label">Astrological:</td>
                 <td className="value">{pathData.astrologicalSymbol} {pathData.astrologicalSign}</td>
               </tr>
               <tr>
                 <td className="label">Element:</td>
-                <td className="value">{pathData.element}</td>
+                <td className="value">{pathData.element} {pathData.elementSymbol}</td>
               </tr>
               <tr>
                 <td className="label">Musical Note:</td>
@@ -132,17 +133,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, selectedWorld
               </tr>
             </tbody>
           </table>
-          
-          {/* Tarot Image */}
-          {pathData.tarotImage && (
-            <div className="tarot-image-container">
-              <img 
-                src={pathData.tarotImage} 
-                alt={`${pathData.tarotCard} tarot card`}
-                className="tarot-image"
-              />
-            </div>
-          )}
+
         </div>
       </div>
     );

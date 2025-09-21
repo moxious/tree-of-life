@@ -40,6 +40,7 @@ const TreeOfLife: React.FC = () => {
     astrologicalSign: string;
     astrologicalSymbol: string;
     element: string;
+    elementSymbol: string;
     letterMeaning: string;
     musicalNote: string;
     gematriaValue: number;
@@ -89,6 +90,7 @@ const TreeOfLife: React.FC = () => {
       astrologicalSign: string;
       astrologicalSymbol: string;
       element: string;
+      elementSymbol: string;
       letterMeaning: string;
       musicalNote: string;
       gematriaValue: number;
@@ -178,6 +180,7 @@ const TreeOfLife: React.FC = () => {
                     astrologicalSign: path.astrologicalSign,
                     astrologicalSymbol: path.astrologicalSymbol,
                     element: path.element,
+                    elementSymbol: path.elementSymbol,
                     letterMeaning: path.letterMeaning,
                     musicalNote: path.musicalNote,
                     gematriaValue: path.gematriaValue
