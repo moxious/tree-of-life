@@ -6,6 +6,7 @@ interface SephirahProps {
   color: string;
   image: string | null;
   radius: number;
+  viewMode: string;
   metadata: {
     hebrewName: string;
     englishName: string;
@@ -29,6 +30,7 @@ const Sephirah: React.FC<SephirahProps> = ({
   color, 
   image, 
   radius, 
+  viewMode,
   metadata, 
   worldColors,
   onHover, 
@@ -36,7 +38,7 @@ const Sephirah: React.FC<SephirahProps> = ({
 }) => {
   return (
     <g 
-      className="sephirah-group"
+      className={`sephirah-group ${viewMode === 'card' ? 'card-mode' : 'sphere-mode'}`}
       data-name={name}
       onMouseEnter={() => onHover({ name, metadata, worldColors })}
       onMouseLeave={onLeave}
@@ -49,6 +51,18 @@ const Sephirah: React.FC<SephirahProps> = ({
         className="sephirah"
         data-name={name}
       />
+      {/* Full rectangular card for hover in card mode */}
+      {image && viewMode === 'card' && (
+        <rect
+          x={position.x - radius}
+          y={position.y - radius}
+          width={radius * 2}
+          height={radius * 2}
+          fill={`url(#${name}-full-pattern)`}
+          className="sephirah-full-card"
+          data-name={name}
+        />
+      )}
       {image && (
         <defs>
           <pattern id={`${name}-pattern`} patternUnits="objectBoundingBox" width="1" height="1">
@@ -61,6 +75,18 @@ const Sephirah: React.FC<SephirahProps> = ({
               preserveAspectRatio="xMidYMid slice"
             />
           </pattern>
+          {viewMode === 'card' && (
+            <pattern id={`${name}-full-pattern`} patternUnits="objectBoundingBox" width="1" height="1">
+              <image
+                href={image}
+                x="0"
+                y="0"
+                width={radius * 2}
+                height={radius * 2}
+                preserveAspectRatio="xMidYMid meet"
+              />
+            </pattern>
+          )}
         </defs>
       )}
       {/* Text label that appears on hover */}

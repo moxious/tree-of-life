@@ -199,9 +199,32 @@ body {
   transform-box: fill-box;
 }
 
-.sephirah-group:hover .sephirah {
+/* ===== SPHERE MODE ===== */
+.sephirah-group.sphere-mode:hover .sephirah {
   filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
   transform: scale(2);
+}
+
+/* ===== CARD MODE ===== */
+
+/* Card mode hover - hide circular version */
+.sephirah-group.card-mode:hover .sephirah {
+  opacity: 0;
+}
+
+/* Full rectangular card - hidden by default */
+.sephirah-full-card {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+  transform: scale(4);
+  transform-origin: center center;
+  transform-box: fill-box;
+}
+
+/* Card mode hover - show full rectangular card */
+.sephirah-group.card-mode:hover .sephirah-full-card {
+  opacity: 1;
 }
 
 /* Special styling for Da'ath (the hidden sephirah) */

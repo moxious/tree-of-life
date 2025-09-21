@@ -7,12 +7,6 @@ import WorldInfo from './WorldInfo';
 import Sephirah from './Sephirah';
 import Path from './Path';
 
-
-
-
-
-
-
 const TreeOfLife: React.FC = () => {
   const { sephirot, paths, styling, worlds } = treeConfig;
   const [selectedWorld, setSelectedWorld] = useState<string>('briah');
@@ -191,6 +185,7 @@ const TreeOfLife: React.FC = () => {
                 color={sephirah.color}
                 image={currentImages[key as keyof typeof currentImages] || sephirah.image}
                 radius={styling.circleRadius}
+                viewMode={viewMode}
                 metadata={sephirah.metadata}
                 worldColors={sephirah.in}
                 onHover={handleSephirahHover}
