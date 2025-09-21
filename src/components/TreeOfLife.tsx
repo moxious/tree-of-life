@@ -28,6 +28,8 @@ const TreeOfLife: React.FC = () => {
     };
   } | null>(null);
   
+  const [activeHoveredSephirah, setActiveHoveredSephirah] = useState<string | null>(null);
+  
   const [hoveredPath, setHoveredPath] = useState<{
     pathNumber: number;
     hebrewLetter: string;
@@ -61,12 +63,18 @@ const TreeOfLife: React.FC = () => {
       };
     }
   ) => {
-    setHoveredSephirah(sephirah);
-    // Clear path when hovering sephirah
-    setHoveredPath(null);
+    // Only allow hover if no other sephirah is currently hovered
+    // or if this is the same sephirah (for card mode transitions)
+    if (!activeHoveredSephirah || activeHoveredSephirah === sephirah.name) {
+      setActiveHoveredSephirah(sephirah.name);
+      setHoveredSephirah(sephirah);
+      // Clear path when hovering sephirah
+      setHoveredPath(null);
+    }
   };
 
   const handleSephirahLeave = () => {
+    setActiveHoveredSephirah(null);
     setHoveredSephirah(null);
   };
 
@@ -88,6 +96,7 @@ const TreeOfLife: React.FC = () => {
   ) => {
     setHoveredPath(pathData);
     // Clear sephirah when hovering path
+    setActiveHoveredSephirah(null);
     setHoveredSephirah(null);
   };
 

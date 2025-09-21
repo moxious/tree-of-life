@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface SephirahProps {
   name: string;
@@ -36,13 +36,120 @@ const Sephirah: React.FC<SephirahProps> = ({
   onHover, 
   onLeave 
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const transitionTimeoutRef = useRef<number | null>(null);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Only implement new hover logic for card mode
+  if (viewMode !== 'card') {
+    return (
+      <g 
+        className={`sephirah-group ${viewMode === 'card' ? 'card-mode' : 'sphere-mode'}`}
+        data-name={name}
+        onMouseEnter={() => onHover({ name, metadata, worldColors })}
+        onMouseLeave={onLeave}
+      >
+        <circle
+          cx={position.x}
+          cy={position.y}
+          r={radius}
+          fill={image ? `url(#${name}-pattern)` : color}
+          className="sephirah"
+          data-name={name}
+        />
+        {image && (
+          <defs>
+            <pattern id={`${name}-pattern`} patternUnits="objectBoundingBox" width="1" height="1">
+              <image
+                href={image}
+                x="0"
+                y="0"
+                width={radius * 2}
+                height={radius * 2}
+                preserveAspectRatio="xMidYMid slice"
+              />
+            </pattern>
+          </defs>
+        )}
+        <text
+          x={position.x}
+          y={position.y - radius - 10}
+          textAnchor="middle"
+          className="sephirah-label"
+          fill="#ffffff"
+          fontSize="14"
+          fontWeight="bold"
+        >
+          {name.charAt(0).toUpperCase() + name.slice(1)}
+        </text>
+      </g>
+    );
+  }
+
+  // Card mode hover detection logic
+  const handleCircleEnter = () => {
+    if (!isTransitioning) {
+      setIsTransitioning(true);
+      // Small delay to prevent flickering
+      transitionTimeoutRef.current = setTimeout(() => {
+        setIsHovered(true);
+        setIsTransitioning(false);
+        onHover({ name, metadata, worldColors });
+      }, 50);
+    }
+  };
+
+  const handleRectangleEnter = () => {
+    // Keep hover active
+    setIsHovered(true);
+  };
+
+  const handleRectangleLeave = () => {
+    setIsHovered(false);
+    onLeave();
+  };
+
   return (
     <g 
       className={`sephirah-group ${viewMode === 'card' ? 'card-mode' : 'sphere-mode'}`}
       data-name={name}
-      onMouseEnter={() => onHover({ name, metadata, worldColors })}
-      onMouseLeave={onLeave}
     >
+      {/* Circle hover detector - only visible when not hovered */}
+      {!isHovered && !isTransitioning && (
+        <circle
+          cx={position.x}
+          cy={position.y}
+          r={radius}
+          fill="transparent"
+          className="sephirah-hover-detector sephirah-hover-detector-circle"
+          onMouseEnter={handleCircleEnter}
+        />
+      )}
+
+      {/* Rectangle hover detector - only visible when hovered */}
+      {isHovered && (
+        <rect
+          x={position.x - radius * 2}
+          y={position.y - radius * 2}
+          width={radius * 4}
+          height={radius * 4}
+          fill="transparent"
+          className="sephirah-hover-detector sephirah-hover-detector-rectangle"
+          onMouseEnter={handleRectangleEnter}
+          onMouseLeave={handleRectangleLeave}
+        />
+      )}
+
+      {/* Visual circle - always present but with pointer-events disabled */}
       <circle
         cx={position.x}
         cy={position.y}
@@ -51,6 +158,7 @@ const Sephirah: React.FC<SephirahProps> = ({
         className="sephirah"
         data-name={name}
       />
+
       {/* Full rectangular card for hover in card mode */}
       {image && viewMode === 'card' && (
         <rect
@@ -63,6 +171,8 @@ const Sephirah: React.FC<SephirahProps> = ({
           data-name={name}
         />
       )}
+
+      {/* Pattern definitions */}
       {image && (
         <defs>
           <pattern id={`${name}-pattern`} patternUnits="objectBoundingBox" width="1" height="1">
@@ -89,6 +199,7 @@ const Sephirah: React.FC<SephirahProps> = ({
           )}
         </defs>
       )}
+
       {/* Text label that appears on hover */}
       <text
         x={position.x}

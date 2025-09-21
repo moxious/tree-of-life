@@ -209,6 +209,27 @@ body {
 
 /* ===== CARD MODE ===== */
 
+/* Hover detection elements */
+.sephirah-hover-detector {
+  pointer-events: all;
+  fill: transparent;
+  cursor: pointer;
+}
+
+/* Hover detector specific styles can be added here if needed in the future */
+
+/* Visual elements - disable pointer events only in card mode */
+.sephirah-group.card-mode .sephirah,
+.sephirah-group.card-mode .sephirah-full-card,
+.sephirah-group.card-mode .sephirah-label {
+  pointer-events: none;
+}
+
+/* Disable group hover for card mode */
+.sephirah-group.card-mode {
+  pointer-events: none;
+}
+
 /* Card mode hover - hide circular version */
 .sephirah-group.card-mode:hover .sephirah {
   opacity: 0;
