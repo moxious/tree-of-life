@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import type { SephirahData } from '../types/treeOfLife';
 
 interface SephirahProps {
   name: string;
@@ -20,8 +21,10 @@ interface SephirahProps {
     briah: { color: string };
     atziluth: { color: string };
   };
-  onHover: (sephirah: any) => void;
+  onHover: (sephirah: SephirahData) => void;
   onLeave: () => void;
+  onSephirahClick: (sephirah: SephirahData) => void;
+  isPinned: boolean;
 }
 
 const Sephirah: React.FC<SephirahProps> = ({ 
@@ -34,7 +37,9 @@ const Sephirah: React.FC<SephirahProps> = ({
   metadata, 
   worldColors,
   onHover, 
-  onLeave 
+  onLeave,
+  onSephirahClick,
+  isPinned
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -57,13 +62,14 @@ const Sephirah: React.FC<SephirahProps> = ({
         data-name={name}
         onMouseEnter={() => onHover({ name, metadata, worldColors })}
         onMouseLeave={onLeave}
+        onClick={() => onSephirahClick({ name, metadata, worldColors })}
       >
         <circle
           cx={position.x}
           cy={position.y}
           r={radius}
           fill={image ? `url(#${name}-pattern)` : color}
-          className="sephirah"
+          className={`sephirah ${isPinned ? 'pinned' : ''}`}
           data-name={name}
         />
         {image && (
@@ -132,6 +138,7 @@ const Sephirah: React.FC<SephirahProps> = ({
           fill="transparent"
           className="sephirah-hover-detector sephirah-hover-detector-circle"
           onMouseEnter={handleCircleEnter}
+          onClick={() => onSephirahClick({ name, metadata, worldColors })}
         />
       )}
 
@@ -146,6 +153,7 @@ const Sephirah: React.FC<SephirahProps> = ({
           className="sephirah-hover-detector sephirah-hover-detector-rectangle"
           onMouseEnter={handleRectangleEnter}
           onMouseLeave={handleRectangleLeave}
+          onClick={() => onSephirahClick({ name, metadata, worldColors })}
         />
       )}
 
@@ -155,7 +163,7 @@ const Sephirah: React.FC<SephirahProps> = ({
         cy={position.y}
         r={radius}
         fill={image ? `url(#${name}-pattern)` : color}
-        className="sephirah"
+        className={`sephirah ${isPinned ? 'pinned' : ''}`}
         data-name={name}
       />
 

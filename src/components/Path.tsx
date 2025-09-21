@@ -1,28 +1,15 @@
 import React from 'react';
+import type { PathData } from '../types/treeOfLife';
 
 interface PathProps {
   from: { x: number; y: number };
   to: { x: number; y: number };
   stroke: string;
   strokeWidth: number;
-  metadata: {
-    pathNumber: number;
-    hebrewLetter: string;
-    hebrewLetterName: string;
-    tarotCard: string;
-    tarotNumber: number;
-    tarotImage: string | null;
-    astrologicalSign: string;
-    astrologicalSymbol: string;
-    element: string;
-    elementSymbol: string;
-    letterMeaning: string;
-    musicalNote: string;
-    gematriaValue: number;
-  };
-  onHover: (pathData: any) => void;
+  metadata: PathData;
+  onHover: (pathData: PathData) => void;
   onLeave: () => void;
-  onPathClick: (pathData: any) => void;
+  onPathClick: (pathData: PathData) => void;
   isPinned: boolean;
 }
 

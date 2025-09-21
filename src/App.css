@@ -330,6 +330,14 @@ body {
   opacity: 1;
 }
 
+/* Pinned sephirah styling */
+.sephirah.pinned {
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+  opacity: 1;
+  stroke: rgba(255, 255, 255, 0.8);
+  stroke-width: 2;
+}
+
 /* Hebrew letter styling on paths */
 .path-letter {
   font-family: 'Arial Unicode MS', 'Lucida Grande', 'Tahoma', sans-serif;

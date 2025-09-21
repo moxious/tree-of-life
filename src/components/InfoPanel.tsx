@@ -1,49 +1,23 @@
 import React from 'react';
+import type { SephirahData, PathData } from '../types/treeOfLife';
 
 interface InfoPanelProps {
-  sephirah: {
-    name: string;
-    metadata: {
-      hebrewName: string;
-      englishName: string;
-      planetaryCorrespondence: string;
-      planetarySymbol: string;
-      element: string;
-    };
-    worldColors: {
-      assiah: { color: string };
-      yetzirah: { color: string };
-      briah: { color: string };
-      atziluth: { color: string };
-    };
-  } | null;
-  pathData: {
-    pathNumber: number;
-    hebrewLetter: string;
-    hebrewLetterName: string;
-    tarotCard: string;
-    tarotNumber: number;
-    tarotImage: string | null;
-    astrologicalSign: string;
-    astrologicalSymbol: string;
-    element: string;
-    elementSymbol: string;
-    letterMeaning: string;
-    musicalNote: string;
-    gematriaValue: number;
-  } | null;
+  sephirah: SephirahData | null;
+  pathData: PathData | null;
   isPathPinned: boolean;
   onUnpinPath: () => void;
+  isSephirahPinned: boolean;
+  onUnpinSephirah: () => void;
   selectedWorld: string;
 }
 
-const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned, onUnpinPath, selectedWorld }) => {
+const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned, onUnpinPath, isSephirahPinned, onUnpinSephirah, selectedWorld }) => {
   if (!sephirah && !pathData) {
     return (
       <div className="info-panel">
         <div className="info-panel-content">
           <h3>Tree of Life</h3>
-          <p>Hover over a sephirah or path to see its correspondences.</p>
+          <p>Click on a sephirah or path to see its correspondences.</p>
         </div>
       </div>
     );
@@ -58,6 +32,15 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned,
         <div className="info-panel-content">
           <div className="info-header">
             <h3>{sephirah.name}</h3>
+            {isSephirahPinned && (
+              <button 
+                className="unpin-button" 
+                onClick={onUnpinSephirah}
+                title="Click to unpin this sephirah"
+              >
+                ✕ 
+              </button>
+            )}
           </div>
           <table className="info-table">
             <tbody>
