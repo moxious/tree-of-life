@@ -9,9 +9,10 @@ interface InfoPanelProps {
   isSephirahPinned: boolean;
   onUnpinSephirah: () => void;
   selectedWorld: string;
+  chordNotes: string[];
 }
 
-const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned, onUnpinPath, isSephirahPinned, onUnpinSephirah, selectedWorld }) => {
+const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned, onUnpinPath, isSephirahPinned, onUnpinSephirah, selectedWorld, chordNotes }) => {
   if (!sephirah && !pathData) {
     return (
       <div className="info-panel">
@@ -64,6 +65,21 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned,
                 <td className="label">Color ({selectedWorld}):</td>
                 <td className="value">{worldColor}</td>
               </tr>
+              {chordNotes.length > 0 && (
+                <tr>
+                  <td className="label">Chord Notes:</td>
+                  <td className="value">
+                    <div className="chord-notes">
+                      {[...new Set(chordNotes)].map((note, index) => (
+                        <span key={index} className="chord-note">
+                          {note}
+                          {index < [...new Set(chordNotes)].length - 1 && ', '}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

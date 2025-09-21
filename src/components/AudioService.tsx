@@ -29,6 +29,33 @@ const defaultAudioConfig: AudioConfig = {
     frequency: 1.5,
     delayTime: 5.5,
     depth: 0.7
+  },
+  chord: {
+    octaves: 3,
+    baseOctave: 4,
+    duration: 3000,
+    waveform: 'sine',
+    envelope: {
+      attack: 0.5,
+      decay: 0.4,
+      sustain: 0.7,
+      release: 2.0
+    },
+    gain: 0.25,
+    reverb: {
+      enabled: true,
+      roomSize: 0.8,
+      wet: 0.4
+    },
+    chorus: {
+      enabled: true,
+      frequency: 1.2,
+      delayTime: 4.0,
+      depth: 0.8
+    },
+    style: 'simultaneous',
+    arpeggioDelay: 150,
+    rollDelay: 100
   }
 };
 
@@ -38,6 +65,9 @@ interface AudioServiceState {
   isPlaying: boolean;
   activeVoices: Set<string>;
 }
+
+// Maximum number of simultaneous voices to prevent clipping
+const MAX_SIMULTANEOUS_VOICES = 12;
 
 // Audio service props
 interface AudioServiceProps {
@@ -77,14 +107,18 @@ const createEffectsChain = (config: AudioConfig) => {
     wet: config.reverb.enabled ? config.reverb.wet : 0
   });
 
-  const gain = new Tone.Gain(0.3); // Master volume control
+  const gain = new Tone.Gain(0.2); // Master volume control - reduced to prevent clipping
+  
+  // Add a limiter to prevent clipping
+  const limiter = new Tone.Limiter(-3); // Limit to -3dB to prevent clipping
 
-  // Chain: chorus -> reverb -> gain -> destination
+  // Chain: chorus -> reverb -> gain -> limiter -> destination
   chorus.connect(reverb);
   reverb.connect(gain);
-  gain.toDestination();
+  gain.connect(limiter);
+  limiter.toDestination();
 
-  return { chorus, reverb, gain };
+  return { chorus, reverb, gain, limiter };
 };
 
 // Pure function to create oscillator for a specific frequency
@@ -193,7 +227,7 @@ const AudioService: React.FC<AudioServiceProps> = ({
     try {
       const normalizedNote = normalizeNoteName(noteName);
       const octaves = createOctaveRange(audioConfig.octaves, audioConfig.baseOctave);
-      const frequencies = generateOctaveFrequencies(normalizedNote, octaves, audioConfig.baseOctave);
+      const frequencies = generateOctaveFrequencies(normalizedNote, octaves);
       const timestamp = Date.now();
       
       // Create and play oscillators for each octave
@@ -210,6 +244,9 @@ const AudioService: React.FC<AudioServiceProps> = ({
         // Store voice for cleanup
         voicesRef.current.set(voiceId, { oscillator, envelope, gainNode });
         stateRef.current.activeVoices.add(voiceId);
+        
+        // Update master gain to prevent clipping
+        updateMasterGain();
         
         oscillator.start();
         envelope.triggerAttackRelease(audioConfig.duration / 1000);
@@ -231,6 +268,121 @@ const AudioService: React.FC<AudioServiceProps> = ({
     }
   }, [initializeAudio, onError]);
 
+  // Pure function to play a chord (multiple notes)
+  const playChord = useCallback(async (noteNames: string[], audioConfig: AudioConfig): Promise<void> => {
+    console.log('🎵 AudioService: playChord called with notes:', noteNames);
+    
+    if (!stateRef.current.isInitialized || !effectsRef.current) {
+      console.log('🎵 AudioService: Audio not initialized, initializing...');
+      await initializeAudio(audioConfig);
+    }
+
+    if (noteNames.length === 0) {
+      console.log('🎵 AudioService: No notes to play');
+      return;
+    }
+
+    try {
+      const chordConfig = audioConfig.chord;
+      const octaves = createOctaveRange(chordConfig.octaves, chordConfig.baseOctave);
+      const timestamp = Date.now();
+      
+      // Deduplicate notes
+      const uniqueNotes = [...new Set(noteNames.map(note => normalizeNoteName(note)))];
+      console.log('🎵 AudioService: Playing chord with unique notes:', uniqueNotes);
+      
+      // Create effects chain for chord (separate from path effects)
+      const chordEffects = createEffectsChain({
+        ...audioConfig,
+        reverb: chordConfig.reverb,
+        chorus: chordConfig.chorus
+      });
+      
+      const playNoteAtTime = (noteName: string, delayMs: number = 0) => {
+        const frequencies = generateOctaveFrequencies(noteName, octaves);
+        
+        frequencies.forEach((frequency, index) => {
+          // Check if we've reached the maximum number of simultaneous voices
+          if (stateRef.current.activeVoices.size >= MAX_SIMULTANEOUS_VOICES) {
+            console.log(`🎵 AudioService: Maximum voices (${MAX_SIMULTANEOUS_VOICES}) reached, skipping additional oscillators`);
+            return;
+          }
+          
+          const octave = octaves[index];
+          const voiceId = createVoiceId(`${noteName}-chord`, octave, timestamp + delayMs);
+          
+          console.log(`🎵 AudioService: Creating chord oscillator ${index + 1}/${frequencies.length} - Note: ${noteName}${octave}, Frequency: ${frequency}Hz, Voice ID: ${voiceId}`);
+          const { oscillator, envelope, gainNode } = createOscillator(frequency, {
+            ...audioConfig,
+            ...chordConfig
+          });
+          
+          // Connect gain node to chord effects chain
+          gainNode.connect(chordEffects.gain);
+          
+          // Store voice for cleanup
+          voicesRef.current.set(voiceId, { oscillator, envelope, gainNode });
+          stateRef.current.activeVoices.add(voiceId);
+          
+          // Update master gain to prevent clipping
+          updateMasterGain();
+          
+          oscillator.start();
+          
+          // Schedule note based on chord style
+          if (chordConfig.style === 'simultaneous') {
+            envelope.triggerAttackRelease(chordConfig.duration / 1000);
+          } else {
+            // For arpeggio and roll, delay the trigger
+            setTimeout(() => {
+              envelope.triggerAttackRelease(chordConfig.duration / 1000);
+            }, delayMs);
+          }
+          
+          // Clean up after duration
+          setTimeout(() => {
+            console.log(`🎵 AudioService: Cleaning up chord voice ${voiceId}`);
+            cleanupVoice(voiceId);
+          }, chordConfig.duration + 2000); // Extra buffer for envelope release
+        });
+      };
+      
+      // Play notes based on chord style
+      if (chordConfig.style === 'simultaneous') {
+        // Play all notes at once
+        uniqueNotes.forEach(noteName => playNoteAtTime(noteName));
+      } else if (chordConfig.style === 'arpeggio') {
+        // Play notes in sequence with arpeggio delay
+        uniqueNotes.forEach((noteName, index) => {
+          playNoteAtTime(noteName, index * chordConfig.arpeggioDelay);
+        });
+      } else if (chordConfig.style === 'roll') {
+        // Play notes in quick succession with roll delay
+        uniqueNotes.forEach((noteName, index) => {
+          playNoteAtTime(noteName, index * chordConfig.rollDelay);
+        });
+      }
+      
+      stateRef.current.isPlaying = true;
+      console.log(`🎵 AudioService: Chord started with ${uniqueNotes.length} unique notes, style: ${chordConfig.style}`);
+    } catch (error) {
+      console.error('🎵 AudioService: Error in playChord:', error);
+      onError?.(error as Error);
+    }
+  }, [initializeAudio, onError]);
+
+  // Pure function to update master gain based on active voices
+  const updateMasterGain = useCallback((): void => {
+    if (effectsRef.current) {
+      const activeVoiceCount = stateRef.current.activeVoices.size;
+      // Reduce gain as more voices are added to prevent clipping
+      // Base gain of 0.2, reduced by 0.02 per additional voice (max reduction to 0.05)
+      const dynamicGain = Math.max(0.05, 0.2 - (activeVoiceCount - 1) * 0.02);
+      effectsRef.current.gain.gain.value = dynamicGain;
+      console.log(`🎵 AudioService: Updated master gain to ${dynamicGain} for ${activeVoiceCount} active voices`);
+    }
+  }, []);
+
   // Pure function to cleanup a specific voice
   const cleanupVoice = useCallback((voiceId: string): void => {
     const voice = voicesRef.current.get(voiceId);
@@ -247,11 +399,14 @@ const AudioService: React.FC<AudioServiceProps> = ({
     if (stateRef.current.activeVoices.size === 0) {
       stateRef.current.isPlaying = false;
     }
-  }, []);
+    
+    // Update master gain based on active voices to prevent clipping
+    updateMasterGain();
+  }, [updateMasterGain]);
 
   // Pure function to stop all voices
   const stopAllVoices = useCallback((): void => {
-    voicesRef.current.forEach((voice, voiceId) => {
+    voicesRef.current.forEach((voice) => {
       voice.oscillator.stop();
       voice.oscillator.dispose();
       voice.envelope.dispose();
@@ -273,6 +428,7 @@ const AudioService: React.FC<AudioServiceProps> = ({
         effectsRef.current.chorus.dispose();
         effectsRef.current.reverb.dispose();
         effectsRef.current.gain.dispose();
+        effectsRef.current.limiter.dispose();
       }
     };
   }, [config, initializeAudio, stopAllVoices]);
@@ -285,12 +441,22 @@ const AudioService: React.FC<AudioServiceProps> = ({
       playNote(noteName, config);
     };
     
+    console.log('🎵 AudioService: Exposing global playTreeOfLifeChord function');
+    (window as any).playTreeOfLifeChord = (noteNames: string[]) => {
+      console.log('🎵 AudioService: Global playTreeOfLifeChord called with notes:', noteNames);
+      playChord(noteNames, config);
+    };
+    
     // Add debug function to check audio state
     (window as any).debugAudioState = () => {
+      const masterGain = effectsRef.current?.gain.gain.value || 0;
       console.log('🎵 AudioService: Debug Info', {
         isInitialized: stateRef.current.isInitialized,
         isPlaying: stateRef.current.isPlaying,
         activeVoices: stateRef.current.activeVoices.size,
+        maxVoices: MAX_SIMULTANEOUS_VOICES,
+        masterGain: masterGain,
+        masterGainDb: 20 * Math.log10(masterGain),
         hasEffects: !!effectsRef.current,
         toneContextState: Tone.context.state,
         toneContextSampleRate: Tone.context.sampleRate
@@ -298,11 +464,12 @@ const AudioService: React.FC<AudioServiceProps> = ({
     };
     
     return () => {
-      console.log('🎵 AudioService: Cleaning up global playTreeOfLifeNote function');
+      console.log('🎵 AudioService: Cleaning up global audio functions');
       delete (window as any).playTreeOfLifeNote;
+      delete (window as any).playTreeOfLifeChord;
       delete (window as any).debugAudioState;
     };
-  }, [playNote, config]);
+  }, [playNote, playChord, config]);
 
   // This component doesn't render anything - it's a service
   return null;

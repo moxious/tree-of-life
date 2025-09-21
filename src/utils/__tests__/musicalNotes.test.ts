@@ -40,7 +40,7 @@ const testGenerateOctaveFrequencies = () => {
   console.log('\nTesting generateOctaveFrequencies...');
   
   const octaves = [3, 4, 5];
-  const frequencies = generateOctaveFrequencies('C', octaves, 4);
+  const frequencies = generateOctaveFrequencies('C', octaves);
   
   console.log(`C note across octaves 3,4,5:`, frequencies);
   

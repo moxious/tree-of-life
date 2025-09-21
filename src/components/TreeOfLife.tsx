@@ -7,6 +7,7 @@ import WorldInfo from './WorldInfo';
 import Sephirah from './Sephirah';
 import Path from './Path';
 import AudioService from './AudioService';
+import { findIncidentPaths } from '../utils/treeOfLifeUtils';
 import type { SephirahData, PathData, PinnedState, HoverState } from '../types/treeOfLife';
 
 const TreeOfLife: React.FC = () => {
@@ -27,6 +28,12 @@ const TreeOfLife: React.FC = () => {
     isSephirahPinned: false,
     isPathPinned: false
   });
+
+  // Highlighted paths state for chord visual feedback
+  const [highlightedPaths, setHighlightedPaths] = useState<Set<number>>(new Set());
+  
+  // Chord notes state for info panel
+  const [chordNotes, setChordNotes] = useState<string[]>([]);
 
   const handleSephirahHover = (sephirah: SephirahData) => {
     // Don't show hover info if something is pinned
@@ -118,6 +125,42 @@ const TreeOfLife: React.FC = () => {
   };
 
   const handleSephirahClick = (sephirah: SephirahData) => {
+    // Find incident paths for the sephirah
+    const incidentPaths = findIncidentPaths(sephirah.name, paths);
+    console.log(`🎵 TreeOfLife: Sephirah ${sephirah.name} clicked!`);
+    console.log(`🎵 TreeOfLife: Incident paths:`, incidentPaths.map(p => ({
+      pathNumber: p.pathNumber,
+      hebrewLetter: p.hebrewLetter,
+      musicalNote: p.musicalNote
+    })));
+    
+    // Highlight incident paths briefly
+    const incidentPathNumbers = new Set(incidentPaths.map(path => path.pathNumber));
+    setHighlightedPaths(incidentPathNumbers);
+    
+    // Clear highlighting after 2 seconds
+    setTimeout(() => {
+      setHighlightedPaths(new Set());
+    }, 2000);
+    
+    // Play chord if there are incident paths (skip Da'ath)
+    if (incidentPaths.length > 0) {
+      const chordNotes = incidentPaths.map(path => path.musicalNote);
+      console.log(`🎵 TreeOfLife: Playing chord with notes:`, chordNotes);
+      
+      // Update chord notes for info panel
+      setChordNotes(chordNotes);
+      
+      if (typeof (window as any).playTreeOfLifeChord === 'function') {
+        (window as any).playTreeOfLifeChord(chordNotes);
+      } else {
+        console.error('🎵 TreeOfLife: playTreeOfLifeChord function not found on window object');
+      }
+    } else {
+      console.log(`🎵 TreeOfLife: No incident paths for ${sephirah.name}, skipping chord playback`);
+      setChordNotes([]);
+    }
+    
     if (pinnedState.sephirah && pinnedState.sephirah.name === sephirah.name) {
       // Unpin if clicking the same sephirah
       setPinnedState({
@@ -218,12 +261,15 @@ const TreeOfLife: React.FC = () => {
                     elementSymbol: path.elementSymbol,
                     letterMeaning: path.letterMeaning,
                     musicalNote: path.musicalNote,
-                    gematriaValue: path.gematriaValue
+                    gematriaValue: path.gematriaValue,
+                    from: path.from,
+                    to: path.to
                   }}
                   onHover={handlePathHover}
                   onLeave={handlePathLeave}
                   onPathClick={handlePathClick}
                   isPinned={pinnedState.path?.pathNumber === path.pathNumber}
+                  isHighlighted={highlightedPaths.has(path.pathNumber)}
                 />
               );
             })}
@@ -257,6 +303,7 @@ const TreeOfLife: React.FC = () => {
           isSephirahPinned={pinnedState.isSephirahPinned}
           onUnpinSephirah={handleUnpinSephirah}
           selectedWorld={selectedWorld}
+          chordNotes={chordNotes}
         />
       </div>
     </div>

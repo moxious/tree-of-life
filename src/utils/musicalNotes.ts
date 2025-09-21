@@ -41,8 +41,7 @@ export const calculateFrequency = (noteName: string, octave: number): number => 
 // Pure function to generate frequencies for multiple octaves
 export const generateOctaveFrequencies = (
   noteName: string, 
-  octaves: number[], 
-  baseOctave: number
+  octaves: number[]
 ): number[] => {
   return octaves.map(octave => calculateFrequency(noteName, octave));
 };

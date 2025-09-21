@@ -37,7 +37,10 @@ export interface PathMetadata {
   gematriaValue: number;
 }
 
-export interface PathData extends PathMetadata {}
+export interface PathData extends PathMetadata {
+  from: string;
+  to: string;
+}
 
 // Pinned state types
 export interface PinnedState {

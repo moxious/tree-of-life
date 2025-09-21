@@ -11,9 +11,10 @@ interface PathProps {
   onLeave: () => void;
   onPathClick: (pathData: PathData) => void;
   isPinned: boolean;
+  isHighlighted?: boolean;
 }
 
-const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, onHover, onLeave, onPathClick, isPinned }) => {
+const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, onHover, onLeave, onPathClick, isPinned, isHighlighted = false }) => {
   const midX = (from.x + to.x) / 2;
   const midY = (from.y + to.y) / 2;
 
@@ -67,6 +68,19 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
 
   const isFlashPath = isLightningFlash(from, to);
   const pathStrokeWidth = isFlashPath ? strokeWidth + 1 : strokeWidth;
+  
+  // Determine stroke color and width based on state
+  const getStrokeColor = () => {
+    if (isHighlighted) return "#ffd700"; // Gold for highlighted paths
+    if (isPinned) return "#ff6b6b"; // Red for pinned paths
+    return stroke; // Default stroke color
+  };
+  
+  const getStrokeWidth = () => {
+    if (isHighlighted) return pathStrokeWidth + 2; // Thicker for highlighted
+    if (isPinned) return pathStrokeWidth + 1; // Slightly thicker for pinned
+    return pathStrokeWidth;
+  };
 
   return (
     <g className="path-group">
@@ -89,9 +103,9 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
         y1={from.y}
         x2={to.x}
         y2={to.y}
-        stroke={stroke}
-        strokeWidth={pathStrokeWidth}
-        className={`tree-path ${isPinned ? 'pinned' : ''}`}
+        stroke={getStrokeColor()}
+        strokeWidth={getStrokeWidth()}
+        className={`tree-path ${isPinned ? 'pinned' : ''} ${isHighlighted ? 'highlighted' : ''}`}
       />
       {/* Hebrew letter caption */}
       <text
@@ -100,7 +114,7 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
         textAnchor="middle"
         dominantBaseline="central"
         className="path-letter"
-        fill="#ffffff"
+        fill={isHighlighted ? "#ffd700" : "#ffffff"}
         fontSize="16"
         fontWeight="bold"
       >

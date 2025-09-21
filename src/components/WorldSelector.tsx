@@ -7,7 +7,6 @@ interface WorldSelectorProps {
 }
 
 const WorldSelector: React.FC<WorldSelectorProps> = ({ selectedWorld, onWorldChange, worlds }) => {
-  // Define the order and transliterations
   const worldOrder = [
     { key: 'assiah', transliteration: 'Assiah' },
     { key: 'yetzirah', transliteration: 'Yetzirah' },
