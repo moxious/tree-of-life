@@ -3,6 +3,72 @@
 
 import type { PathData } from '../types/treeOfLife';
 
+// Sephirah numbering system for above/below relationships
+// Keter=1, Hockmah=2, Binah=3, Da'ath=11, Hesed=4, Gevurah=5, Tiferet=6, 
+// Netzach=7, Hod=8, Yesod=9, Malkuth=10
+const SEPHIRAH_NUMBERS: Record<string, number> = {
+  'keter': 1,
+  'hockmah': 2,
+  'binah': 3,
+  'daath': 11, // Da'ath is excluded from above/below relationships
+  'hesed': 4,
+  'gevurah': 5,
+  'tiferet': 6,
+  'netzach': 7,
+  'hod': 8,
+  'yesod': 9,
+  'malkuth': 10
+};
+
+// Pure function to get sephirah number
+const getSephirahNumber = (sephirahName: string): number => {
+  const number = SEPHIRAH_NUMBERS[sephirahName.toLowerCase()];
+  if (number === undefined) {
+    throw new Error(`Unknown sephirah: ${sephirahName}`);
+  }
+  return number;
+};
+
+// Pure function to find paths going "below" a sephirah (to higher-numbered sephirot)
+export const findPathsBelow = (
+  sephirahName: string, 
+  allPaths: PathData[]
+): PathData[] => {
+  const fromSephirahNumber = getSephirahNumber(sephirahName);
+  
+  return allPaths.filter(path => {
+    if (path.from !== sephirahName) return false;
+    
+    try {
+      const toSephirahNumber = getSephirahNumber(path.to);
+      return toSephirahNumber > fromSephirahNumber;
+    } catch {
+      // If to sephirah is not found (e.g., Da'ath), exclude this path
+      return false;
+    }
+  });
+};
+
+// Pure function to find paths going "above" a sephirah (to lower-numbered sephirot)
+export const findPathsAbove = (
+  sephirahName: string, 
+  allPaths: PathData[]
+): PathData[] => {
+  const fromSephirahNumber = getSephirahNumber(sephirahName);
+  
+  return allPaths.filter(path => {
+    if (path.from !== sephirahName) return false;
+    
+    try {
+      const toSephirahNumber = getSephirahNumber(path.to);
+      return toSephirahNumber < fromSephirahNumber;
+    } catch {
+      // If to sephirah is not found (e.g., Da'ath), exclude this path
+      return false;
+    }
+  });
+};
+
 // Pure function to find all incident paths for a given sephirah
 // An incident path is one where the sephirah appears as either "from" or "to"
 export const findIncidentPaths = (

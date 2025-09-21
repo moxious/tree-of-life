@@ -7,7 +7,7 @@ import WorldInfo from './WorldInfo';
 import Sephirah from './Sephirah';
 import Path from './Path';
 import AudioService from './AudioService';
-import { findIncidentPaths } from '../utils/treeOfLifeUtils';
+import { findPathsBelow, findPathsAbove } from '../utils/treeOfLifeUtils';
 import type { SephirahData, PathData, PinnedState, HoverState } from '../types/treeOfLife';
 
 const TreeOfLife: React.FC = () => {
@@ -33,7 +33,10 @@ const TreeOfLife: React.FC = () => {
   const [highlightedPaths, setHighlightedPaths] = useState<Set<number>>(new Set());
   
   // Chord notes state for info panel
-  const [chordNotes, setChordNotes] = useState<string[]>([]);
+  const [chordNotes, setChordNotes] = useState<{
+    above: string[];
+    below: string[];
+  }>({ above: [], below: [] });
 
   const handleSephirahHover = (sephirah: SephirahData) => {
     // Don't show hover info if something is pinned
@@ -125,40 +128,47 @@ const TreeOfLife: React.FC = () => {
   };
 
   const handleSephirahClick = (sephirah: SephirahData) => {
-    // Find incident paths for the sephirah
-    const incidentPaths = findIncidentPaths(sephirah.name, paths);
+    // Find paths above and below the sephirah
+    const pathsAbove = findPathsAbove(sephirah.name, paths);
+    const pathsBelow = findPathsBelow(sephirah.name, paths);
+    
     console.log(`🎵 TreeOfLife: Sephirah ${sephirah.name} clicked!`);
-    console.log(`🎵 TreeOfLife: Incident paths:`, incidentPaths.map(p => ({
+    console.log(`🎵 TreeOfLife: Paths above:`, pathsAbove.map(p => ({
+      pathNumber: p.pathNumber,
+      hebrewLetter: p.hebrewLetter,
+      musicalNote: p.musicalNote
+    })));
+    console.log(`🎵 TreeOfLife: Paths below:`, pathsBelow.map(p => ({
       pathNumber: p.pathNumber,
       hebrewLetter: p.hebrewLetter,
       musicalNote: p.musicalNote
     })));
     
-    // Highlight incident paths briefly
-    const incidentPathNumbers = new Set(incidentPaths.map(path => path.pathNumber));
-    setHighlightedPaths(incidentPathNumbers);
+    // Highlight only below paths briefly
+    const belowPathNumbers = new Set(pathsBelow.map(path => path.pathNumber));
+    setHighlightedPaths(belowPathNumbers);
     
     // Clear highlighting after 2 seconds
     setTimeout(() => {
       setHighlightedPaths(new Set());
     }, 2000);
     
-    // Play chord if there are incident paths (skip Da'ath)
-    if (incidentPaths.length > 0) {
-      const chordNotes = incidentPaths.map(path => path.musicalNote);
-      console.log(`🎵 TreeOfLife: Playing chord with notes:`, chordNotes);
-      
-      // Update chord notes for info panel
-      setChordNotes(chordNotes);
+    // Update chord notes for info panel (both above and below)
+    const aboveChordNotes = pathsAbove.map(path => path.musicalNote);
+    const belowChordNotes = pathsBelow.map(path => path.musicalNote);
+    setChordNotes({ above: aboveChordNotes, below: belowChordNotes });
+    
+    // Play only below chord if there are below paths
+    if (pathsBelow.length > 0) {
+      console.log(`🎵 TreeOfLife: Playing below chord with notes:`, belowChordNotes);
       
       if (typeof (window as any).playTreeOfLifeChord === 'function') {
-        (window as any).playTreeOfLifeChord(chordNotes);
+        (window as any).playTreeOfLifeChord(belowChordNotes);
       } else {
         console.error('🎵 TreeOfLife: playTreeOfLifeChord function not found on window object');
       }
     } else {
-      console.log(`🎵 TreeOfLife: No incident paths for ${sephirah.name}, skipping chord playback`);
-      setChordNotes([]);
+      console.log(`🎵 TreeOfLife: No below paths for ${sephirah.name}, skipping chord playback`);
     }
     
     if (pinnedState.sephirah && pinnedState.sephirah.name === sephirah.name) {
