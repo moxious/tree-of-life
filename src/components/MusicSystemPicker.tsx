@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 
 interface MusicalSystem {
   system: string;
@@ -17,38 +17,8 @@ const MusicSystemPicker: React.FC<MusicSystemPickerProps> = ({
   onSystemChange, 
   musicalSystems 
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Pure function to get system options
-  const getSystemOptions = (systems: Record<string, MusicalSystem>) => 
-    Object.entries(systems).map(([key, system]) => ({
-      key,
-      name: system.system,
-      description: system.description
-    }));
-
-
-  const systemOptions = getSystemOptions(musicalSystems);
-  const selectedSystemData = musicalSystems[selectedSystem];
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleToggle = () => setIsOpen(!isOpen);
-
-  const handleSelect = (systemKey: string) => {
-    onSystemChange(systemKey);
-    setIsOpen(false);
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onSystemChange(event.target.value);
   };
 
   return (
@@ -56,32 +26,17 @@ const MusicSystemPicker: React.FC<MusicSystemPickerProps> = ({
       <label className="picker-label">
         Musical System:
       </label>
-      <div className="custom-select-container" ref={dropdownRef}>
-        <div 
-          className={`custom-select ${isOpen ? 'open' : ''}`}
-          onClick={handleToggle}
-        >
-          <span className="selected-text">
-            {selectedSystemData ? selectedSystemData.system : selectedSystem}
-          </span>
-          <span className="dropdown-arrow">▼</span>
-        </div>
-        
-        {isOpen && (
-          <div className="custom-select-options">
-            {systemOptions.map(({ key, name, description }) => (
-              <div
-                key={key}
-                className={`custom-select-option ${key === selectedSystem ? 'selected' : ''}`}
-                onClick={() => handleSelect(key)}
-              >
-                <div className="option-name">{name}</div>
-                <div className="option-description">{description}</div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <select 
+        className="music-system-select"
+        value={selectedSystem}
+        onChange={handleChange}
+      >
+        {Object.entries(musicalSystems).map(([key, system]) => (
+          <option key={key} value={key}>
+            {system.system}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
