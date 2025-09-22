@@ -36,7 +36,7 @@
         "Israel Regardie, 'The Middle Pillar' (with Thom Parrott’s appendix on Musical Qabalah)",
         "Thom Parrott, 'The Musical Qabalah' (appendix)"
       ],
-      "system": "Golden Dawn / Allan Bennett Chromatic System",
+      "system": "Bennett: Golden Dawn Chromatic",
       "assignments": {
         "11": "C",
         "12": "C",
@@ -62,7 +62,7 @@
         "Paul Foster Case, 'The Tarot: A Key to the Wisdom of the Ages' (1931)",
         "Alison P. Deadman, 'Letter, Musical Pitch, and Color in the Work of Paul Foster Case,' The Esoteric Quarterly, Spring 2006"
       ],
-      "system": "Paul Foster Case / B.O.T.A. Chromatic System",
+      "system": "Case / B.O.T.A. Chromatic",
       "assignments": {
         "11": "E",
         "12": "E",
@@ -120,7 +120,7 @@
     "12Tone_Iteration_2": {
       "description": "Second iteration focusing on triad relationships and shared tones. Used C minor, G major, and D major as anchor triads with circle-of-fifths relationships. Achieved good consonant balance with major triads throughout.",
       "references": [],
-      "system": "Iteration 2 - Circle of Fifths Anchors",
+      "system": "It.2 - Circle of Fifths Anchors",
       "assignments": {
         "11": "C",
         "12": "E♭",
@@ -149,7 +149,7 @@
     "12Tone_Iteration_3": {
       "description": "Third iteration using E♭ major, B♭ major, and F major as circle-of-fifths anchor triads. Introduced more chromaticism while maintaining triadic structure. Achieved 10 peppers and 8 consonant rows.",
       "references": [],
-      "system": "Iteration 3 - Circle of Fifths E♭-B♭-F",
+      "system": "It.3 - Circle of Fifths E♭-B♭-F",
       "assignments": {
         "11": "E♭",
         "12": "G",
@@ -178,7 +178,7 @@
     "12Tone_Iteration_4": {
       "description": "Fourth iteration refining the E♭-B♭-F circle-of-fifths approach. Improved tension distribution by adjusting specific paths while maintaining anchor triads. Achieved 8 peppers and 11 consonant rows.",
       "references": [],
-      "system": "Iteration 4 - Refined Circle of Fifths",
+      "system": "It.4 - Refined Circle of Fifths",
       "assignments": {
         "11": "E♭",
         "12": "G",
@@ -207,7 +207,7 @@
     "12Tone_Iteration_5": {
       "description": "Optimal mediant chain approach using D minor → B♭ major → G minor. Maximized shared tones across triangle boundaries, allowing extensive dyad collapsing. Achieved best results: 2 peppers and 16 consonant rows.",
       "references": [],
-      "system": "Iteration 5 - Mediant Chain (Best)",
+      "system": "It.5 - Mediant Chain (Best)",
       "assignments": {
         "11": "D",
         "12": "F",
@@ -236,7 +236,7 @@
     "12Tone_Iteration_6": {
       "description": "Final iteration using hub coloring strategy. Maintained D minor, B♭ major, G minor anchors while using Tiferet (Above) and Malkuth (Above) as hubs to introduce remaining pitch classes. Achieved 2 peppers and 16 consonant rows with full 12-pitch coverage.",
       "references": [],
-      "system": "Iteration 6 - Hub Coloring Strategy",
+      "system": "It.6 - Hub Coloring Strategy",
       "assignments": {
         "11": "D",
         "12": "F",
@@ -265,7 +265,7 @@
     "Iteration_2_4Worlds_Assiah": {
       "description": "Four Worlds approach using Assiah (Earth) with center triad constraint. Uses Eb major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 2 - Assiah 4Worlds (Center Triad)",
+      "system": "It.2 - Assiah 4Worlds (Center Triad)",
       "assignments": {
         "11": "E♭",
         "12": "G",
@@ -294,7 +294,7 @@
     "Iteration_2_4Worlds_Yetzirah": {
       "description": "Four Worlds approach using Yetzirah (Air) with center triad constraint. Uses C major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 2 - Yetzirah 4Worlds (Center Triad)",
+      "system": "It.2 - Yetzirah 4Worlds (Center Triad)",
       "assignments": {
         "11": "C",
         "12": "E",
@@ -323,7 +323,7 @@
     "Iteration_2_4Worlds_Atziluth": {
       "description": "Four Worlds approach using Atziluth (Fire) with center triad constraint. Uses A major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 2 - Atziluth 4Worlds (Center Triad)",
+      "system": "It.2 - Atziluth 4Worlds (Center Triad)",
       "assignments": {
         "11": "A",
         "12": "C♯",
@@ -352,7 +352,7 @@
     "Iteration_2_4Worlds_Briah": {
       "description": "Four Worlds approach using Briah (Water) with center triad constraint. Uses F♯ major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 2 - Briah 4Worlds (Center Triad)",
+      "system": "It.2 - Briah 4Worlds (Center Triad)",
       "assignments": {
         "11": "F♯",
         "12": "A♯",
@@ -381,7 +381,7 @@
     "Iteration_3_4Worlds_Assiah": {
       "description": "Four Worlds approach using Assiah (Earth) with complete triad coverage constraint. Uses Eb major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 3 - Assiah 4Worlds (Complete Coverage)",
+      "system": "It.3 - Assiah 4Worlds (Complete Coverage)",
       "assignments": {
         "11": "E♭",
         "12": "G",
@@ -410,7 +410,7 @@
     "Iteration_3_4Worlds_Yetzirah": {
       "description": "Four Worlds approach using Yetzirah (Air) with complete triad coverage constraint. Uses C major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 3 - Yetzirah 4Worlds (Complete Coverage)",
+      "system": "It.3 - Yetzirah 4Worlds (Complete Coverage)",
       "assignments": {
         "11": "C",
         "12": "E",
@@ -439,7 +439,7 @@
     "Iteration_3_4Worlds_Atziluth": {
       "description": "Four Worlds approach using Atziluth (Fire) with complete triad coverage constraint. Uses A major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 3 - Atziluth 4Worlds (Complete Coverage)",
+      "system": "It.3 - Atziluth 4Worlds (Complete Coverage)",
       "assignments": {
         "11": "A",
         "12": "C♯",
@@ -468,7 +468,7 @@
     "Iteration_3_4Worlds_Briah": {
       "description": "Four Worlds approach using Briah (Water) with complete triad coverage constraint. Uses F♯ major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
       "references": [],
-      "system": "Iteration 3 - Briah 4Worlds (Complete Coverage)",
+      "system": "It.3 - Briah 4Worlds (Complete Coverage)",
       "assignments": {
         "11": "F♯",
         "12": "A♯",
@@ -497,7 +497,7 @@
     "Four_Worlds_Assiah_Complete": {
       "description": "Four Worlds approach using Assiah (Earth) with complete triad coverage. Uses Eb major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
-      "system": "Four Worlds - Assiah (Complete Coverage with Color)",
+      "system": "4Worlds - Assiah (Complete Coverage with Color)",
       "assignments": {
         "11": "E♭",
         "12": "G",
@@ -696,7 +696,7 @@
     "Four_Worlds_Yetzirah_Complete": {
       "description": "Four Worlds approach using Yetzirah (Air) with complete triad coverage. Uses C major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
-      "system": "Four Worlds - Yetzirah (Complete Coverage with Color)",
+      "system": "4Worlds - Yetzirah (Complete Coverage with Color)",
       "assignments": {
         "11": "C",
         "12": "E",
@@ -895,7 +895,7 @@
     "Four_Worlds_Atziluth_Complete": {
       "description": "Four Worlds approach using Atziluth (Fire) with complete triad coverage. Uses A major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
-      "system": "Four Worlds - Atziluth (Complete Coverage with Color)",
+      "system": "4Worlds - Atziluth (Complete Coverage with Color)",
       "assignments": {
         "11": "A",
         "12": "C♯",
@@ -1094,7 +1094,7 @@
     "Four_Worlds_Briah_Complete": {
       "description": "Four Worlds approach using Briah (Water) with complete triad coverage. Uses F♯ major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
-      "system": "Four Worlds - Briah (Complete Coverage with Color)",
+      "system": "4Worlds - Briah (Complete Coverage with Color)",
       "assignments": {
         "11": "F♯",
         "12": "A♯",
