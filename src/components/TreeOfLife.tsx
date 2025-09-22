@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import treeConfig from '../treeOfLifeConfig.json';
 import musicalSystems from '../musicalSystems.json';
 import InfoPanel from './InfoPanel';
@@ -16,8 +16,6 @@ import type { PathData } from '../types/treeOfLife';
 // Inner component that uses audio context
 const TreeOfLifeInner: React.FC = () => {
   const { sephirot, styling, worlds } = treeConfig;
-  const [selectedWorld, setSelectedWorld] = useState<string>('briah');
-  const [viewMode, setViewMode] = useState<string>('sphere');
   const { actions: audioActions } = useAudio();
 
   // Use unified hook for all state management with audio actions
@@ -28,16 +26,18 @@ const TreeOfLifeInner: React.FC = () => {
     highlightedPaths,
     chordNotes,
     selectedMusicalSystem,
-    patchedPaths
+    patchedPaths,
+    selectedWorld,
+    viewMode
   } = useTreeState(audioActions);
 
 
   const handleWorldChange = (world: string) => {
-    setSelectedWorld(world);
+    actions.changeSelectedWorld(world);
   };
 
   const handleViewModeChange = (mode: string) => {
-    setViewMode(mode);
+    actions.changeViewMode(mode);
   };
 
   const getCurrentWorldImages = () => {

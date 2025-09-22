@@ -35,18 +35,15 @@ The Tree of Life application follows a modern React component-based architecture
 - **State**: None (stateless)
 
 ### 2. TreeOfLife.tsx (Main Container)
-- **Purpose**: Central state management and layout coordination
+- **Purpose**: Layout coordination and component composition
 - **Responsibilities**:
-  - Manages all application state (selected world, view mode, hover states)
   - Coordinates between child components
-  - Handles user interactions and state updates
   - Renders the main SVG canvas
-- **State Management**:
-  - `selectedWorld`: Current Kabbalistic world (atziluth, briah, yetzirah, assiah)
-  - `viewMode`: Visualization mode (sphere, card)
-  - `hoveredSephirah`: Currently hovered sephirah data
-  - `hoveredPath`: Currently hovered path data
-  - `activeHoveredSephirah`: Prevents multiple simultaneous hovers
+  - Handles component composition and layout
+- **State Management**: 
+  - **Delegated to useTreeState hook** - All state management is now centralized
+  - No longer manages individual state variables
+  - Uses unified state from custom hook
 
 ### 3. Control Components
 
@@ -97,21 +94,33 @@ The Tree of Life application follows a modern React component-based architecture
 
 ## Data Flow Architecture
 
-### State Management Pattern
-The application uses a "lifted state" pattern where all state is managed in the `TreeOfLife` component and passed down to children:
+### Unified State Management Pattern
+The application uses a **unified state management pattern** where all state is managed through the `useTreeState` custom hook:
 
 ```
-TreeOfLife (State Owner)
-├── selectedWorld → WorldSelector, WorldInfo, InfoPanel
+useTreeState Hook (Centralized State)
+├── UI State: selectedWorld, viewMode
+├── Hover State: sephirah, path, activeHoveredSephirah
+├── Pinned State: sephirah, path, isSephirahPinned, isPathPinned
+├── Highlighting State: paths, chordNotes
+└── Musical State: selectedSystem, patchedPaths
+```
+
+### State Distribution
+State flows from the unified hook to components:
+```
+useTreeState → TreeOfLife → Child Components
+├── selectedWorld → WorldSelector, InfoPanel
 ├── viewMode → VisualizationPicker, Sephirah
-├── hoveredSephirah → InfoPanel
-└── hoveredPath → InfoPanel
+├── hoverState → InfoPanel
+├── pinnedState → InfoPanel, Sephirah, Path
+└── highlighting → Path components
 ```
 
 ### Event Handling Flow
 1. **User Interaction** → Child Component
-2. **Event Handler** → Child Component calls parent callback
-3. **State Update** → TreeOfLife updates state
+2. **Event Handler** → Child Component calls unified action
+3. **State Update** → useTreeState hook updates centralized state
 4. **Re-render** → All affected components re-render with new props
 
 ### Data Source
@@ -121,22 +130,44 @@ TreeOfLife (State Owner)
 
 ## Key Architectural Patterns
 
-### 1. Component Composition
+### 1. Unified State Management Hook
+The `useTreeState` hook provides centralized state management for the entire application:
+
+```typescript
+interface TreeState {
+  hover: { sephirah: SephirahData | null; path: PathData | null; activeHoveredSephirah: string | null };
+  pinned: { sephirah: SephirahData | null; path: PathData | null; isSephirahPinned: boolean; isPathPinned: boolean };
+  highlighting: { paths: Set<number>; chordNotes: { above: string[]; below: string[] } };
+  musical: { selectedSystem: string; patchedPaths: PathData[] };
+  ui: { selectedWorld: string; viewMode: string };
+}
+```
+
+**Benefits:**
+- **Single source of truth** for all application state
+- **Consistent state updates** across all components
+- **Centralized action handlers** with proper state coordination
+- **Type safety** with comprehensive TypeScript interfaces
+- **Performance optimization** through memoized state updates
+
+### 2. Component Composition
 - Small, focused components with single responsibilities
 - Props-based communication between components
 - Clear separation between presentation and logic
 
-### 2. State Management
-- Centralized state in main container component
-- Unidirectional data flow (props down, events up)
-- No external state management library (Redux, Zustand, etc.)
+### 3. State Management
+- **Unified state management** through custom `useTreeState` hook
+- **Centralized state** with clear separation of concerns
+- **Unidirectional data flow** (props down, events up)
+- **No external state management library** (Redux, Zustand, etc.)
+- **Consistent state patterns** throughout the application
 
-### 3. Event Handling
+### 4. Event Handling
 - Callback props for child-to-parent communication
 - Event delegation for complex hover interactions
 - State-based conditional rendering
 
-### 4. SVG Rendering Strategy
+### 5. SVG Rendering Strategy
 - **Layered Rendering**: Paths rendered first (behind), sephirot on top
 - **Pattern-based Images**: SVG patterns for image display
 - **Interactive Elements**: Separate hover detection elements from visual elements

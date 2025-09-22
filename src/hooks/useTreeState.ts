@@ -29,6 +29,10 @@ interface TreeState {
     selectedSystem: string;
     patchedPaths: PathData[];
   };
+  ui: {
+    selectedWorld: string;
+    viewMode: string;
+  };
 }
 
 // Unified action interface
@@ -51,6 +55,10 @@ interface TreeActions {
   
   // Musical system actions
   changeMusicalSystem: (systemKey: string) => void;
+  
+  // UI actions
+  changeSelectedWorld: (world: string) => void;
+  changeViewMode: (mode: string) => void;
   
   // Utility actions
   clearAll: () => void;
@@ -79,6 +87,10 @@ export const useTreeState = (audioActions?: AudioActions) => {
     musical: { 
       selectedSystem: 'Four_Worlds_Briah_Complete', 
       patchedPaths: [] 
+    },
+    ui: {
+      selectedWorld: 'briah',
+      viewMode: 'sphere'
     }
   });
 
@@ -280,7 +292,7 @@ export const useTreeState = (audioActions?: AudioActions) => {
       } else {
         console.log(`🎵 TreeState: No below paths for ${sephirah.name}, skipping chord playback`);
       }
-    }, [patchedPaths]),
+    }, [patchedPaths, audioActions]),
 
     handlePathClick: useCallback((path: PathData) => {
       // Play audio for the musical note
@@ -293,7 +305,7 @@ export const useTreeState = (audioActions?: AudioActions) => {
         pinned: { sephirah: null, path, isSephirahPinned: false, isPathPinned: true },
         hover: { sephirah: null, path: null, activeHoveredSephirah: null }
       }));
-    }, []),
+    }, [audioActions]),
 
     // Musical system actions
     changeMusicalSystem: useCallback((systemKey: string) => {
@@ -302,6 +314,27 @@ export const useTreeState = (audioActions?: AudioActions) => {
         musical: {
           ...prev.musical,
           selectedSystem: systemKey
+        }
+      }));
+    }, []),
+
+    // UI actions
+    changeSelectedWorld: useCallback((world: string) => {
+      setState(prev => ({
+        ...prev,
+        ui: {
+          ...prev.ui,
+          selectedWorld: world
+        }
+      }));
+    }, []),
+
+    changeViewMode: useCallback((mode: string) => {
+      setState(prev => ({
+        ...prev,
+        ui: {
+          ...prev.ui,
+          viewMode: mode
         }
       }));
     }, []),
@@ -345,6 +378,8 @@ export const useTreeState = (audioActions?: AudioActions) => {
     highlightedPaths: updatedState.highlighting.paths,
     chordNotes: updatedState.highlighting.chordNotes,
     selectedMusicalSystem: updatedState.musical.selectedSystem,
-    patchedPaths: updatedState.musical.patchedPaths
+    patchedPaths: updatedState.musical.patchedPaths,
+    selectedWorld: updatedState.ui.selectedWorld,
+    viewMode: updatedState.ui.viewMode
   };
 };
