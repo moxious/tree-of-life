@@ -5,7 +5,7 @@ import InfoPanel from './InfoPanel';
 import VisualizationPicker from './VisualizationPicker';
 import WorldSelector from './WorldSelector';
 import MusicSystemPicker from './MusicSystemPicker';
-import WorldInfo from './WorldInfo';
+import MusicControl from './MusicControl';
 import Sephirah from './Sephirah';
 import Path from './Path';
 import AudioService from './AudioService';
@@ -125,7 +125,7 @@ const TreeOfLife: React.FC = () => {
     // Play audio for the musical note
     if (typeof (window as any).playTreeOfLifeNote === 'function') {
       console.log('🎵 TreeOfLife: Calling playTreeOfLifeNote with note:', pathData.musicalNote);
-      (window as any).playTreeOfLifeNote(pathData.musicalNote);
+      (window as any).playTreeOfLifeNote(pathData.musicalNote, `Path ${pathData.pathNumber}`);
     } else {
       console.error('🎵 TreeOfLife: playTreeOfLifeNote function not found on window object');
     }
@@ -194,7 +194,7 @@ const TreeOfLife: React.FC = () => {
       console.log(`🎵 TreeOfLife: Playing below chord with notes:`, belowChordNotes);
       
       if (typeof (window as any).playTreeOfLifeChord === 'function') {
-        (window as any).playTreeOfLifeChord(belowChordNotes);
+        (window as any).playTreeOfLifeChord(belowChordNotes, `${sephirah.name} (Below)`);
       } else {
         console.error('🎵 TreeOfLife: playTreeOfLifeChord function not found on window object');
       }
@@ -249,7 +249,6 @@ const TreeOfLife: React.FC = () => {
     return viewMode === 'card' ? world.tarotCards || {} : world.images || {};
   };
 
-  const currentWorld = worlds[selectedWorld as keyof typeof worlds];
   const currentImages = getCurrentWorldImages();
 
   return (
@@ -260,6 +259,8 @@ const TreeOfLife: React.FC = () => {
         {/* <WorldInfo world={currentWorld} /> */}
         
         <div className="controls">
+          <MusicControl />
+          
           <WorldSelector 
             selectedWorld={selectedWorld}
             onWorldChange={handleWorldChange}

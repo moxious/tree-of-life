@@ -1,14 +1,16 @@
 // AudioService component for Tree of Life sound management
 // Functional approach with pure functions and immutable state
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
 import * as Tone from 'tone';
-import type { AudioConfig } from '../types/audio';
+import type { AudioConfig, AudioServiceRef } from '../types/audio';
 import { generateOctaveFrequencies, normalizeNoteName } from '../utils/musicalNotes';
+import { setupGlobalAudioFunctions, cleanupGlobalAudioFunctions } from '../services/audioGlobalFunctions';
+import { addToNowPlaying, isSoundEnabled, setSoundEnabled } from '../hooks/useAudioControl';
 
 // Default configuration
 const defaultAudioConfig: AudioConfig = {
-  octaves: 6,
+  octaves: 1,
   baseOctave: 4,
   duration: 1000,
   waveform: 'sine',
@@ -31,9 +33,9 @@ const defaultAudioConfig: AudioConfig = {
     depth: 0.7
   },
   chord: {
-    octaves: 3,
+    octaves: 1,
     baseOctave: 4,
-    duration: 3000,
+    duration: 1000,
     waveform: 'sine',
     envelope: {
       attack: 0.5,
@@ -41,7 +43,7 @@ const defaultAudioConfig: AudioConfig = {
       sustain: 0.7,
       release: 2.0
     },
-    gain: 0.25,
+    gain: 0.0,
     reverb: {
       enabled: true,
       roomSize: 0.8,
@@ -153,10 +155,10 @@ const createVoiceId = (noteName: string, octave: number, timestamp: number): str
 };
 
 // AudioService component using functional programming principles
-const AudioService: React.FC<AudioServiceProps> = ({ 
+const AudioService = forwardRef<AudioServiceRef, AudioServiceProps>(({ 
   config = defaultAudioConfig, 
   onError 
-}) => {
+}, ref) => {
   const stateRef = useRef<AudioServiceState>(createInitialState());
   const effectsRef = useRef<ReturnType<typeof createEffectsChain> | null>(null);
   const voicesRef = useRef<Map<string, { oscillator: Tone.Oscillator; envelope: Tone.Envelope; gainNode: Tone.Gain }>>(new Map());
@@ -433,46 +435,39 @@ const AudioService: React.FC<AudioServiceProps> = ({
     };
   }, [config, initializeAudio, stopAllVoices]);
 
-  // Expose playNote function globally for use by other components
+  // Expose ref interface for MusicControl
+  useImperativeHandle(ref, () => ({
+    playNote: (note: string, source: string) => {
+      addToNowPlaying(source, [note], config.duration);
+      if (isSoundEnabled()) {
+        playNote(note, config);
+      }
+    },
+    playChord: (notes: string[], source: string) => {
+      addToNowPlaying(source, notes, config.chord.duration);
+      if (isSoundEnabled()) {
+        playChord(notes, config);
+      }
+    },
+    setSoundEnabled: (enabled: boolean) => {
+      setSoundEnabled(enabled);
+    },
+    isSoundEnabled: () => isSoundEnabled()
+  }), [playNote, playChord, config]);
+
+  // Set up global audio functions
   useEffect(() => {
-    console.log('🎵 AudioService: Exposing global playTreeOfLifeNote function');
-    (window as any).playTreeOfLifeNote = (noteName: string) => {
-      console.log('🎵 AudioService: Global playTreeOfLifeNote called with note:', noteName);
-      playNote(noteName, config);
-    };
-    
-    console.log('🎵 AudioService: Exposing global playTreeOfLifeChord function');
-    (window as any).playTreeOfLifeChord = (noteNames: string[]) => {
-      console.log('🎵 AudioService: Global playTreeOfLifeChord called with notes:', noteNames);
-      playChord(noteNames, config);
-    };
-    
-    // Add debug function to check audio state
-    (window as any).debugAudioState = () => {
-      const masterGain = effectsRef.current?.gain.gain.value || 0;
-      console.log('🎵 AudioService: Debug Info', {
-        isInitialized: stateRef.current.isInitialized,
-        isPlaying: stateRef.current.isPlaying,
-        activeVoices: stateRef.current.activeVoices.size,
-        maxVoices: MAX_SIMULTANEOUS_VOICES,
-        masterGain: masterGain,
-        masterGainDb: 20 * Math.log10(masterGain),
-        hasEffects: !!effectsRef.current,
-        toneContextState: Tone.context.state,
-        toneContextSampleRate: Tone.context.sampleRate
-      });
-    };
+    setupGlobalAudioFunctions(playNote, playChord, config);
     
     return () => {
-      console.log('🎵 AudioService: Cleaning up global audio functions');
-      delete (window as any).playTreeOfLifeNote;
-      delete (window as any).playTreeOfLifeChord;
-      delete (window as any).debugAudioState;
+      cleanupGlobalAudioFunctions();
     };
   }, [playNote, playChord, config]);
 
   // This component doesn't render anything - it's a service
   return null;
-};
+});
+
+AudioService.displayName = 'AudioService';
 
 export default AudioService;

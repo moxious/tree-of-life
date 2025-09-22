@@ -1,5 +1,20 @@
 // Audio types for Tree of Life sound feature
 
+export interface NowPlayingEntry {
+  id: string;
+  source: string;        // "Keter (Below)" or "Path 22"
+  notes: string[];       // ["C", "E", "G"]
+  startTime: number;
+  duration: number;
+}
+
+export interface AudioServiceRef {
+  playNote: (note: string, source: string) => void;
+  playChord: (notes: string[], source: string) => void;
+  setSoundEnabled: (enabled: boolean) => void;
+  isSoundEnabled: () => boolean;
+}
+
 export interface AudioConfig {
   readonly octaves: number;
   readonly baseOctave: number;
