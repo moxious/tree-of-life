@@ -8,16 +8,19 @@ import MusicSystemPicker from './MusicSystemPicker';
 import MusicControl from './MusicControl';
 import Sephirah from './Sephirah';
 import Path from './Path';
-import AudioService from './AudioService';
+import { AudioProvider, useAudio } from '../contexts/AudioContext';
+import AudioErrorBoundary from './AudioErrorBoundary';
 import { useTreeState } from '../hooks/useTreeState';
 import type { PathData } from '../types/treeOfLife';
 
-const TreeOfLife: React.FC = () => {
+// Inner component that uses audio context
+const TreeOfLifeInner: React.FC = () => {
   const { sephirot, styling, worlds } = treeConfig;
   const [selectedWorld, setSelectedWorld] = useState<string>('briah');
   const [viewMode, setViewMode] = useState<string>('sphere');
+  const { actions: audioActions } = useAudio();
 
-  // Use unified hook for all state management
+  // Use unified hook for all state management with audio actions
   const {
     actions,
     hoverState,
@@ -26,7 +29,7 @@ const TreeOfLife: React.FC = () => {
     chordNotes,
     selectedMusicalSystem,
     patchedPaths
-  } = useTreeState();
+  } = useTreeState(audioActions);
 
 
   const handleWorldChange = (world: string) => {
@@ -48,8 +51,6 @@ const TreeOfLife: React.FC = () => {
 
   return (
     <div className="tree-of-life-app">
-      <AudioService />
-      
       <div className="app-header">
         {/* <WorldInfo world={currentWorld} /> */}
         
@@ -154,6 +155,17 @@ const TreeOfLife: React.FC = () => {
         />
       </div>
     </div>
+  );
+};
+
+// Main component with AudioProvider and ErrorBoundary wrapper
+const TreeOfLife: React.FC = () => {
+  return (
+    <AudioErrorBoundary>
+      <AudioProvider>
+        <TreeOfLifeInner />
+      </AudioProvider>
+    </AudioErrorBoundary>
   );
 };
 

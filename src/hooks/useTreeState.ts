@@ -3,6 +3,7 @@ import treeConfig from '../treeOfLifeConfig.json';
 import musicalSystems from '../musicalSystems.json';
 import { patchMusicalNotes, validateMusicalSystem, findPathsBelow, findPathsAbove } from '../utils/treeOfLifeUtils';
 import type { SephirahData, PathData } from '../types/treeOfLife';
+import type { AudioActions } from '../types/audio';
 
 // Unified state interface
 interface TreeState {
@@ -57,7 +58,7 @@ interface TreeActions {
 }
 
 // Custom hook for unified tree state management
-export const useTreeState = () => {
+export const useTreeState = (audioActions?: AudioActions) => {
   // Single state object managing all tree interactions
   const [state, setState] = useState<TreeState>({
     hover: { 
@@ -267,11 +268,14 @@ export const useTreeState = () => {
       // Play only below chord if there are below paths
       if (pathsBelow.length > 0) {
         console.log(`🎵 TreeState: Playing below chord with notes:`, belowChordNotes);
+        console.log(`🎵 TreeState: audioActions available:`, !!audioActions);
+        console.log(`🎵 TreeState: playChord available:`, !!audioActions?.playChord);
         
-        if (typeof (window as any).playTreeOfLifeChord === 'function') {
-          (window as any).playTreeOfLifeChord(belowChordNotes, `${sephirah.name} (Below)`);
+        if (audioActions?.playChord) {
+          console.log(`🎵 TreeState: Calling playChord...`);
+          audioActions.playChord(belowChordNotes, `${sephirah.name} (Below)`);
         } else {
-          console.error('🎵 TreeState: playTreeOfLifeChord function not found on window object');
+          console.warn('🎵 TreeState: Audio actions not available for chord playback');
         }
       } else {
         console.log(`🎵 TreeState: No below paths for ${sephirah.name}, skipping chord playback`);
@@ -279,18 +283,9 @@ export const useTreeState = () => {
     }, [patchedPaths]),
 
     handlePathClick: useCallback((path: PathData) => {
-      console.log('🎵 TreeState: Path clicked!', {
-        pathNumber: path.pathNumber,
-        hebrewLetter: path.hebrewLetter,
-        musicalNote: path.musicalNote
-      });
-      
       // Play audio for the musical note
-      if (typeof (window as any).playTreeOfLifeNote === 'function') {
-        console.log('🎵 TreeState: Calling playTreeOfLifeNote with note:', path.musicalNote);
-        (window as any).playTreeOfLifeNote(path.musicalNote, `Path ${path.pathNumber}`);
-      } else {
-        console.error('🎵 TreeState: playTreeOfLifeNote function not found on window object');
+      if (audioActions?.playNote) {
+        audioActions.playNote(path.musicalNote, `Path ${path.pathNumber}`);
       }
       
       setState(prev => ({

@@ -1,9 +1,11 @@
 import React from 'react';
-import { useAudioControl } from '../hooks/useAudioControl';
+import { useAudio } from '../contexts/AudioContext';
 import type { NowPlayingEntry } from '../types/audio';
 
 const MusicControl: React.FC = () => {
-  const { nowPlaying, soundEnabled, setSoundEnabled } = useAudioControl();
+  const { state, actions } = useAudio();
+  const { nowPlaying, soundEnabled, error, isInitialized } = state;
+  const { setSoundEnabled, clearError } = actions;
 
   // Pure function to format notes for display
   const formatNotes = (notes: string[]): string => {
@@ -44,6 +46,17 @@ const MusicControl: React.FC = () => {
             <span className="toggle-label">Off</span>
           </label>
         </div>
+        {!isInitialized && (
+          <div className="audio-status">
+            <span className="status-text">Click "On" to initialize audio</span>
+          </div>
+        )}
+        {error && (
+          <div className="audio-error">
+            <span className="error-text">Audio Error: {error}</span>
+            <button onClick={clearError} className="clear-error-btn">×</button>
+          </div>
+        )}
       </div>
       
       <div className="now-playing-area">
