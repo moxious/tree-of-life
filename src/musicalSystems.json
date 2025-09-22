@@ -1,0 +1,1293 @@
+{
+    "Saint_Yves_d'Alveydre": {
+      "description": "French occultist (1842–1909). Assigned the 22 Hebrew letters/paths sequentially to the seven-note diatonic scale (C major), cycling through as needed.",
+      "references": [
+        "Saint-Yves d'Alveydre, 'La Mission des Juifs' (1884)"
+      ],
+      "system": "Saint-Yves Diatonic System",
+      "assignments": {
+        "11": "C",
+        "12": "D",
+        "13": "E",
+        "14": "F",
+        "15": "G",
+        "16": "A",
+        "17": "B",
+        "18": "C",
+        "19": "D",
+        "20": "E",
+        "21": "F",
+        "22": "G",
+        "23": "A",
+        "24": "B",
+        "25": "C",
+        "26": "D",
+        "27": "E",
+        "28": "F",
+        "29": "G",
+        "30": "A",
+        "31": "B",
+        "32": "C"
+      }
+    },
+    "Allan_Bennett_Golden_Dawn": {
+      "description": "Golden Dawn adept Allan Bennett (Frater I.A.) assigned the 12 zodiac signs to the chromatic scale beginning with Aries=C. Planets and elements were then mapped based on Golden Dawn color scale correspondences.",
+      "references": [
+        "Israel Regardie, 'The Middle Pillar' (with Thom Parrott’s appendix on Musical Qabalah)",
+        "Thom Parrott, 'The Musical Qabalah' (appendix)"
+      ],
+      "system": "Golden Dawn / Allan Bennett Chromatic System",
+      "assignments": {
+        "11": "C",
+        "12": "C",
+        "13": "C",
+        "14": "C",
+        "15": "C",
+        "16": "C♯",
+        "17": "D",
+        "18": "D♯",
+        "19": "E",
+        "20": "F",
+        "22": "F♯",
+        "24": "G",
+        "25": "G♯",
+        "26": "A",
+        "28": "A♯",
+        "29": "B"
+      }
+    },
+    "Paul_Foster_Case": {
+      "description": "B.O.T.A. founder Paul Foster Case systematized the 22 letters to a full chromatic set, anchored by the augmented triad (C–E–G♯) for the Mother letters. Doubles assigned via spectral color logic, zodiac mapped as Aries=C → Pisces=B.",
+      "references": [
+        "Paul Foster Case, 'The Tarot: A Key to the Wisdom of the Ages' (1931)",
+        "Alison P. Deadman, 'Letter, Musical Pitch, and Color in the Work of Paul Foster Case,' The Esoteric Quarterly, Spring 2006"
+      ],
+      "system": "Paul Foster Case / B.O.T.A. Chromatic System",
+      "assignments": {
+        "11": "E",
+        "12": "E",
+        "13": "G♯",
+        "14": "F♯",
+        "15": "C",
+        "16": "C♯",
+        "17": "D",
+        "18": "D♯",
+        "19": "E",
+        "20": "F",
+        "21": "A♯",
+        "22": "F♯",
+        "23": "G♯",
+        "24": "G",
+        "25": "G♯",
+        "26": "A",
+        "27": "C",
+        "28": "A♯",
+        "29": "B",
+        "30": "D",
+        "31": "C",
+        "32": "A"
+      }
+    },
+    "12Tone_Iteration_1": {
+      "description": "First optimization attempt using triad-based approach. Achieved 7 peppers and 14 consonant rows by using major triads (C, A, D) and collapsing dyads to unisons. Used 9/12 pitch classes with missing G♯.",
+      "references": [],
+      "system": "Iteration 1 - Triad Optimization",
+      "assignments": {
+        "11": "E",
+        "12": "G",
+        "13": "C",
+        "14": "E",
+        "15": "A",
+        "16": "C♯",
+        "17": "G",
+        "18": "C",
+        "19": "D",
+        "20": "F♯",
+        "21": "A",
+        "22": "B♭",
+        "23": "G",
+        "24": "G",
+        "25": "D",
+        "26": "B♭",
+        "27": "E♭",
+        "28": "G",
+        "29": "B♭",
+        "30": "G",
+        "31": "F",
+        "32": "D"
+      }
+    },
+    "12Tone_Iteration_2": {
+      "description": "Second iteration focusing on triad relationships and shared tones. Used C minor, G major, and D major as anchor triads with circle-of-fifths relationships. Achieved good consonant balance with major triads throughout.",
+      "references": [],
+      "system": "Iteration 2 - Circle of Fifths Anchors",
+      "assignments": {
+        "11": "C",
+        "12": "E♭",
+        "13": "G",
+        "14": "G",
+        "15": "B",
+        "16": "D",
+        "17": "F",
+        "18": "D",
+        "19": "G",
+        "20": "B",
+        "21": "D",
+        "22": "D",
+        "23": "F♯",
+        "24": "D",
+        "25": "F♯",
+        "26": "A",
+        "27": "D",
+        "28": "F♯",
+        "29": "A",
+        "30": "D",
+        "31": "D",
+        "32": "F♯"
+      }
+    },
+    "12Tone_Iteration_3": {
+      "description": "Third iteration using E♭ major, B♭ major, and F major as circle-of-fifths anchor triads. Introduced more chromaticism while maintaining triadic structure. Achieved 10 peppers and 8 consonant rows.",
+      "references": [],
+      "system": "Iteration 3 - Circle of Fifths E♭-B♭-F",
+      "assignments": {
+        "11": "E♭",
+        "12": "G",
+        "13": "B♭",
+        "14": "B♭",
+        "15": "F",
+        "16": "D",
+        "17": "C♯",
+        "18": "A♭",
+        "19": "B♭",
+        "20": "D",
+        "21": "F",
+        "22": "F",
+        "23": "F♯",
+        "24": "F",
+        "25": "A",
+        "26": "C",
+        "27": "F",
+        "28": "A",
+        "29": "C",
+        "30": "C",
+        "31": "G",
+        "32": "B"
+      }
+    },
+    "12Tone_Iteration_4": {
+      "description": "Fourth iteration refining the E♭-B♭-F circle-of-fifths approach. Improved tension distribution by adjusting specific paths while maintaining anchor triads. Achieved 8 peppers and 11 consonant rows.",
+      "references": [],
+      "system": "Iteration 4 - Refined Circle of Fifths",
+      "assignments": {
+        "11": "E♭",
+        "12": "G",
+        "13": "B♭",
+        "14": "B♭",
+        "15": "F",
+        "16": "D",
+        "17": "C♯",
+        "18": "A♭",
+        "19": "B♭",
+        "20": "D",
+        "21": "F",
+        "22": "F♯",
+        "23": "D",
+        "24": "F",
+        "25": "A",
+        "26": "C",
+        "27": "F",
+        "28": "A",
+        "29": "C",
+        "30": "B",
+        "31": "G",
+        "32": "E"
+      }
+    },
+    "12Tone_Iteration_5": {
+      "description": "Optimal mediant chain approach using D minor → B♭ major → G minor. Maximized shared tones across triangle boundaries, allowing extensive dyad collapsing. Achieved best results: 2 peppers and 16 consonant rows.",
+      "references": [],
+      "system": "Iteration 5 - Mediant Chain (Best)",
+      "assignments": {
+        "11": "D",
+        "12": "F",
+        "13": "A",
+        "14": "F",
+        "15": "B♭",
+        "16": "D",
+        "17": "D",
+        "18": "D",
+        "19": "D",
+        "20": "F",
+        "21": "B♭",
+        "22": "D",
+        "23": "D",
+        "24": "G",
+        "25": "B♭",
+        "26": "D",
+        "27": "G",
+        "28": "B♭",
+        "29": "D",
+        "30": "B♭",
+        "31": "B♭",
+        "32": "G"
+      }
+    },
+    "12Tone_Iteration_6": {
+      "description": "Final iteration using hub coloring strategy. Maintained D minor, B♭ major, G minor anchors while using Tiferet (Above) and Malkuth (Above) as hubs to introduce remaining pitch classes. Achieved 2 peppers and 16 consonant rows with full 12-pitch coverage.",
+      "references": [],
+      "system": "Iteration 6 - Hub Coloring Strategy",
+      "assignments": {
+        "11": "D",
+        "12": "F",
+        "13": "D",
+        "14": "F",
+        "15": "F",
+        "16": "D",
+        "17": "D",
+        "18": "D",
+        "19": "D",
+        "20": "F",
+        "21": "D",
+        "22": "D",
+        "23": "D",
+        "24": "D",
+        "25": "D",
+        "26": "A",
+        "27": "A",
+        "28": "C♯",
+        "29": "E",
+        "30": "E",
+        "31": "E",
+        "32": "E"
+      }
+    },
+    "Iteration_2_4Worlds_Assiah": {
+      "description": "Four Worlds approach using Assiah (Earth) with center triad constraint. Uses Eb major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 2 - Assiah 4Worlds (Center Triad)",
+      "assignments": {
+        "11": "Eb",
+        "12": "G",
+        "13": "Bb",
+        "14": "Bb",
+        "15": "D",
+        "16": "Eb",
+        "17": "C",
+        "18": "Bb",
+        "19": "Eb",
+        "20": "D",
+        "21": "Ab",
+        "22": "C",
+        "23": "Eb",
+        "24": "Bb",
+        "25": "D",
+        "26": "F",
+        "27": "Ab",
+        "28": "C",
+        "29": "Ab",
+        "30": "F",
+        "31": "Ab",
+        "32": "F"
+      }
+    },
+    "Iteration_2_4Worlds_Yetzirah": {
+      "description": "Four Worlds approach using Yetzirah (Air) with center triad constraint. Uses C major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 2 - Yetzirah 4Worlds (Center Triad)",
+      "assignments": {
+        "11": "C",
+        "12": "E",
+        "13": "G",
+        "14": "G",
+        "15": "B",
+        "16": "C",
+        "17": "A",
+        "18": "G",
+        "19": "C",
+        "20": "B",
+        "21": "F",
+        "22": "A",
+        "23": "C",
+        "24": "G",
+        "25": "B",
+        "26": "D",
+        "27": "F",
+        "28": "A",
+        "29": "F",
+        "30": "D",
+        "31": "F",
+        "32": "D"
+      }
+    },
+    "Iteration_2_4Worlds_Atziluth": {
+      "description": "Four Worlds approach using Atziluth (Fire) with center triad constraint. Uses A major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 2 - Atziluth 4Worlds (Center Triad)",
+      "assignments": {
+        "11": "A",
+        "12": "C#",
+        "13": "E",
+        "14": "E",
+        "15": "G#",
+        "16": "A",
+        "17": "F#",
+        "18": "E",
+        "19": "A",
+        "20": "G#",
+        "21": "D",
+        "22": "F#",
+        "23": "A",
+        "24": "E",
+        "25": "G#",
+        "26": "B",
+        "27": "D",
+        "28": "F#",
+        "29": "D",
+        "30": "B",
+        "31": "D",
+        "32": "B"
+      }
+    },
+    "Iteration_2_4Worlds_Briah": {
+      "description": "Four Worlds approach using Briah (Water) with center triad constraint. Uses F# major as center triad in Supernal triangle, with 5 additional triads distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 2 - Briah 4Worlds (Center Triad)",
+      "assignments": {
+        "11": "F#",
+        "12": "A#",
+        "13": "C#",
+        "14": "C#",
+        "15": "E#",
+        "16": "F#",
+        "17": "D#",
+        "18": "C#",
+        "19": "F#",
+        "20": "E#",
+        "21": "B",
+        "22": "D#",
+        "23": "F#",
+        "24": "C#",
+        "25": "E#",
+        "26": "G#",
+        "27": "B",
+        "28": "D#",
+        "29": "B",
+        "30": "G#",
+        "31": "B",
+        "32": "G#"
+      }
+    },
+    "Iteration_3_4Worlds_Assiah": {
+      "description": "Four Worlds approach using Assiah (Earth) with complete triad coverage constraint. Uses Eb major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 3 - Assiah 4Worlds (Complete Coverage)",
+      "assignments": {
+        "11": "Eb",
+        "12": "G",
+        "13": "Bb",
+        "14": "Bb",
+        "15": "D",
+        "16": "Eb",
+        "17": "C",
+        "18": "Bb",
+        "19": "Eb",
+        "20": "D",
+        "21": "Ab",
+        "22": "C",
+        "23": "G",
+        "24": "Bb",
+        "25": "D",
+        "26": "F",
+        "27": "Ab",
+        "28": "C",
+        "29": "Ab",
+        "30": "F",
+        "31": "Ab",
+        "32": "F"
+      }
+    },
+    "Iteration_3_4Worlds_Yetzirah": {
+      "description": "Four Worlds approach using Yetzirah (Air) with complete triad coverage constraint. Uses C major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 3 - Yetzirah 4Worlds (Complete Coverage)",
+      "assignments": {
+        "11": "C",
+        "12": "E",
+        "13": "G",
+        "14": "G",
+        "15": "B",
+        "16": "C",
+        "17": "A",
+        "18": "G",
+        "19": "C",
+        "20": "B",
+        "21": "F",
+        "22": "A",
+        "23": "E",
+        "24": "G",
+        "25": "B",
+        "26": "D",
+        "27": "F",
+        "28": "A",
+        "29": "F",
+        "30": "D",
+        "31": "F",
+        "32": "D"
+      }
+    },
+    "Iteration_3_4Worlds_Atziluth": {
+      "description": "Four Worlds approach using Atziluth (Fire) with complete triad coverage constraint. Uses A major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 3 - Atziluth 4Worlds (Complete Coverage)",
+      "assignments": {
+        "11": "A",
+        "12": "C#",
+        "13": "E",
+        "14": "E",
+        "15": "G#",
+        "16": "A",
+        "17": "F#",
+        "18": "E",
+        "19": "A",
+        "20": "G#",
+        "21": "D",
+        "22": "F#",
+        "23": "C#",
+        "24": "E",
+        "25": "G#",
+        "26": "B",
+        "27": "D",
+        "28": "F#",
+        "29": "D",
+        "30": "B",
+        "31": "D",
+        "32": "B"
+      }
+    },
+    "Iteration_3_4Worlds_Briah": {
+      "description": "Four Worlds approach using Briah (Water) with complete triad coverage constraint. Uses F# major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Achieved 0 peppers and 15 consonant rows with 1 rainbow extension.",
+      "references": [],
+      "system": "Iteration 3 - Briah 4Worlds (Complete Coverage)",
+      "assignments": {
+        "11": "F#",
+        "12": "A#",
+        "13": "C#",
+        "14": "C#",
+        "15": "E#",
+        "16": "F#",
+        "17": "D#",
+        "18": "C#",
+        "19": "F#",
+        "20": "E#",
+        "21": "B",
+        "22": "D#",
+        "23": "A#",
+        "24": "C#",
+        "25": "E#",
+        "26": "G#",
+        "27": "B",
+        "28": "D#",
+        "29": "B",
+        "30": "G#",
+        "31": "B",
+        "32": "G#"
+      }
+    },
+    "Four_Worlds_Assiah_Complete": {
+      "description": "Four Worlds approach using Assiah (Earth) with complete triad coverage. Uses Eb major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
+      "references": [],
+      "system": "Four Worlds - Assiah (Complete Coverage with Color)",
+      "assignments": {
+        "11": "Eb",
+        "12": "G",
+        "13": "D",
+        "14": "Bb",
+        "15": "D",
+        "16": "C",
+        "17": "D",
+        "18": "D",
+        "19": "Bb",
+        "20": "D",
+        "21": "A",
+        "22": "F",
+        "23": "D",
+        "24": "A",
+        "25": "D",
+        "26": "F",
+        "27": "Ab",
+        "28": "C",
+        "29": "A",
+        "30": "Eb",
+        "31": "C",
+        "32": "F"
+      },
+      "chords": [
+        {
+          "chord": "Keter (Below)",
+          "path_numbers": [11, 12, 13],
+          "chord_tones": ["Eb", "G", "D"],
+          "chord_name": "Dm(add6)",
+          "notes": "D minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Hockmah (Above)",
+          "path_numbers": [11],
+          "chord_tones": ["Eb"],
+          "chord_name": "Eb (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hockmah (Below)",
+          "path_numbers": [14, 15, 16],
+          "chord_tones": ["Bb", "D", "C"],
+          "chord_name": "Cm",
+          "notes": "C minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Above)",
+          "path_numbers": [12, 14],
+          "chord_tones": ["G", "Bb"],
+          "chord_name": "Bb (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Below)",
+          "path_numbers": [17, 18],
+          "chord_tones": ["D", "D"],
+          "chord_name": "D (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Above)",
+          "path_numbers": [16, 19],
+          "chord_tones": ["C", "Bb"],
+          "chord_name": "Bb (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Below)",
+          "path_numbers": [20, 21],
+          "chord_tones": ["D", "A"],
+          "chord_name": "Dm(add6)",
+          "notes": "D minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Gevurah (Above)",
+          "path_numbers": [17, 19],
+          "chord_tones": ["D", "Bb"],
+          "chord_name": "Bb (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Gevurah (Below)",
+          "path_numbers": [22, 23],
+          "chord_tones": ["F", "D"],
+          "chord_name": "Dm",
+          "notes": "D minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Above)",
+          "path_numbers": [13, 15, 18, 20, 22],
+          "chord_tones": ["D", "D", "D", "D", "F"],
+          "chord_name": "Dm",
+          "notes": "D minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Below)",
+          "path_numbers": [24, 25, 26],
+          "chord_tones": ["A", "D", "F"],
+          "chord_name": "Dm(add6)",
+          "notes": "D minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Netzach (Above)",
+          "path_numbers": [21, 24],
+          "chord_tones": ["A", "A"],
+          "chord_name": "A (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Netzach (Below)",
+          "path_numbers": [27, 28, 29],
+          "chord_tones": ["Ab", "C", "A"],
+          "chord_name": "Am(add♭6)",
+          "notes": "A minor with added flat 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Hod (Above)",
+          "path_numbers": [23, 25, 27],
+          "chord_tones": ["D", "D", "Ab"],
+          "chord_name": "Dm(add♭6)",
+          "notes": "D minor with added flat 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Hod (Below)",
+          "path_numbers": [30, 31],
+          "chord_tones": ["Eb", "C"],
+          "chord_name": "Cm",
+          "notes": "C minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Above)",
+          "path_numbers": [26, 28, 30],
+          "chord_tones": ["F", "C", "Eb"],
+          "chord_name": "Cm",
+          "notes": "C minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Below)",
+          "path_numbers": [32],
+          "chord_tones": ["F"],
+          "chord_name": "F (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Malkuth (Above)",
+          "path_numbers": [29, 31, 32],
+          "chord_tones": ["A", "C", "F"],
+          "chord_name": "F",
+          "notes": "F major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Supernal Tree-Triad",
+          "path_numbers": [11, 12, 14],
+          "chord_tones": ["Eb", "G", "Bb"],
+          "chord_name": "Eb",
+          "notes": "Eb major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Ethical Tree-Triad",
+          "path_numbers": [19, 20, 22],
+          "chord_tones": ["Bb", "D", "F"],
+          "chord_name": "Bb",
+          "notes": "Bb major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Astral Tree-Triad",
+          "path_numbers": [27, 28, 30],
+          "chord_tones": ["Ab", "C", "Eb"],
+          "chord_name": "Ab",
+          "notes": "Ab major",
+          "spice": "😌"
+        }
+      ]
+    },
+    "Four_Worlds_Yetzirah_Complete": {
+      "description": "Four Worlds approach using Yetzirah (Air) with complete triad coverage. Uses C major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
+      "references": [],
+      "system": "Four Worlds - Yetzirah (Complete Coverage with Color)",
+      "assignments": {
+        "11": "C",
+        "12": "E",
+        "13": "B",
+        "14": "G",
+        "15": "B",
+        "16": "F",
+        "17": "B",
+        "18": "B",
+        "19": "G",
+        "20": "B",
+        "21": "D",
+        "22": "A",
+        "23": "B",
+        "24": "D",
+        "25": "B",
+        "26": "A",
+        "27": "F",
+        "28": "A",
+        "29": "D",
+        "30": "E",
+        "31": "A",
+        "32": "A"
+      },
+      "chords": [
+        {
+          "chord": "Keter (Below)",
+          "path_numbers": [11, 12, 13],
+          "chord_tones": ["C", "E", "B"],
+          "chord_name": "Cmaj7",
+          "notes": "C major 7th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Hockmah (Above)",
+          "path_numbers": [11],
+          "chord_tones": ["C"],
+          "chord_name": "C (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hockmah (Below)",
+          "path_numbers": [14, 15, 16],
+          "chord_tones": ["G", "B", "F"],
+          "chord_name": "F",
+          "notes": "F major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Above)",
+          "path_numbers": [12, 14],
+          "chord_tones": ["E", "G"],
+          "chord_name": "G (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Below)",
+          "path_numbers": [17, 18],
+          "chord_tones": ["B", "B"],
+          "chord_name": "B (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Above)",
+          "path_numbers": [16, 19],
+          "chord_tones": ["F", "G"],
+          "chord_name": "G (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Below)",
+          "path_numbers": [20, 21],
+          "chord_tones": ["B", "D"],
+          "chord_name": "Bm(add6)",
+          "notes": "B minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Gevurah (Above)",
+          "path_numbers": [17, 19],
+          "chord_tones": ["B", "G"],
+          "chord_name": "G (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Gevurah (Below)",
+          "path_numbers": [22, 23],
+          "chord_tones": ["A", "B"],
+          "chord_name": "Bm",
+          "notes": "B minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Above)",
+          "path_numbers": [13, 15, 18, 20, 22],
+          "chord_tones": ["B", "B", "B", "B", "A"],
+          "chord_name": "Bm",
+          "notes": "B minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Below)",
+          "path_numbers": [24, 25, 26],
+          "chord_tones": ["D", "B", "A"],
+          "chord_name": "Bm(add6)",
+          "notes": "B minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Netzach (Above)",
+          "path_numbers": [21, 24],
+          "chord_tones": ["D", "D"],
+          "chord_name": "D (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Netzach (Below)",
+          "path_numbers": [27, 28, 29],
+          "chord_tones": ["F", "A", "D"],
+          "chord_name": "Dm",
+          "notes": "D minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hod (Above)",
+          "path_numbers": [23, 25, 27],
+          "chord_tones": ["B", "B", "F"],
+          "chord_name": "F",
+          "notes": "F major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hod (Below)",
+          "path_numbers": [30, 31],
+          "chord_tones": ["E", "A"],
+          "chord_name": "Am",
+          "notes": "A minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Above)",
+          "path_numbers": [26, 28, 30],
+          "chord_tones": ["A", "A", "E"],
+          "chord_name": "Am",
+          "notes": "A minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Below)",
+          "path_numbers": [32],
+          "chord_tones": ["A"],
+          "chord_name": "A (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Malkuth (Above)",
+          "path_numbers": [29, 31, 32],
+          "chord_tones": ["D", "A", "A"],
+          "chord_name": "A",
+          "notes": "A major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Supernal Tree-Triad",
+          "path_numbers": [11, 12, 14],
+          "chord_tones": ["C", "E", "G"],
+          "chord_name": "C",
+          "notes": "C major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Ethical Tree-Triad",
+          "path_numbers": [19, 20, 22],
+          "chord_tones": ["G", "B", "A"],
+          "chord_name": "G",
+          "notes": "G major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Astral Tree-Triad",
+          "path_numbers": [27, 28, 30],
+          "chord_tones": ["F", "A", "E"],
+          "chord_name": "F",
+          "notes": "F major",
+          "spice": "😌"
+        }
+      ]
+    },
+    "Four_Worlds_Atziluth_Complete": {
+      "description": "Four Worlds approach using Atziluth (Fire) with complete triad coverage. Uses A major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
+      "references": [],
+      "system": "Four Worlds - Atziluth (Complete Coverage with Color)",
+      "assignments": {
+        "11": "A",
+        "12": "C#",
+        "13": "G#",
+        "14": "E",
+        "15": "G#",
+        "16": "F#",
+        "17": "G#",
+        "18": "G#",
+        "19": "E",
+        "20": "G#",
+        "21": "B",
+        "22": "D",
+        "23": "G#",
+        "24": "B",
+        "25": "G#",
+        "26": "D",
+        "27": "F#",
+        "28": "D",
+        "29": "B",
+        "30": "C#",
+        "31": "D",
+        "32": "D"
+      },
+      "chords": [
+        {
+          "chord": "Keter (Below)",
+          "path_numbers": [11, 12, 13],
+          "chord_tones": ["A", "C#", "G#"],
+          "chord_name": "Amaj7",
+          "notes": "A major 7th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Hockmah (Above)",
+          "path_numbers": [11],
+          "chord_tones": ["A"],
+          "chord_name": "A (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hockmah (Below)",
+          "path_numbers": [14, 15, 16],
+          "chord_tones": ["E", "G#", "F#"],
+          "chord_name": "F#m",
+          "notes": "F# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Above)",
+          "path_numbers": [12, 14],
+          "chord_tones": ["C#", "E"],
+          "chord_name": "E (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Below)",
+          "path_numbers": [17, 18],
+          "chord_tones": ["G#", "G#"],
+          "chord_name": "G# (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Above)",
+          "path_numbers": [16, 19],
+          "chord_tones": ["F#", "E"],
+          "chord_name": "E (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Below)",
+          "path_numbers": [20, 21],
+          "chord_tones": ["G#", "B"],
+          "chord_name": "G#m(add6)",
+          "notes": "G# minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Gevurah (Above)",
+          "path_numbers": [17, 19],
+          "chord_tones": ["G#", "E"],
+          "chord_name": "E (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Gevurah (Below)",
+          "path_numbers": [22, 23],
+          "chord_tones": ["D", "G#"],
+          "chord_name": "G#m",
+          "notes": "G# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Above)",
+          "path_numbers": [13, 15, 18, 20, 22],
+          "chord_tones": ["G#", "G#", "G#", "G#", "D"],
+          "chord_name": "G#m",
+          "notes": "G# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Below)",
+          "path_numbers": [24, 25, 26],
+          "chord_tones": ["B", "G#", "D"],
+          "chord_name": "G#m(add6)",
+          "notes": "G# minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Netzach (Above)",
+          "path_numbers": [21, 24],
+          "chord_tones": ["B", "B"],
+          "chord_name": "B (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Netzach (Below)",
+          "path_numbers": [27, 28, 29],
+          "chord_tones": ["F#", "D", "B"],
+          "chord_name": "Bm",
+          "notes": "B minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hod (Above)",
+          "path_numbers": [23, 25, 27],
+          "chord_tones": ["G#", "G#", "F#"],
+          "chord_name": "F#m",
+          "notes": "F# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hod (Below)",
+          "path_numbers": [30, 31],
+          "chord_tones": ["C#", "D"],
+          "chord_name": "C#m",
+          "notes": "C# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Above)",
+          "path_numbers": [26, 28, 30],
+          "chord_tones": ["D", "D", "C#"],
+          "chord_name": "C#m",
+          "notes": "C# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Below)",
+          "path_numbers": [32],
+          "chord_tones": ["D"],
+          "chord_name": "D (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Malkuth (Above)",
+          "path_numbers": [29, 31, 32],
+          "chord_tones": ["B", "D", "D"],
+          "chord_name": "D",
+          "notes": "D major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Supernal Tree-Triad",
+          "path_numbers": [11, 12, 14],
+          "chord_tones": ["A", "C#", "E"],
+          "chord_name": "A",
+          "notes": "A major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Ethical Tree-Triad",
+          "path_numbers": [19, 20, 22],
+          "chord_tones": ["E", "G#", "D"],
+          "chord_name": "E",
+          "notes": "E major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Astral Tree-Triad",
+          "path_numbers": [27, 28, 30],
+          "chord_tones": ["F#", "D", "C#"],
+          "chord_name": "F#",
+          "notes": "F# major",
+          "spice": "😌"
+        }
+      ]
+    },
+    "Four_Worlds_Briah_Complete": {
+      "description": "Four Worlds approach using Briah (Water) with complete triad coverage. Uses F# major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
+      "references": [],
+      "system": "Four Worlds - Briah (Complete Coverage with Color)",
+      "assignments": {
+        "11": "F#",
+        "12": "A#",
+        "13": "E#",
+        "14": "C#",
+        "15": "E#",
+        "16": "D#",
+        "17": "E#",
+        "18": "E#",
+        "19": "C#",
+        "20": "E#",
+        "21": "G#",
+        "22": "B",
+        "23": "E#",
+        "24": "G#",
+        "25": "E#",
+        "26": "B",
+        "27": "D#",
+        "28": "B",
+        "29": "G#",
+        "30": "A#",
+        "31": "B",
+        "32": "B"
+      },
+      "chords": [
+        {
+          "chord": "Keter (Below)",
+          "path_numbers": [11, 12, 13],
+          "chord_tones": ["F#", "A#", "E#"],
+          "chord_name": "F#maj7",
+          "notes": "F# major 7th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Hockmah (Above)",
+          "path_numbers": [11],
+          "chord_tones": ["F#"],
+          "chord_name": "F# (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hockmah (Below)",
+          "path_numbers": [14, 15, 16],
+          "chord_tones": ["C#", "E#", "D#"],
+          "chord_name": "D#m",
+          "notes": "D# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Above)",
+          "path_numbers": [12, 14],
+          "chord_tones": ["A#", "C#"],
+          "chord_name": "C# (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Binah (Below)",
+          "path_numbers": [17, 18],
+          "chord_tones": ["E#", "E#"],
+          "chord_name": "E# (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Above)",
+          "path_numbers": [16, 19],
+          "chord_tones": ["D#", "C#"],
+          "chord_name": "C# (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hesed (Below)",
+          "path_numbers": [20, 21],
+          "chord_tones": ["E#", "G#"],
+          "chord_name": "E#m(add6)",
+          "notes": "E# minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Gevurah (Above)",
+          "path_numbers": [17, 19],
+          "chord_tones": ["E#", "C#"],
+          "chord_name": "C# (tone)",
+          "notes": "Collapsed dyad",
+          "spice": "😌"
+        },
+        {
+          "chord": "Gevurah (Below)",
+          "path_numbers": [22, 23],
+          "chord_tones": ["B", "E#"],
+          "chord_name": "E#m",
+          "notes": "E# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Above)",
+          "path_numbers": [13, 15, 18, 20, 22],
+          "chord_tones": ["E#", "E#", "E#", "E#", "B"],
+          "chord_name": "E#m",
+          "notes": "E# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Tiferet (Below)",
+          "path_numbers": [24, 25, 26],
+          "chord_tones": ["G#", "E#", "B"],
+          "chord_name": "E#m(add6)",
+          "notes": "E# minor with added 6th",
+          "spice": "🌈"
+        },
+        {
+          "chord": "Netzach (Above)",
+          "path_numbers": [21, 24],
+          "chord_tones": ["G#", "G#"],
+          "chord_name": "G# (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Netzach (Below)",
+          "path_numbers": [27, 28, 29],
+          "chord_tones": ["D#", "B", "G#"],
+          "chord_name": "G#m",
+          "notes": "G# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hod (Above)",
+          "path_numbers": [23, 25, 27],
+          "chord_tones": ["E#", "E#", "D#"],
+          "chord_name": "D#m",
+          "notes": "D# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Hod (Below)",
+          "path_numbers": [30, 31],
+          "chord_tones": ["A#", "B"],
+          "chord_name": "A#m",
+          "notes": "A# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Above)",
+          "path_numbers": [26, 28, 30],
+          "chord_tones": ["B", "B", "A#"],
+          "chord_name": "A#m",
+          "notes": "A# minor",
+          "spice": "😌"
+        },
+        {
+          "chord": "Yesod (Below)",
+          "path_numbers": [32],
+          "chord_tones": ["B"],
+          "chord_name": "B (tone)",
+          "notes": "Unison",
+          "spice": "😌"
+        },
+        {
+          "chord": "Malkuth (Above)",
+          "path_numbers": [29, 31, 32],
+          "chord_tones": ["G#", "B", "B"],
+          "chord_name": "B",
+          "notes": "B major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Supernal Tree-Triad",
+          "path_numbers": [11, 12, 14],
+          "chord_tones": ["F#", "A#", "C#"],
+          "chord_name": "F#",
+          "notes": "F# major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Ethical Tree-Triad",
+          "path_numbers": [19, 20, 22],
+          "chord_tones": ["C#", "E#", "B"],
+          "chord_name": "C#",
+          "notes": "C# major",
+          "spice": "😌"
+        },
+        {
+          "chord": "Astral Tree-Triad",
+          "path_numbers": [27, 28, 30],
+          "chord_tones": ["D#", "B", "A#"],
+          "chord_name": "B",
+          "notes": "B major",
+          "spice": "😌"
+        }
+      ]
+    }
+  }
