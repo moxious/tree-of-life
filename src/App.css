@@ -37,7 +37,6 @@ body {
   align-items: center;
   gap: 20px;
   width: 100%;
-  margin-bottom: 20px;
 }
 
 /* App Main Content */
@@ -92,7 +91,7 @@ body {
 .controls {
   display: flex;
   gap: 20px;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -153,7 +152,7 @@ body {
   border-radius: 12px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 16px;
+  margin-top: 0px;
   overflow: hidden;
   width: 800px; /* Minimum width to prevent vertical scrolling */
   max-width: 100%; /* Don't exceed container width */
@@ -756,7 +755,7 @@ body {
   top: 20px;
   transition: all 0.3s ease;
   flex: 0 0 auto;
-  z-index: 1;
+  z-index: 0;
 }
 
 .info-panel-content {
@@ -948,13 +947,6 @@ body {
   .button-group {
     flex-wrap: wrap;
     gap: 8px;
-  }
-
-  .music-system-picker {
-    max-width: 100%;
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
   }
 
   .music-control {

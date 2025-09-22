@@ -32,8 +32,6 @@ const TreeOfLifeInner: React.FC = () => {
     chordType
   } = useTreeState(audioActions);
 
-
-
   const getCurrentWorldImages = () => {
     const world = worlds[selectedWorld as keyof typeof worlds];
     if (!world) return {};
@@ -59,16 +57,18 @@ const TreeOfLifeInner: React.FC = () => {
             onViewModeChange={actions.changeViewMode}
           />
 
-          <ChordPicker
-            chordType={chordType}
-            onChordTypeChange={actions.changeChordType}
-          />
+          <div className="chord-picker-container">
+            <ChordPicker
+              chordType={chordType}
+              onChordTypeChange={actions.changeChordType}
+            />
 
-          <MusicSystemPicker
-            selectedSystem={selectedMusicalSystem}
-            onSystemChange={actions.changeMusicalSystem}
-            musicalSystems={musicalSystems}
-          />
+            <MusicSystemPicker
+              selectedSystem={selectedMusicalSystem}
+              onSystemChange={actions.changeMusicalSystem}
+              musicalSystems={musicalSystems}
+            />
+          </div>
         </div>
         
         <NowPlaying />
