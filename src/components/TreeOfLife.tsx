@@ -3,6 +3,7 @@ import treeConfig from '../treeOfLifeConfig.json';
 import musicalSystems from '../musicalSystems.json';
 import InfoPanel from './InfoPanel';
 import VisualizationPicker from './VisualizationPicker';
+import ChordPicker from './ChordPicker';
 import WorldSelector from './WorldSelector';
 import MusicSystemPicker from './MusicSystemPicker';
 import MusicControl from './MusicControl';
@@ -24,11 +25,11 @@ const TreeOfLifeInner: React.FC = () => {
     hoverState,
     pinnedState,
     highlightedPaths,
-    chordNotes,
     selectedMusicalSystem,
     patchedPaths,
     selectedWorld,
-    viewMode
+    viewMode,
+    chordType
   } = useTreeState(audioActions);
 
 
@@ -59,6 +60,11 @@ const TreeOfLifeInner: React.FC = () => {
           <VisualizationPicker 
             viewMode={viewMode}
             onViewModeChange={actions.changeViewMode}
+          />
+
+          <ChordPicker
+            chordType={chordType}
+            onChordTypeChange={actions.changeChordType}
           />
 
           <MusicSystemPicker
@@ -144,7 +150,6 @@ const TreeOfLifeInner: React.FC = () => {
           isSephirahPinned={pinnedState.isSephirahPinned}
           onUnpinSephirah={actions.unpinSephirah}
           selectedWorld={selectedWorld}
-          chordNotes={chordNotes}
         />
       </div>
     </div>

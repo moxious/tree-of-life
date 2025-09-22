@@ -9,13 +9,9 @@ interface InfoPanelProps {
   isSephirahPinned: boolean;
   onUnpinSephirah: () => void;
   selectedWorld: string;
-  chordNotes: {
-    above: string[];
-    below: string[];
-  };
 }
 
-const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned, onUnpinPath, isSephirahPinned, onUnpinSephirah, selectedWorld, chordNotes }) => {
+const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned, onUnpinPath, isSephirahPinned, onUnpinSephirah, selectedWorld }) => {
   if (!sephirah && !pathData) {
     return (
       <div className="info-panel">
@@ -68,40 +64,6 @@ const InfoPanel: React.FC<InfoPanelProps> = ({ sephirah, pathData, isPathPinned,
                 <td className="label">Color ({selectedWorld}):</td>
                 <td className="value">{worldColor}</td>
               </tr>
-              {(chordNotes.above.length > 0 || chordNotes.below.length > 0) && (
-                <>
-                  {chordNotes.above.length > 0 && (
-                    <tr>
-                      <td className="label">Chords Above:</td>
-                      <td className="value">
-                        <div className="chord-notes">
-                          {[...new Set(chordNotes.above)].map((note, index) => (
-                            <span key={index} className="chord-note">
-                              {note}
-                              {index < [...new Set(chordNotes.above)].length - 1 && ', '}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                  {chordNotes.below.length > 0 && (
-                    <tr>
-                      <td className="label">Chords Below:</td>
-                      <td className="value">
-                        <div className="chord-notes">
-                          {[...new Set(chordNotes.below)].map((note, index) => (
-                            <span key={index} className="chord-note">
-                              {note}
-                              {index < [...new Set(chordNotes.below)].length - 1 && ', '}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </>
-              )}
             </tbody>
           </table>
         </div>

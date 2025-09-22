@@ -32,6 +32,7 @@ interface TreeState {
   ui: {
     selectedWorld: string;
     viewMode: string;
+    chordType: string;
   };
 }
 
@@ -59,6 +60,7 @@ interface TreeActions {
   // UI actions
   changeSelectedWorld: (world: string) => void;
   changeViewMode: (mode: string) => void;
+  changeChordType: (type: string) => void;
   
   // Utility actions
   clearAll: () => void;
@@ -90,7 +92,8 @@ export const useTreeState = (audioActions?: AudioActions) => {
     },
     ui: {
       selectedWorld: 'briah',
-      viewMode: 'sphere'
+      viewMode: 'sphere',
+      chordType: 'below'
     }
   });
 
@@ -239,6 +242,7 @@ export const useTreeState = (audioActions?: AudioActions) => {
       const treeTriadPaths = findTreeTriadPaths(sephirah.name, patchedPaths);
       
       console.log(`🎵 TreeState: Sephirah ${sephirah.name} clicked!`);
+      console.log("Paths above: ", pathsAbove);
       /*
       console.log(`🎵 TreeState: Paths above:`, pathsAbove.map(p => ({
         pathNumber: p.pathNumber,
@@ -257,10 +261,32 @@ export const useTreeState = (audioActions?: AudioActions) => {
       })));
       */
       
-      // Highlight only below paths briefly
-      const belowPathNumbers = new Set(pathsBelow.map(path => path.pathNumber));
+      // Get selected chord type and corresponding paths/notes
+      let selectedPaths: PathData[];
+      let selectedChordNotes: string[];
+      let pathNumbers: Set<number>;
       
-      // Update chord notes for info panel (both above and below)
+      console.log(`🎵 TreeState: Chord type:`, state.ui.chordType);
+      switch (state.ui.chordType) {
+        case 'above':
+          selectedPaths = pathsAbove;
+          selectedChordNotes = pathsAbove.map(path => path.musicalNote);
+          pathNumbers = new Set(pathsAbove.map(path => path.pathNumber));
+          break;
+        case 'triad':
+          selectedPaths = treeTriadPaths;
+          selectedChordNotes = treeTriadPaths.map(path => path.musicalNote);
+          pathNumbers = new Set(treeTriadPaths.map(path => path.pathNumber));
+          break;
+        case 'below':
+        default:
+          selectedPaths = pathsBelow;
+          selectedChordNotes = pathsBelow.map(path => path.musicalNote);
+          pathNumbers = new Set(pathsBelow.map(path => path.pathNumber));
+          break;
+      }
+      
+      // Update chord notes for info panel (all types for reference)
       const aboveChordNotes = pathsAbove.map(path => path.musicalNote);
       const belowChordNotes = pathsBelow.map(path => path.musicalNote);
       const treeTriadChordNotes = treeTriadPaths.map(path => path.musicalNote);
@@ -268,7 +294,7 @@ export const useTreeState = (audioActions?: AudioActions) => {
       setState(prev => ({
         ...prev,
         highlighting: {
-          paths: belowPathNumbers,
+          paths: pathNumbers,
           chordNotes: { above: aboveChordNotes, below: belowChordNotes, treeTriad: treeTriadChordNotes }
         },
         pinned: { sephirah, path: null, isSephirahPinned: true, isPathPinned: false },
@@ -286,22 +312,22 @@ export const useTreeState = (audioActions?: AudioActions) => {
         }));
       }, 2000);
       
-      // Play only below chord if there are below paths
-      if (pathsBelow.length > 0) {
-        console.log(`🎵 TreeState: Playing below chord with notes:`, belowChordNotes);
+      // Play selected chord type if there are paths
+      if (selectedPaths.length > 0) {
+        console.log(`🎵 TreeState: Playing ${state.ui.chordType} chord with notes:`, selectedChordNotes);
         console.log(`🎵 TreeState: audioActions available:`, !!audioActions);
         console.log(`🎵 TreeState: playChord available:`, !!audioActions?.playChord);
         
         if (audioActions?.playChord) {
           console.log(`🎵 TreeState: Calling playChord...`);
-          audioActions.playChord(belowChordNotes, `${sephirah.name} (Below)`);
+          audioActions.playChord(selectedChordNotes, `${sephirah.name} (${state.ui.chordType.charAt(0).toUpperCase() + state.ui.chordType.slice(1)})`);
         } else {
           console.warn('🎵 TreeState: Audio actions not available for chord playback');
         }
       } else {
-        console.log(`🎵 TreeState: No below paths for ${sephirah.name}, skipping chord playback`);
+        console.log(`🎵 TreeState: No ${state.ui.chordType} paths for ${sephirah.name}, skipping chord playback`);
       }
-    }, [patchedPaths, audioActions]),
+    }, [patchedPaths, audioActions, state.ui.chordType]),
 
     handlePathClick: useCallback((path: PathData) => {
       // Play audio for the musical note
@@ -348,6 +374,16 @@ export const useTreeState = (audioActions?: AudioActions) => {
       }));
     }, []),
 
+    changeChordType: useCallback((type: string) => {
+      setState(prev => ({
+        ...prev,
+        ui: {
+          ...prev.ui,
+          chordType: type
+        }
+      }));
+    }, []),
+
     // Utility actions
     clearAll: useCallback(() => {
       setState(prev => ({
@@ -389,6 +425,7 @@ export const useTreeState = (audioActions?: AudioActions) => {
     selectedMusicalSystem: updatedState.musical.selectedSystem,
     patchedPaths: updatedState.musical.patchedPaths,
     selectedWorld: updatedState.ui.selectedWorld,
-    viewMode: updatedState.ui.viewMode
+    viewMode: updatedState.ui.viewMode,
+    chordType: updatedState.ui.chordType
   };
 };

@@ -57,10 +57,10 @@ export const findPathsAbove = (
   const fromSephirahNumber = getSephirahNumber(sephirahName);
   
   return allPaths.filter(path => {
-    if (path.from !== sephirahName) return false;
+    if (path.to !== sephirahName) return false;
     
     try {
-      const toSephirahNumber = getSephirahNumber(path.to);
+      const toSephirahNumber = getSephirahNumber(path.from);
       return toSephirahNumber < fromSephirahNumber;
     } catch {
       // If to sephirah is not found (e.g., Da'ath), exclude this path
