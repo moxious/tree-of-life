@@ -77,7 +77,7 @@ export const useTreeState = (audioActions?: AudioActions) => {
       chordNotes: { above: [], below: [] } 
     },
     musical: { 
-      selectedSystem: 'Paul_Foster_Case', 
+      selectedSystem: 'Four_Worlds_Briah_Complete', 
       patchedPaths: [] 
     }
   });

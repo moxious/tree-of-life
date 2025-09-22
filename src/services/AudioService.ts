@@ -203,7 +203,7 @@ export class AudioService implements IAudioService {
           
           const octave = octaves[index];
           const voiceId = this.createVoiceId(`${noteName}-chord`, octave, timestamp + delayMs);
-          console.log(`🎵 AudioService: Creating chord oscillator for ${noteName}${octave} at ${frequency}Hz`);
+          // console.log(`🎵 AudioService: Creating chord oscillator for ${noteName}${octave} at ${frequency}Hz`);
           
           const voice = this.createOscillator(frequency, {
             ...config,
@@ -220,11 +220,11 @@ export class AudioService implements IAudioService {
           
           if (chordConfig.style === 'simultaneous') {
             voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
-            console.log(`🎵 AudioService: Envelope triggered for ${voiceId}`);
+            // console.log(`🎵 AudioService: Envelope triggered for ${voiceId}`);
           } else {
             setTimeout(() => {
               voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
-              console.log(`🎵 AudioService: Envelope triggered (delayed) for ${voiceId}`);
+              // console.log(`🎵 AudioService: Envelope triggered (delayed) for ${voiceId}`);
             }, delayMs);
           }
           
