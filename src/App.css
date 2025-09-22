@@ -93,6 +93,10 @@ body {
   display: flex;
   gap: 20px;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 /* World Selector Styles */
@@ -115,6 +119,67 @@ body {
   border-radius: 16px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Music System Picker Styles */
+.music-system-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0; /* Allow flex item to shrink below content size */
+}
+
+.picker-label {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.musical-system-select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.musical-system-select:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.musical-system-select:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+.musical-system-select option {
+  background: #1a1a1a;
+  color: #ffffff;
+  padding: 8px;
+  white-space: pre-line;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 .world-button {
@@ -509,6 +574,13 @@ body {
     flex-wrap: wrap;
     gap: 8px;
     padding: 12px;
+  }
+
+  .music-system-picker {
+    max-width: 100%;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
   }
 
   .world-button {

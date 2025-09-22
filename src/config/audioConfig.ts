@@ -8,9 +8,9 @@ export type { AudioConfig };
 
 // Default configuration - immutable object
 export const defaultAudioConfig: AudioConfig = {
-  octaves: 3,
+  octaves: 1,
   baseOctave: 4,
-  duration: 2000,
+  duration: 1000,
   waveform: 'sine',
   envelope: {
     attack: 0.3,

@@ -153,3 +153,53 @@ export const getAllSephirotNames = (allPaths: PathData[]): string[] => {
   });
   return Array.from(sephirotSet);
 };
+
+// Pure function to patch musical notes in tree configuration
+export const patchMusicalNotes = (
+  treeConfig: any,
+  musicalSystem: any
+): any => {
+  if (!musicalSystem || !musicalSystem.assignments) {
+    console.warn('Invalid musical system provided, using original config');
+    return treeConfig;
+  }
+
+  // Create a deep copy of the tree config to avoid mutations
+  const patchedConfig = JSON.parse(JSON.stringify(treeConfig));
+  
+  // Patch each path with the new musical note assignment
+  patchedConfig.paths = treeConfig.paths.map((path: any) => {
+    const pathNumber = path.pathNumber.toString();
+    const newNote = musicalSystem.assignments[pathNumber];
+    
+    if (!newNote) {
+      console.warn(
+        `Missing musical assignment for path ${pathNumber} in system ${musicalSystem.system || 'unknown'}. Using fallback 'C'.`
+      );
+      return { ...path, musicalNote: 'C' };
+    }
+    
+    return { ...path, musicalNote: newNote };
+  });
+  
+  return patchedConfig;
+};
+
+// Pure function to validate musical system has all required assignments
+export const validateMusicalSystem = (
+  musicalSystem: any,
+  requiredPathNumbers: number[]
+): { isValid: boolean; missingPaths: number[] } => {
+  if (!musicalSystem || !musicalSystem.assignments) {
+    return { isValid: false, missingPaths: requiredPathNumbers };
+  }
+  
+  const missingPaths = requiredPathNumbers.filter(pathNumber => 
+    !musicalSystem.assignments[pathNumber.toString()]
+  );
+  
+  return {
+    isValid: missingPaths.length === 0,
+    missingPaths
+  };
+};

@@ -8,22 +8,26 @@ const A4_FREQUENCY = 440;
 const NOTE_NAMES = [
   'C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'
 ] as const;
+const ENHARMONIC_EQUIVALENTS = [
+  'C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'
+] as const;
 
-type NoteName = typeof NOTE_NAMES[number];
+type NoteName = typeof NOTE_NAMES[number] | typeof ENHARMONIC_EQUIVALENTS[number];
 
 // Pure function to get note index from note name
 const getNoteIndex = (noteName: NoteName): number => {
-  const index = NOTE_NAMES.indexOf(noteName);
-  if (index === -1) {
-    throw new Error(`Invalid note name: ${noteName}`);
+  const index = NOTE_NAMES.indexOf(noteName as any);
+  const enharmonicIndex = ENHARMONIC_EQUIVALENTS.indexOf(noteName as any);
+  if (index === -1 && enharmonicIndex === -1) {
+    throw new Error(`Invalid note name: '${noteName}'`);
   }
-  return index;
+  return index === -1 ? enharmonicIndex : index;
 };
 
 // Pure function to calculate frequency from note name and octave
 export const calculateFrequency = (noteName: string, octave: number): number => {
   // Validate note name exists in our mapping
-  if (!NOTE_NAMES.includes(noteName as NoteName)) {
+  if (!isValidNoteName(noteName)) {
     throw new Error(`Unsupported note name: ${noteName}`);
   }
   
@@ -48,7 +52,9 @@ export const generateOctaveFrequencies = (
 
 // Pure function to validate note name format
 export const isValidNoteName = (noteName: string): boolean => {
-  return NOTE_NAMES.includes(noteName as NoteName);
+  const index = NOTE_NAMES.indexOf(noteName as any);
+  const enharmonicIndex = ENHARMONIC_EQUIVALENTS.indexOf(noteName as any);
+  return index !== -1 || enharmonicIndex !== -1;
 };
 
 // Pure function to get all supported note names

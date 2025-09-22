@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import treeConfig from '../treeOfLifeConfig.json';
+import musicalSystems from '../musicalSystems.json';
 import InfoPanel from './InfoPanel';
 import VisualizationPicker from './VisualizationPicker';
 import WorldSelector from './WorldSelector';
+import MusicSystemPicker from './MusicSystemPicker';
 import WorldInfo from './WorldInfo';
 import Sephirah from './Sephirah';
 import Path from './Path';
 import AudioService from './AudioService';
-import { findPathsBelow, findPathsAbove } from '../utils/treeOfLifeUtils';
+import { findPathsBelow, findPathsAbove, patchMusicalNotes, validateMusicalSystem } from '../utils/treeOfLifeUtils';
 import type { SephirahData, PathData, PinnedState, HoverState } from '../types/treeOfLife';
 
 const TreeOfLife: React.FC = () => {
-  const { sephirot, paths, styling, worlds } = treeConfig;
+  const { sephirot, styling, worlds } = treeConfig;
   const [selectedWorld, setSelectedWorld] = useState<string>('briah');
   const [viewMode, setViewMode] = useState<string>('sphere');
+  const [selectedMusicalSystem, setSelectedMusicalSystem] = useState<string>('Paul_Foster_Case');
   // Hover state
   const [hoverState, setHoverState] = useState<HoverState>({
     sephirah: null,
@@ -37,6 +40,34 @@ const TreeOfLife: React.FC = () => {
     above: string[];
     below: string[];
   }>({ above: [], below: [] });
+
+  // Pure function to get current musical system
+  const getCurrentMusicalSystem = (systemKey: string) => (musicalSystems as Record<string, any>)[systemKey];
+
+  // Memoized patched configuration with musical notes
+  const patchedConfig = useMemo(() => {
+    const currentSystem = getCurrentMusicalSystem(selectedMusicalSystem);
+    
+    if (!currentSystem) {
+      console.warn(`Musical system '${selectedMusicalSystem}' not found, using original config`);
+      return treeConfig;
+    }
+
+    // Validate the musical system
+    const requiredPathNumbers = Array.from({ length: 22 }, (_, i) => i + 11); // 11-32
+    const validation = validateMusicalSystem(currentSystem, requiredPathNumbers);
+    
+    if (!validation.isValid) {
+      console.warn(
+        `Musical system '${selectedMusicalSystem}' is missing assignments for paths: ${validation.missingPaths.join(', ')}`
+      );
+    }
+
+    return patchMusicalNotes(treeConfig, currentSystem);
+  }, [selectedMusicalSystem]);
+
+  // Extract patched paths for use throughout the component
+  const patchedPaths = patchedConfig.paths;
 
   const handleSephirahHover = (sephirah: SephirahData) => {
     // Don't show hover info if something is pinned
@@ -129,8 +160,8 @@ const TreeOfLife: React.FC = () => {
 
   const handleSephirahClick = (sephirah: SephirahData) => {
     // Find paths above and below the sephirah
-    const pathsAbove = findPathsAbove(sephirah.name, paths);
-    const pathsBelow = findPathsBelow(sephirah.name, paths);
+    const pathsAbove = findPathsAbove(sephirah.name, patchedPaths);
+    const pathsBelow = findPathsBelow(sephirah.name, patchedPaths);
     
     console.log(`🎵 TreeOfLife: Sephirah ${sephirah.name} clicked!`);
     console.log(`🎵 TreeOfLife: Paths above:`, pathsAbove.map(p => ({
@@ -207,6 +238,10 @@ const TreeOfLife: React.FC = () => {
     setViewMode(mode);
   };
 
+  const handleMusicalSystemChange = (systemKey: string) => {
+    setSelectedMusicalSystem(systemKey);
+  };
+
   const getCurrentWorldImages = () => {
     const world = worlds[selectedWorld as keyof typeof worlds];
     if (!world) return {};
@@ -222,7 +257,7 @@ const TreeOfLife: React.FC = () => {
       <AudioService />
       
       <div className="app-header">
-        <WorldInfo world={currentWorld} />
+        {/* <WorldInfo world={currentWorld} /> */}
         
         <div className="controls">
           <WorldSelector 
@@ -234,6 +269,12 @@ const TreeOfLife: React.FC = () => {
           <VisualizationPicker 
             viewMode={viewMode}
             onViewModeChange={handleViewModeChange}
+          />
+
+          <MusicSystemPicker
+            selectedSystem={selectedMusicalSystem}
+            onSystemChange={handleMusicalSystemChange}
+            musicalSystems={musicalSystems}
           />
         </div>
       </div>
@@ -247,7 +288,7 @@ const TreeOfLife: React.FC = () => {
             className="tree-of-life-svg"
           >
             {/* Render paths first so they appear behind circles */}
-            {paths.map((path, index) => {
+            {patchedPaths.map((path: PathData, index: number) => {
               const fromSephirah = sephirot[path.from as keyof typeof sephirot];
               const toSephirah = sephirot[path.to as keyof typeof sephirot];
               
