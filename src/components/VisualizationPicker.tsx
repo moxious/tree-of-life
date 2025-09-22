@@ -12,7 +12,7 @@ const VisualizationPicker: React.FC<VisualizationPickerProps> = ({ viewMode, onV
   ];
 
   return (
-    <div className="visualization-picker">
+    <div className="control-container control-container--horizontal">
       {modes.map(({ key, label }) => (
         <button
           key={key}

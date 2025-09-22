@@ -22,7 +22,7 @@ const MusicSystemPicker: React.FC<MusicSystemPickerProps> = ({
   };
 
   return (
-    <div className="music-system-picker">
+    <div className="control-container control-container--vertical control-container--full-width">
       <label className="picker-label">
         Musical System:
       </label>

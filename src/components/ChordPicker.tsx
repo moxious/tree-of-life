@@ -13,7 +13,7 @@ const ChordPicker: React.FC<ChordPickerProps> = ({ chordType, onChordTypeChange 
   ];
 
   return (
-    <div className="chord-picker">
+    <div className="control-container control-container--horizontal">
       {chordTypes.map(({ key, label, description }) => (
         <button
           key={key}

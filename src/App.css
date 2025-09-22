@@ -98,50 +98,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* World Selector Styles */
-.world-selector {
-  /* Extends: .control-container + .control-container--horizontal */
-  display: flex;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-sizing: border-box;
-}
-
-/* Visualization Picker Styles */
-.visualization-picker {
-  /* Extends: .control-container + .control-container--horizontal */
-  display: flex;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-sizing: border-box;
-}
-
-/* Music System Picker Styles */
-.music-system-picker {
-  /* Extends: .control-container + .control-container--vertical + .control-container--full-width */
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  max-width: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  flex: 1;
-  min-width: 0; /* Allow flex item to shrink below content size */
-}
-
 /* Now Playing Styles */
 .now-playing {
   display: flex;
@@ -212,22 +168,6 @@ body {
   animation: fadeIn 0.3s ease-in;
 }
 
-.entry-source {
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.entry-notes {
-  color: #e0e0e0;
-  font-size: 12px;
-}
-
-.no-sounds {
-  color: #888888;
-  font-size: 12px;
-  font-style: italic;
-}
 
 @keyframes fadeIn {
   from {
@@ -315,19 +255,6 @@ body {
   gap: 12px;
   flex-wrap: wrap;
   width: fit-content;
-}
-
-/* Chord Picker Styles */
-.chord-picker {
-  /* Extends: .control-container + .control-container--horizontal */
-  display: flex;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-sizing: border-box;
 }
 
 /* Music System Select Styles */
@@ -598,13 +525,11 @@ body {
 
 /* Special styling for Da'ath (the hidden sephirah) */
 .sephirah-group[data-name="daath"] .sephirah {
-  /* filter: drop-shadow(0 0 6px rgba(128, 128, 128, 0.4)); */
   opacity: 0.85;
   z-index: 1; /* Ensure Da'ath is below paths */
 }
 
 .sephirah-group[data-name="daath"]:hover .sephirah {
-  /* filter: drop-shadow(0 0 12px rgba(128, 128, 128, 0.7)); */
   transform: scale(2);
   opacity: 1;
   z-index: 1; /* Ensure Da'ath is below paths */
@@ -613,7 +538,6 @@ body {
 .sephirah-label {
   opacity: 0;
   transition: opacity 0.3s ease;
-  /* filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8)); */
   pointer-events: none;
 }
 
@@ -644,7 +568,6 @@ body {
 
 .path-group:hover .tree-path {
   opacity: 1;
-  /* filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8)); */
   stroke-width: 3;
 }
 
@@ -666,7 +589,6 @@ body {
 /* Hebrew letter styling on paths */
 .path-letter {
   font-family: 'Arial Unicode MS', 'Lucida Grande', 'Tahoma', sans-serif;
-  /* filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.8)); */
   transition: all 0.3s ease;
   pointer-events: none;
   opacity: 0.9;
@@ -675,8 +597,6 @@ body {
 
 .path-group:hover .path-letter {
   opacity: 1;
-  /* filter: drop-shadow(0 0 5px rgba(102, 102, 102, 0.8)); */
-  /* transform: scale(1.2); */
   font-size: 3em;
 }
 

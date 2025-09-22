@@ -15,7 +15,7 @@ const WorldSelector: React.FC<WorldSelectorProps> = ({ selectedWorld, onWorldCha
   ];
 
   return (
-    <div className="world-selector">
+    <div className="control-container control-container--horizontal">
       {worldOrder.map(({ key, transliteration }) => {
         const world = worlds[key];
         return (
