@@ -1,24 +1,10 @@
 import React from 'react';
 import { useAudio } from '../contexts/AudioContext';
-import type { NowPlayingEntry } from '../types/audio';
 
 const MusicControl: React.FC = () => {
   const { state, actions } = useAudio();
-  const { nowPlaying, soundEnabled, error, isInitialized } = state;
+  const { soundEnabled, error, isInitialized } = state;
   const { setSoundEnabled, clearError } = actions;
-
-  // Pure function to format notes for display
-  const formatNotes = (notes: string[]): string => {
-    return notes.join(', ');
-  };
-
-  // Pure function to render now playing entry
-  const renderNowPlayingEntry = (entry: NowPlayingEntry) => (
-    <div key={entry.id} className="now-playing-entry">
-      <span className="entry-source">{entry.source}:</span>
-      <span className="entry-notes">{formatNotes(entry.notes)}</span>
-    </div>
-  );
 
   return (
     <div className="music-control">
@@ -46,9 +32,14 @@ const MusicControl: React.FC = () => {
             <span className="toggle-label">Off</span>
           </label>
         </div>
-        {!isInitialized && (
+        {(!isInitialized || !soundEnabled) && (
           <div className="audio-status">
             <span className="status-text">Click "On" to permit audio</span>
+          </div>
+        )}
+        {isInitialized && soundEnabled && (
+          <div className="audio-status">
+            <span className="status-text">Interact with the tree to play</span>
           </div>
         )}
         {error && (
@@ -59,18 +50,6 @@ const MusicControl: React.FC = () => {
         )}
       </div>
       
-      <div className="now-playing-area">
-        <label className="picker-label">
-          Now Playing:
-        </label>
-        <div className="now-playing-list">
-          {nowPlaying.length === 0 ? (
-            <div className="no-sounds">No sounds playing</div>
-          ) : (
-            nowPlaying.map(renderNowPlayingEntry)
-          )}
-        </div>
-      </div>
     </div>
   );
 };

@@ -320,7 +320,10 @@ export const useTreeState = (audioActions?: AudioActions) => {
         
         if (audioActions?.playChord) {
           console.log(`🎵 TreeState: Calling playChord...`);
-          audioActions.playChord(selectedChordNotes, `${sephirah.name} (${state.ui.chordType.charAt(0).toUpperCase() + state.ui.chordType.slice(1)})`);
+          const sName = sephirah.name.charAt(0).toUpperCase() + sephirah.name.slice(1);
+          const cType = state.ui.chordType.charAt(0).toUpperCase() + state.ui.chordType.slice(1);
+          const chordName = `${sName} (${cType})`
+          audioActions.playChord(selectedChordNotes, chordName);
         } else {
           console.warn('🎵 TreeState: Audio actions not available for chord playback');
         }

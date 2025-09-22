@@ -6,6 +6,7 @@ import CombinedPicker from './CombinedPicker';
 import ChordPicker from './ChordPicker';
 import MusicSystemPicker from './MusicSystemPicker';
 import MusicControl from './MusicControl';
+import NowPlaying from './NowPlaying';
 import Sephirah from './Sephirah';
 import Path from './Path';
 import { AudioProvider, useAudio } from '../contexts/AudioContext';
@@ -69,6 +70,8 @@ const TreeOfLifeInner: React.FC = () => {
             musicalSystems={musicalSystems}
           />
         </div>
+        
+        <NowPlaying />
       </div>
 
       <div className="app-main">
