@@ -2,9 +2,8 @@ import React from 'react';
 import treeConfig from '../treeOfLifeConfig.json';
 import musicalSystems from '../musicalSystems.json';
 import InfoPanel from './InfoPanel';
-import VisualizationPicker from './VisualizationPicker';
+import CombinedPicker from './CombinedPicker';
 import ChordPicker from './ChordPicker';
-import WorldSelector from './WorldSelector';
 import MusicSystemPicker from './MusicSystemPicker';
 import MusicControl from './MusicControl';
 import Sephirah from './Sephirah';
@@ -51,13 +50,10 @@ const TreeOfLifeInner: React.FC = () => {
         <div className="controls">
           <MusicControl />
           
-          <WorldSelector 
+          <CombinedPicker
             selectedWorld={selectedWorld}
             onWorldChange={actions.changeSelectedWorld}
             worlds={worlds}
-          />
-          
-          <VisualizationPicker 
             viewMode={viewMode}
             onViewModeChange={actions.changeViewMode}
           />

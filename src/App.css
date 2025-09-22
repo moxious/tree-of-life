@@ -145,6 +145,37 @@ body {
   margin-bottom: 4px;
 }
 
+/* Combined Picker Styles */
+.combined-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 100%;
+  width: fit-content;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.combined-picker .picker-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: fit-content;
+}
+
+.combined-picker .button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: fit-content;
+}
+
 /* Custom Select Styles */
 .custom-select-container {
   position: relative;
@@ -721,6 +752,15 @@ body {
     flex-wrap: wrap;
     gap: 8px;
     padding: 12px;
+  }
+
+  .combined-picker {
+    padding: 12px;
+  }
+
+  .combined-picker .button-group {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .visualization-picker {

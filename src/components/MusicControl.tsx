@@ -48,7 +48,7 @@ const MusicControl: React.FC = () => {
         </div>
         {!isInitialized && (
           <div className="audio-status">
-            <span className="status-text">Click "On" to initialize audio</span>
+            <span className="status-text">Click "On" to permit audio</span>
           </div>
         )}
         {error && (
