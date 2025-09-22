@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import treeConfig from '../treeOfLifeConfig.json';
 import musicalSystems from '../musicalSystems.json';
-import { patchMusicalNotes, validateMusicalSystem, findPathsBelow, findPathsAbove } from '../utils/treeOfLifeUtils';
+import { patchMusicalNotes, validateMusicalSystem, findPathsBelow, findPathsAbove, findTreeTriadPaths } from '../utils/treeOfLifeUtils';
 import type { SephirahData, PathData } from '../types/treeOfLife';
 import type { AudioActions } from '../types/audio';
 
@@ -236,8 +236,10 @@ export const useTreeState = (audioActions?: AudioActions) => {
       // Find paths above and below the sephirah
       const pathsAbove = findPathsAbove(sephirah.name, patchedPaths);
       const pathsBelow = findPathsBelow(sephirah.name, patchedPaths);
+      const treeTriadPaths = findTreeTriadPaths(sephirah.name, patchedPaths);
       
       console.log(`🎵 TreeState: Sephirah ${sephirah.name} clicked!`);
+      /*
       console.log(`🎵 TreeState: Paths above:`, pathsAbove.map(p => ({
         pathNumber: p.pathNumber,
         hebrewLetter: p.hebrewLetter,
@@ -248,6 +250,12 @@ export const useTreeState = (audioActions?: AudioActions) => {
         hebrewLetter: p.hebrewLetter,
         musicalNote: p.musicalNote
       })));
+      console.log(`🎵 TreeState: Tree triad paths:`, treeTriadPaths.map(p => ({
+        pathNumber: p.pathNumber,
+        hebrewLetter: p.hebrewLetter,
+        musicalNote: p.musicalNote
+      })));
+      */
       
       // Highlight only below paths briefly
       const belowPathNumbers = new Set(pathsBelow.map(path => path.pathNumber));
@@ -255,12 +263,13 @@ export const useTreeState = (audioActions?: AudioActions) => {
       // Update chord notes for info panel (both above and below)
       const aboveChordNotes = pathsAbove.map(path => path.musicalNote);
       const belowChordNotes = pathsBelow.map(path => path.musicalNote);
+      const treeTriadChordNotes = treeTriadPaths.map(path => path.musicalNote);
       
       setState(prev => ({
         ...prev,
         highlighting: {
           paths: belowPathNumbers,
-          chordNotes: { above: aboveChordNotes, below: belowChordNotes }
+          chordNotes: { above: aboveChordNotes, below: belowChordNotes, treeTriad: treeTriadChordNotes }
         },
         pinned: { sephirah, path: null, isSephirahPinned: true, isPathPinned: false },
         hover: { sephirah: null, path: null, activeHoveredSephirah: null }

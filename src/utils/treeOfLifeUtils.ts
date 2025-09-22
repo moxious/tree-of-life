@@ -69,6 +69,53 @@ export const findPathsAbove = (
   });
 };
 
+// Pure function to find tree-triad paths for a given sephirah
+// Tree-triad chords are based on the three structural triangles in the Tree of Life
+export const findTreeTriadPaths = (
+  sephirahName: string, 
+  allPaths: PathData[]
+): PathData[] => {
+  const sephirah = sephirahName.toLowerCase();
+  
+  // Define the three tree-triad triangles and their path numbers
+  const treeTriadDefinitions = {
+    // Supernal Tree-Triad: Keter–Hockmah–Binah (paths 11, 12, 14)
+    supernal: {
+      sephirot: ['keter', 'hockmah', 'binah'],
+      pathNumbers: [11, 12, 14]
+    },
+    // Ethical Tree-Triad: Hesed–Gevurah–Tiferet (paths 19, 20, 22)
+    ethical: {
+      sephirot: ['hesed', 'gevurah', 'tiferet'],
+      pathNumbers: [19, 20, 22]
+    },
+    // Astral Tree-Triad: Netzach–Hod–Yesod (paths 27, 28, 30)
+    astral: {
+      sephirot: ['netzach', 'hod', 'yesod'],
+      pathNumbers: [27, 28, 30]
+    }
+  };
+  
+  // Special case: Malkuth only has the path to Yesod (path 32)
+  if (sephirah === 'malkuth') {
+    return allPaths.filter(path => path.pathNumber === 32);
+  }
+  
+  // Check if the sephirah is part of any tree-triad
+  for (const [triadName, triad] of Object.entries(treeTriadDefinitions)) {
+    if (triad.sephirot.includes(sephirah)) {
+      // Return all paths that are part of this tree-triad
+      return allPaths.filter(path => 
+        triad.pathNumbers.includes(path.pathNumber)
+      );
+    }
+  }
+  
+  // If sephirah is not part of any tree-triad (e.g., Da'ath), return empty array
+  console.warn(`Sephirah ${sephirah} is not part of any tree-triad`);
+  return [];
+};
+
 // Pure function to find all incident paths for a given sephirah
 // An incident path is one where the sephirah appears as either "from" or "to"
 export const findIncidentPaths = (

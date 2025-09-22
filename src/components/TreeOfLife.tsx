@@ -32,13 +32,6 @@ const TreeOfLifeInner: React.FC = () => {
   } = useTreeState(audioActions);
 
 
-  const handleWorldChange = (world: string) => {
-    actions.changeSelectedWorld(world);
-  };
-
-  const handleViewModeChange = (mode: string) => {
-    actions.changeViewMode(mode);
-  };
 
   const getCurrentWorldImages = () => {
     const world = worlds[selectedWorld as keyof typeof worlds];
@@ -59,13 +52,13 @@ const TreeOfLifeInner: React.FC = () => {
           
           <WorldSelector 
             selectedWorld={selectedWorld}
-            onWorldChange={handleWorldChange}
+            onWorldChange={actions.changeSelectedWorld}
             worlds={worlds}
           />
           
           <VisualizationPicker 
             viewMode={viewMode}
-            onViewModeChange={handleViewModeChange}
+            onViewModeChange={actions.changeViewMode}
           />
 
           <MusicSystemPicker
