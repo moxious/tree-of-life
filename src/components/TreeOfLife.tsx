@@ -9,64 +9,25 @@ import MusicControl from './MusicControl';
 import Sephirah from './Sephirah';
 import Path from './Path';
 import AudioService from './AudioService';
-import { useHoverState } from '../hooks/useHoverState';
-import { usePinnedState } from '../hooks/usePinnedState';
-import { useMusicalSystem } from '../hooks/useMusicalSystem';
-import { useTreeInteractions } from '../hooks/useTreeInteractions';
-import type { SephirahData, PathData } from '../types/treeOfLife';
+import { useTreeState } from '../hooks/useTreeState';
+import type { PathData } from '../types/treeOfLife';
 
 const TreeOfLife: React.FC = () => {
   const { sephirot, styling, worlds } = treeConfig;
   const [selectedWorld, setSelectedWorld] = useState<string>('briah');
   const [viewMode, setViewMode] = useState<string>('sphere');
 
-  // Use custom hooks for state management
+  // Use unified hook for all state management
   const {
+    actions,
     hoverState,
-    handleSephirahHover,
-    handleSephirahLeave,
-    handlePathHover,
-    handlePathLeave
-  } = useHoverState();
-
-  const {
     pinnedState,
-    toggleSephirahPin,
-    togglePathPin,
-    unpinSephirah,
-    unpinPath
-  } = usePinnedState();
-
-  const {
-    selectedMusicalSystem,
-    patchedPaths,
-    handleMusicalSystemChange
-  } = useMusicalSystem();
-
-  const {
     highlightedPaths,
     chordNotes,
-    handlePathClick,
-    handleSephirahClick
-  } = useTreeInteractions(patchedPaths);
+    selectedMusicalSystem,
+    patchedPaths
+  } = useTreeState();
 
-  // Wrapper functions to pass pinned state to hover handlers
-  const handleSephirahHoverWithPinned = (sephirah: SephirahData) => {
-    handleSephirahHover(sephirah, pinnedState.isSephirahPinned || pinnedState.isPathPinned);
-  };
-
-  const handlePathHoverWithPinned = (pathData: PathData) => {
-    handlePathHover(pathData, pinnedState.isSephirahPinned || pinnedState.isPathPinned);
-  };
-
-  // Wrapper functions for click handlers
-  const handlePathClickWithPin = (pathData: PathData) => {
-    handlePathClick(pathData, togglePathPin);
-  };
-
-  const handleSephirahClickWithPin = (sephirah: SephirahData) => {
-    handleSephirahClick(sephirah, toggleSephirahPin);
-  };
 
   const handleWorldChange = (world: string) => {
     setSelectedWorld(world);
@@ -108,7 +69,7 @@ const TreeOfLife: React.FC = () => {
 
           <MusicSystemPicker
             selectedSystem={selectedMusicalSystem}
-            onSystemChange={handleMusicalSystemChange}
+            onSystemChange={actions.changeMusicalSystem}
             musicalSystems={musicalSystems}
           />
         </div>
@@ -151,9 +112,9 @@ const TreeOfLife: React.FC = () => {
                     from: path.from,
                     to: path.to
                   }}
-                  onHover={handlePathHoverWithPinned}
-                  onLeave={handlePathLeave}
-                  onPathClick={handlePathClickWithPin}
+                  onHover={actions.handlePathHover}
+                  onLeave={actions.handlePathLeave}
+                  onPathClick={actions.handlePathClick}
                   isPinned={pinnedState.path?.pathNumber === path.pathNumber}
                   isHighlighted={highlightedPaths.has(path.pathNumber)}
                 />
@@ -172,9 +133,9 @@ const TreeOfLife: React.FC = () => {
                 viewMode={viewMode}
                 metadata={sephirah.metadata}
                 worldColors={sephirah.in}
-                onHover={handleSephirahHoverWithPinned}
-                onLeave={handleSephirahLeave}
-                onSephirahClick={handleSephirahClickWithPin}
+                onHover={actions.handleSephirahHover}
+                onLeave={actions.handleSephirahLeave}
+                onSephirahClick={actions.handleSephirahClick}
                 isPinned={pinnedState.sephirah?.name === key}
               />
             ))}
@@ -185,9 +146,9 @@ const TreeOfLife: React.FC = () => {
           sephirah={pinnedState.isSephirahPinned ? pinnedState.sephirah : hoverState.sephirah} 
           pathData={pinnedState.isPathPinned ? pinnedState.path : hoverState.path}
           isPathPinned={pinnedState.isPathPinned}
-          onUnpinPath={unpinPath}
+          onUnpinPath={actions.unpinPath}
           isSephirahPinned={pinnedState.isSephirahPinned}
-          onUnpinSephirah={unpinSephirah}
+          onUnpinSephirah={actions.unpinSephirah}
           selectedWorld={selectedWorld}
           chordNotes={chordNotes}
         />
