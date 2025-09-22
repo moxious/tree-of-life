@@ -145,7 +145,13 @@ body {
   margin-bottom: 4px;
 }
 
-.musical-system-select {
+/* Custom Select Styles */
+.custom-select-container {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
@@ -155,31 +161,86 @@ body {
   font-family: inherit;
   cursor: pointer;
   transition: all 0.2s ease;
-  outline: none;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  white-space: normal;
-  word-wrap: break-word;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 20px;
 }
 
-.musical-system-select:hover {
+.custom-select:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.musical-system-select:focus {
+.custom-select.open {
   border-color: #8b5cf6;
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
-.musical-system-select option {
-  background: #1a1a1a;
+.selected-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-arrow {
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+  font-size: 12px;
+}
+
+.custom-select.open .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.custom-select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+}
+
+.custom-select-option {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.custom-select-option:last-child {
+  border-bottom: none;
+}
+
+.custom-select-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.custom-select-option.selected {
+  background: rgba(139, 92, 246, 0.2);
+}
+
+.option-name {
   color: #ffffff;
-  padding: 8px;
-  white-space: pre-line;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.option-description {
+  color: #cccccc;
+  font-size: 12px;
+  line-height: 1.4;
   word-wrap: break-word;
-  max-width: 100%;
+  white-space: normal;
 }
 
 .world-button {
@@ -210,14 +271,14 @@ body {
 }
 
 .world-hebrew {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   color: #ffffff;
   direction: rtl;
 }
 
 .world-english {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
@@ -434,6 +495,7 @@ body {
   top: 20px;
   transition: all 0.3s ease;
   flex: 0 0 auto;
+  z-index: 1;
 }
 
 .info-panel-content {
@@ -571,9 +633,12 @@ body {
   }
 
   .visualization-picker {
+    padding: 12px;
+  }
+
+  .button-group {
     flex-wrap: wrap;
     gap: 8px;
-    padding: 12px;
   }
 
   .music-system-picker {
@@ -581,6 +646,14 @@ body {
     width: 100%;
     padding: 12px;
     box-sizing: border-box;
+  }
+
+  .custom-select-options {
+    max-height: 200px;
+  }
+
+  .option-description {
+    font-size: 11px;
   }
 
   .world-button {
