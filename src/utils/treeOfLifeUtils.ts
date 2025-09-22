@@ -102,7 +102,7 @@ export const findTreeTriadPaths = (
   }
   
   // Check if the sephirah is part of any tree-triad
-  for (const [triadName, triad] of Object.entries(treeTriadDefinitions)) {
+  for (const [, triad] of Object.entries(treeTriadDefinitions)) {
     if (triad.sephirot.includes(sephirah)) {
       // Return all paths that are part of this tree-triad
       return allPaths.filter(path => 
