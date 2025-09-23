@@ -176,6 +176,7 @@
       }
     },
     "Four_Worlds_Assiah_Complete": {
+      "world": "assiah",
       "description": "Four Worlds approach using Assiah (Earth) with complete triad coverage. Uses Eb major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
       "system": "4Worlds - Assiah (Complete Coverage with Color)",
@@ -375,6 +376,7 @@
       ]
     },
     "Four_Worlds_Yetzirah_Complete": {
+      "world": "yetzirah",
       "description": "Four Worlds approach using Yetzirah (Air) with complete triad coverage. Uses C major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
       "system": "4Worlds - Yetzirah (Complete Coverage with Color)",
@@ -574,6 +576,7 @@
       ]
     },
     "Four_Worlds_Atziluth_Complete": {
+      "world": "atziluth",
       "description": "Four Worlds approach using Atziluth (Fire) with complete triad coverage. Uses A major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
       "system": "4Worlds - Atziluth (Complete Coverage with Color)",
@@ -773,6 +776,7 @@
       ]
     },
     "Four_Worlds_Briah_Complete": {
+      "world": "briah",
       "description": "Four Worlds approach using Briah (Water) with complete triad coverage. Uses F♯ major as center triad in Supernal triangle, with all 6 possible triads from the world's palette distributed across the tree. Features colorful extensions including add6 and add♭6 chords. Achieved 0 peppers, 12 consonant rows, and 6 rainbow extensions.",
       "references": [],
       "system": "4Worlds - Briah (Complete Coverage with Color)",
