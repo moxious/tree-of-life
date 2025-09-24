@@ -288,9 +288,6 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     try {
       // Initialize audio context on first interaction (for iOS compatibility)
       await initializeAudioOnFirstInteraction();
-      
-      console.log('🎵 AudioContext: Adding to now playing...');
-      // Add to now playing regardless of sound enabled state
       addToNowPlaying(source, notes, config.chord.duration);
       
       // Only play audio if sound is enabled - use current state value from ref

@@ -78,6 +78,7 @@ const TreeOfLifeInner: React.FC = () => {
               selectedSystem={selectedMusicalSystem}
               onSystemChange={actions.changeMusicalSystem}
               musicalSystems={musicalSystems}
+              world={selectedWorld}
             />
           </div>
         </div>
