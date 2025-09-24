@@ -50,7 +50,7 @@ const MusicSystemPicker: React.FC<MusicSystemPickerProps> = ({
   };
 
   const filterMusicalSystems = (musicalSystems: Record<string, MusicalSystem>, world: string) => {
-    return Object.entries(musicalSystems).filter(([key, system]) => {
+    return Object.entries(musicalSystems).filter(([, system]) => {
       if (!system.world) { return true; }
       if (system.world === world) { return true; }
       return false;
