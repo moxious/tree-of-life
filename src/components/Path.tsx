@@ -1,5 +1,6 @@
 import React from 'react';
 import type { PathData } from '../types/treeOfLife';
+import { useTouchEvents } from '../hooks/useTouchEvents';
 
 interface PathProps {
   from: { x: number; y: number };
@@ -17,6 +18,15 @@ interface PathProps {
 const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, onHover, onLeave, onPathClick, isPinned, isHighlighted = false }) => {
   const midX = (from.x + to.x) / 2;
   const midY = (from.y + to.y) / 2;
+
+  // Create touch event handlers
+  const touchEvents = useTouchEvents({
+    onHover: () => onHover(metadata),
+    onLeave: onLeave,
+    onClick: () => onPathClick(metadata),
+    preventDefault: true,
+    touchDelay: 100
+  });
 
   // Calculate path direction vector
   const dx = to.x - from.x;
@@ -93,9 +103,7 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
         stroke="transparent"
         strokeWidth="12"
         className="path-hit-area"
-        onMouseEnter={() => onHover(metadata)}
-        onMouseLeave={onLeave}
-        onClick={() => onPathClick(metadata)}
+        {...touchEvents}
       />
       {/* Visible path line */}
       <line

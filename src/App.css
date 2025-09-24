@@ -458,11 +458,17 @@ body {
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   overflow: visible; /* Allow scaled content to extend beyond SVG bounds */
+  touch-action: manipulation; /* Prevent double-tap zoom */
+  -webkit-touch-callout: none; /* Disable iOS callout menu */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .sephirah-group {
   cursor: pointer;
   transition: all 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
 }
 
 .sephirah {
@@ -549,6 +555,8 @@ body {
 .path-group {
   cursor: pointer;
   z-index: 10; /* Ensure paths are above labels */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight */
 }
 
 /* Invisible wide stroke for better hover detection */
@@ -842,6 +850,15 @@ body {
 
   .path-letter {
     font-size: 14px;
+  }
+
+  /* Increase touch targets for mobile */
+  .sephirah-hover-detector {
+    stroke-width: 20; /* Larger touch area */
+  }
+  
+  .path-hit-area {
+    stroke-width: 20; /* Larger touch area */
   }
 
   .info-panel {

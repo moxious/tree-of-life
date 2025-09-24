@@ -4,9 +4,11 @@
 import * as Tone from 'tone';
 import type { AudioConfig, IAudioService, Voice } from '../types/audio';
 import { generateOctaveFrequencies, normalizeNoteName } from '../utils/musicalNotes';
+import { isIOS, getTouchCapabilities } from '../utils/deviceDetection';
 
 // Maximum number of simultaneous voices to prevent clipping
 const MAX_SIMULTANEOUS_VOICES = 12;
+const MAX_SIMULTANEOUS_VOICES_IOS = 8; // Lower limit for iOS devices
 
 export class AudioService implements IAudioService {
   private isInitializedFlag = false;
@@ -18,6 +20,7 @@ export class AudioService implements IAudioService {
   } | null = null;
   private voices = new Map<string, Voice>();
   private activeVoices = new Set<string>();
+  private deviceCapabilities = getTouchCapabilities();
 
   // Pure function to create octave range
   private createOctaveRange(octaves: number, baseOctave: number): number[] {
@@ -32,20 +35,28 @@ export class AudioService implements IAudioService {
 
   // Pure function to create audio effects chain
   private createEffectsChain(config: AudioConfig) {
+    // iOS-specific optimizations
+    const isIOSDevice = this.deviceCapabilities.isIOS;
+    
     const chorus = new Tone.Chorus({
       frequency: config.chorus.frequency,
       delayTime: config.chorus.delayTime,
       depth: config.chorus.depth,
-      wet: config.chorus.enabled ? 1 : 0
+      wet: config.chorus.enabled ? (isIOSDevice ? 0.5 : 1) : 0 // Reduce chorus on iOS for performance
     });
 
     const reverb = new Tone.Reverb({
       decay: config.reverb.roomSize,
-      wet: config.reverb.enabled ? config.reverb.wet : 0
+      wet: config.reverb.enabled ? (isIOSDevice ? config.reverb.wet * 0.7 : config.reverb.wet) : 0 // Reduce reverb on iOS
     });
 
-    const gain = new Tone.Gain(0.2); // Master volume control
-    const limiter = new Tone.Limiter(-3); // Limit to -3dB to prevent clipping
+    // iOS devices may need lower gain to prevent clipping
+    const masterGain = isIOSDevice ? 0.15 : 0.2;
+    const gain = new Tone.Gain(masterGain);
+    
+    // More aggressive limiting on iOS
+    const limiterThreshold = isIOSDevice ? -6 : -3;
+    const limiter = new Tone.Limiter(limiterThreshold);
 
     // Chain: chorus -> reverb -> gain -> limiter -> destination
     chorus.connect(reverb);
@@ -86,7 +97,13 @@ export class AudioService implements IAudioService {
   private updateMasterGain(): void {
     if (this.effects) {
       const activeVoiceCount = this.activeVoices.size;
-      const dynamicGain = Math.max(0.05, 0.2 - (activeVoiceCount - 1) * 0.02);
+      const isIOSDevice = this.deviceCapabilities.isIOS;
+      
+      // More aggressive gain reduction on iOS
+      const baseGain = isIOSDevice ? 0.15 : 0.2;
+      const reductionPerVoice = isIOSDevice ? 0.03 : 0.02;
+      const dynamicGain = Math.max(0.05, baseGain - (activeVoiceCount - 1) * reductionPerVoice);
+      
       this.effects.gain.gain.value = dynamicGain;
     }
   }
@@ -108,6 +125,11 @@ export class AudioService implements IAudioService {
   // Initialize audio context
   async initialize(): Promise<boolean> {
     try {
+      if (this.deviceCapabilities.isIOS) {
+        console.log('🎵 AudioService: iOS detected, initializing audio context...');
+        console.log('🎵 AudioService: Device capabilities:', this.deviceCapabilities);
+      }
+      
       console.log('🎵 AudioService: Starting Tone.start()...');
       await Tone.start();
       console.log('🎵 AudioService: Tone.start() completed successfully');
@@ -196,8 +218,9 @@ export class AudioService implements IAudioService {
         console.log(`🎵 AudioService: Playing note ${noteName} with frequencies:`, frequencies);
         
         frequencies.forEach((frequency, index) => {
-          if (this.activeVoices.size >= MAX_SIMULTANEOUS_VOICES) {
-            console.log(`🎵 AudioService: Maximum voices (${MAX_SIMULTANEOUS_VOICES}) reached, skipping`);
+          const maxVoices = this.deviceCapabilities.isIOS ? MAX_SIMULTANEOUS_VOICES_IOS : MAX_SIMULTANEOUS_VOICES;
+          if (this.activeVoices.size >= maxVoices) {
+            console.log(`🎵 AudioService: Maximum voices (${maxVoices}) reached, skipping`);
             return;
           }
           

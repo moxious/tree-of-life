@@ -12,6 +12,7 @@ import Path from './Path';
 import { AudioProvider, useAudio } from '../contexts/AudioContext';
 import AudioErrorBoundary from './AudioErrorBoundary';
 import { useTreeState } from '../hooks/useTreeState';
+import { useMultiTouch } from '../hooks/useMultiTouch';
 import type { PathData } from '../types/treeOfLife';
 
 // Inner component that uses audio context
@@ -40,6 +41,16 @@ const TreeOfLifeInner: React.FC = () => {
   };
 
   const currentImages = getCurrentWorldImages();
+
+  // Multi-touch support for multiple chord playing
+  const multiTouch = useMultiTouch({
+    audioActions,
+    onMultiTouchChord: (notes, source) => {
+      console.log('🎵 TreeOfLife: Multi-touch chord detected:', notes, source);
+      // For now, just play the chord - you could add more sophisticated logic here
+      audioActions?.playChord(notes, source);
+    }
+  });
 
   return (
     <div className="tree-of-life-app">
@@ -81,6 +92,7 @@ const TreeOfLifeInner: React.FC = () => {
             height="700"
             viewBox="0 0 800 700"
             className="tree-of-life-svg"
+            onTouchEnd={multiTouch.handleTouchEnd}
           >
             {/* Render paths first so they appear behind circles */}
             {patchedPaths.map((path: PathData, index: number) => {
@@ -136,6 +148,7 @@ const TreeOfLifeInner: React.FC = () => {
                 onLeave={actions.handleSephirahLeave}
                 onSephirahClick={actions.handleSephirahClick}
                 isPinned={pinnedState.sephirah?.name === key}
+                onMultiTouchStart={multiTouch.handleTouchStart}
               />
             ))}
           </svg>

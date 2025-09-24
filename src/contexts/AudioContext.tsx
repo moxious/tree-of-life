@@ -208,7 +208,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     }
 
     try {
-    //   console.log('🎵 AudioContext: Initializing audio on user interaction...');
+      console.log('🎵 AudioContext: Initializing audio on user interaction...');
       const success = await audioServiceRef.current.initialize();
       console.log('🎵 AudioContext: Audio initialization result:', success);
       dispatch({ type: 'SET_INITIALIZED', payload: success });
@@ -224,6 +224,22 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     }
   }, [state.isInitialized]);
 
+  // Initialize audio context on any user interaction (for iOS compatibility)
+  const initializeAudioOnFirstInteraction = useCallback(async (): Promise<boolean> => {
+    if (state.isInitialized) return true;
+    
+    try {
+      const success = await audioServiceRef.current?.initialize();
+      if (success) {
+        dispatch({ type: 'SET_INITIALIZED', payload: true });
+      }
+      return success || false;
+    } catch (error) {
+      console.error('Audio initialization failed:', error);
+      return false;
+    }
+  }, [state.isInitialized]);
+
   // Play a musical note - NOT using useCallback to avoid closure issues
   const playNote = async (note: string, source: string): Promise<void> => {
     if (!audioServiceRef.current) {
@@ -232,6 +248,9 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     }
 
     try {
+      // Initialize audio context on first interaction (for iOS compatibility)
+      await initializeAudioOnFirstInteraction();
+      
       // Add to now playing regardless of sound enabled state
       addToNowPlaying(source, [note], config.duration);
       
@@ -266,6 +285,9 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     }
 
     try {
+      // Initialize audio context on first interaction (for iOS compatibility)
+      await initializeAudioOnFirstInteraction();
+      
       console.log('🎵 AudioContext: Adding to now playing...');
       // Add to now playing regardless of sound enabled state
       addToNowPlaying(source, notes, config.chord.duration);

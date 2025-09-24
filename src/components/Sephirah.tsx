@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { SephirahData } from '../types/treeOfLife';
+import { useTouchEvents } from '../hooks/useTouchEvents';
 
 interface SephirahProps {
   name: string;
@@ -25,6 +26,7 @@ interface SephirahProps {
   onLeave: () => void;
   onSephirahClick: (sephirah: SephirahData) => void;
   isPinned: boolean;
+  onMultiTouchStart?: (event: React.TouchEvent, sephirah: SephirahData) => void;
 }
 
 const Sephirah: React.FC<SephirahProps> = ({ 
@@ -39,10 +41,10 @@ const Sephirah: React.FC<SephirahProps> = ({
   onHover, 
   onLeave,
   onSephirahClick,
-  isPinned
+  isPinned,
+  onMultiTouchStart
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const transitionTimeoutRef = useRef<number | null>(null);
 
   // Cleanup timeout on unmount
@@ -54,15 +56,34 @@ const Sephirah: React.FC<SephirahProps> = ({
     };
   }, []);
 
+  // Create touch event handlers
+  const touchEvents = useTouchEvents({
+    onHover: () => onHover({ name, metadata, worldColors }),
+    onLeave: onLeave,
+    onClick: () => onSephirahClick({ name, metadata, worldColors }),
+    preventDefault: true,
+    touchDelay: 100
+  });
+
+  // Enhanced touch start handler that includes multi-touch support
+  const handleTouchStart = (event: React.TouchEvent) => {
+    // Call the original touch start handler
+    touchEvents.onTouchStart(event);
+    
+    // Also call multi-touch handler if provided
+    if (onMultiTouchStart) {
+      onMultiTouchStart(event, { name, metadata, worldColors });
+    }
+  };
+
   // Only implement new hover logic for card mode
   if (viewMode !== 'card') {
     return (
       <g 
         className={`sephirah-group ${viewMode === 'card' ? 'card-mode' : 'sphere-mode'}`}
         data-name={name}
-        onMouseEnter={() => onHover({ name, metadata, worldColors })}
-        onMouseLeave={onLeave}
-        onClick={() => onSephirahClick({ name, metadata, worldColors })}
+        {...touchEvents}
+        onTouchStart={handleTouchStart}
       >
         <circle
           cx={position.x}
@@ -102,18 +123,6 @@ const Sephirah: React.FC<SephirahProps> = ({
   }
 
   // Card mode hover detection logic
-  const handleCircleEnter = () => {
-    if (!isTransitioning) {
-      setIsTransitioning(true);
-      // Small delay to prevent flickering
-      transitionTimeoutRef.current = setTimeout(() => {
-        setIsHovered(true);
-        setIsTransitioning(false);
-        onHover({ name, metadata, worldColors });
-      }, 50);
-    }
-  };
-
   const handleRectangleEnter = () => {
     // Keep hover active
     setIsHovered(true);
@@ -130,15 +139,15 @@ const Sephirah: React.FC<SephirahProps> = ({
       data-name={name}
     >
       {/* Circle hover detector - only visible when not hovered */}
-      {!isHovered && !isTransitioning && (
+      {!isHovered && (
         <circle
           cx={position.x}
           cy={position.y}
           r={radius}
           fill="transparent"
           className="sephirah-hover-detector sephirah-hover-detector-circle"
-          onMouseEnter={handleCircleEnter}
-          onClick={() => onSephirahClick({ name, metadata, worldColors })}
+          {...touchEvents}
+          onTouchStart={handleTouchStart}
         />
       )}
 
@@ -153,7 +162,9 @@ const Sephirah: React.FC<SephirahProps> = ({
           className="sephirah-hover-detector sephirah-hover-detector-rectangle"
           onMouseEnter={handleRectangleEnter}
           onMouseLeave={handleRectangleLeave}
-          onClick={() => onSephirahClick({ name, metadata, worldColors })}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={touchEvents.onTouchEnd}
+          onTouchMove={touchEvents.onTouchMove}
         />
       )}
 
