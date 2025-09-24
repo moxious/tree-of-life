@@ -4,7 +4,7 @@
 import * as Tone from 'tone';
 import type { AudioConfig, IAudioService, Voice } from '../types/audio';
 import { generateOctaveFrequencies, normalizeNoteName } from '../utils/musicalNotes';
-import { isIOS, getTouchCapabilities } from '../utils/deviceDetection';
+import { getTouchCapabilities } from '../utils/deviceDetection';
 
 // Maximum number of simultaneous voices to prevent clipping
 const MAX_SIMULTANEOUS_VOICES = 12;
@@ -126,15 +126,11 @@ export class AudioService implements IAudioService {
   async initialize(): Promise<boolean> {
     try {
       if (this.deviceCapabilities.isIOS) {
-        console.log('🎵 AudioService: iOS detected, initializing audio context...');
         console.log('🎵 AudioService: Device capabilities:', this.deviceCapabilities);
       }
       
-      console.log('🎵 AudioService: Starting Tone.start()...');
       await Tone.start();
-      console.log('🎵 AudioService: Tone.start() completed successfully');
       this.isInitializedFlag = true;
-      console.log('🎵 AudioService: Audio context initialized');
       return true;
     } catch (error) {
       console.error('🎵 AudioService: Error initializing audio:', error);
@@ -185,10 +181,7 @@ export class AudioService implements IAudioService {
 
   // Play a chord (multiple notes)
   async playChord(noteNames: string[], config: AudioConfig): Promise<void> {
-    console.log('🎵 AudioService: playChord called with notes:', noteNames);
-    
     if (!this.isInitializedFlag) {
-      console.log('🎵 AudioService: Not initialized, initializing...');
       await this.initialize();
     }
 
@@ -211,11 +204,9 @@ export class AudioService implements IAudioService {
         reverb: chordConfig.reverb,
         chorus: chordConfig.chorus
       });
-      console.log('🎵 AudioService: Chord effects chain created');
       
       const playNoteAtTime = (noteName: string, delayMs: number = 0) => {
         const frequencies = generateOctaveFrequencies(noteName, octaves);
-        console.log(`🎵 AudioService: Playing note ${noteName} with frequencies:`, frequencies);
         
         frequencies.forEach((frequency, index) => {
           const maxVoices = this.deviceCapabilities.isIOS ? MAX_SIMULTANEOUS_VOICES_IOS : MAX_SIMULTANEOUS_VOICES;
@@ -226,7 +217,6 @@ export class AudioService implements IAudioService {
           
           const octave = octaves[index];
           const voiceId = this.createVoiceId(`${noteName}-chord`, octave, timestamp + delayMs);
-          // console.log(`🎵 AudioService: Creating chord oscillator for ${noteName}${octave} at ${frequency}Hz`);
           
           const voice = this.createOscillator(frequency, {
             ...config,
@@ -239,15 +229,12 @@ export class AudioService implements IAudioService {
           this.updateMasterGain();
           
           voice.oscillator.start();
-          console.log(`🎵 AudioService: Oscillator started for ${voiceId}`);
           
           if (chordConfig.style === 'simultaneous') {
             voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
-            // console.log(`🎵 AudioService: Envelope triggered for ${voiceId}`);
           } else {
             setTimeout(() => {
               voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
-              // console.log(`🎵 AudioService: Envelope triggered (delayed) for ${voiceId}`);
             }, delayMs);
           }
           

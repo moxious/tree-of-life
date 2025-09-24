@@ -350,15 +350,10 @@ body {
 }
 
 
-.entry-source {
+.entry-text {
   color: #ffffff;
   font-weight: 500;
   min-width: fit-content;
-}
-
-.entry-notes {
-  color: #cccccc;
-  font-family: 'Courier New', monospace;
 }
 
 .no-sounds {
@@ -798,8 +793,7 @@ body {
     font-size: 11px;
   }
 
-  .entry-source,
-  .entry-notes {
+  .entry-text {
     font-size: 11px;
   }
 

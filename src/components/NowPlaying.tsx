@@ -1,23 +1,22 @@
 import React from 'react';
 import { useAudio } from '../contexts/AudioContext';
 import type { NowPlayingEntry } from '../types/audio';
+import { createNowPlayingDisplayText } from '../utils/chordDetection';
 
 const NowPlaying: React.FC = () => {
   const { state } = useAudio();
   const { nowPlaying } = state;
 
-  // Pure function to format notes for display
-  const formatNotes = (notes: string[]): string => {
-    return notes.join(', ');
-  };
-
   // Pure function to render now playing entry
-  const renderNowPlayingEntry = (entry: NowPlayingEntry) => (
-    <div key={entry.id} className="now-playing-entry">
-      <span className="entry-source">{entry.source}:</span>
-      <span className="entry-notes">{formatNotes(entry.notes)}</span>
-    </div>
-  );
+  const renderNowPlayingEntry = (entry: NowPlayingEntry) => {
+    const displayText = createNowPlayingDisplayText(entry.source, entry.notes, entry.detectedChord);
+    
+    return (
+      <div key={entry.id} className="now-playing-entry">
+        <span className="entry-text">{displayText}</span>
+      </div>
+    );
+  };
 
   return (
     <div className="now-playing">

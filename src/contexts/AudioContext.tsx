@@ -4,6 +4,7 @@
 import React, { createContext, useContext, useReducer, useCallback, useEffect, useRef } from 'react';
 import type { AudioContextValue, AudioState, AudioActions, AudioConfig, NowPlayingEntry } from '../types/audio';
 import { AudioService } from '../services/AudioService';
+import { detectChordName, normalizeNotesForDetection, validateNotes } from '../utils/chordDetection';
 
 // Default audio configuration
 const defaultAudioConfig: AudioConfig = {
@@ -81,8 +82,6 @@ const initialAudioState: AudioState = {
 
 // Audio state reducer
 const audioReducer = (state: AudioState, action: AudioAction): AudioState => {
-//   console.log('🎵 AudioReducer: Action received:', action.type, 'payload:', 'payload' in action ? action.payload : 'none');
-//   console.log('🎵 AudioReducer: Current state before update:', state);
   
   let newState: AudioState;
   switch (action.type) {
@@ -117,7 +116,6 @@ const audioReducer = (state: AudioState, action: AudioAction): AudioState => {
       newState = state;
   }
   
-//   console.log('🎵 AudioReducer: New state after update:', newState);
   return newState;
 };
 
@@ -133,18 +131,27 @@ interface AudioProviderProps {
 // Pure function to generate unique ID
 const generateId = (): string => `audio_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-// Pure function to create now playing entry
+// Pure function to create now playing entry with chord detection
 const createNowPlayingEntry = (
   source: string,
   notes: string[],
   duration: number
-): NowPlayingEntry => ({
-  id: generateId(),
-  source,
-  notes,
-  startTime: Date.now(),
-  duration
-});
+): NowPlayingEntry => {
+  // Validate and normalize notes for chord detection
+  const normalizedNotes = validateNotes(notes) ? normalizeNotesForDetection(notes) : notes;
+  
+  // Detect chord name
+  const detectedChord = detectChordName(normalizedNotes);
+  
+  return {
+    id: generateId(),
+    source,
+    notes,
+    detectedChord,
+    startTime: Date.now(),
+    duration
+  };
+};
 
 // Audio context provider component
 export const AudioProvider: React.FC<AudioProviderProps> = ({ 
@@ -166,9 +173,6 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     const audioService = new AudioService();
     audioServiceRef.current = audioService;
     
-    // Don't auto-initialize - wait for user interaction
-    // console.log('🎵 AudioContext: Audio service created, waiting for user interaction...');
-
     return () => {
       audioService.cleanup();
     };
@@ -208,9 +212,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     }
 
     try {
-      console.log('🎵 AudioContext: Initializing audio on user interaction...');
       const success = await audioServiceRef.current.initialize();
-      console.log('🎵 AudioContext: Audio initialization result:', success);
       dispatch({ type: 'SET_INITIALIZED', payload: success });
       if (!success) {
         dispatch({ type: 'SET_ERROR', payload: 'Failed to initialize audio context' });
@@ -276,7 +278,6 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     
     // Use stateRef to get the current state, not the captured state
     const currentState = stateRef.current;
-    console.log('🎵 AudioContext: Current state from ref - soundEnabled:', currentState.soundEnabled, 'isInitialized:', currentState.isInitialized);
     
     if (!audioServiceRef.current) {
       console.log('🎵 AudioContext: No audio service available');
@@ -294,16 +295,12 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
       
       // Only play audio if sound is enabled - use current state value from ref
       const currentSoundEnabled = currentState.soundEnabled;
-      console.log('🎵 AudioContext: Checking sound enabled state from ref:', currentSoundEnabled);
       
       if (currentSoundEnabled) {
-        console.log('🎵 AudioContext: Sound is enabled, proceeding with audio playback');
         const initialized = await initializeAudioIfNeeded();
         if (initialized) {
-          console.log('🎵 AudioContext: Audio initialized, calling playChord on service');
           await audioServiceRef.current.playChord(notes, config);
           dispatch({ type: 'SET_PLAYING', payload: true });
-          console.log('🎵 AudioContext: Chord playback completed');
         } else {
           console.log('🎵 AudioContext: Audio initialization failed');
         }
@@ -318,16 +315,11 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
   };
 
   // Set sound enabled state
-  const setSoundEnabled = useCallback(async (enabled: boolean) => {
-    console.log('🎵 AudioContext: setSoundEnabled called with:', enabled);
-    console.log('🎵 AudioContext: Current state before update - soundEnabled:', state.soundEnabled, 'isInitialized:', state.isInitialized);
-    
+  const setSoundEnabled = useCallback(async (enabled: boolean) => {    
     dispatch({ type: 'SET_SOUND_ENABLED', payload: enabled });
-    console.log('🎵 AudioContext: Dispatched SET_SOUND_ENABLED with payload:', enabled);
     
     // Initialize audio when user enables sound
     if (enabled && !state.isInitialized) {
-      console.log('🎵 AudioContext: Enabling sound and initializing audio...');
       await initializeAudioIfNeeded();
     }
     

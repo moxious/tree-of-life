@@ -241,32 +241,11 @@ export const useTreeState = (audioActions?: AudioActions) => {
       const pathsBelow = findPathsBelow(sephirah.name, patchedPaths);
       const treeTriadPaths = findTreeTriadPaths(sephirah.name, patchedPaths);
       
-      console.log(`🎵 TreeState: Sephirah ${sephirah.name} clicked!`);
-      console.log("Paths above: ", pathsAbove);
-      /*
-      console.log(`🎵 TreeState: Paths above:`, pathsAbove.map(p => ({
-        pathNumber: p.pathNumber,
-        hebrewLetter: p.hebrewLetter,
-        musicalNote: p.musicalNote
-      })));
-      console.log(`🎵 TreeState: Paths below:`, pathsBelow.map(p => ({
-        pathNumber: p.pathNumber,
-        hebrewLetter: p.hebrewLetter,
-        musicalNote: p.musicalNote
-      })));
-      console.log(`🎵 TreeState: Tree triad paths:`, treeTriadPaths.map(p => ({
-        pathNumber: p.pathNumber,
-        hebrewLetter: p.hebrewLetter,
-        musicalNote: p.musicalNote
-      })));
-      */
-      
       // Get selected chord type and corresponding paths/notes
       let selectedPaths: PathData[];
       let selectedChordNotes: string[];
       let pathNumbers: Set<number>;
       
-      console.log(`🎵 TreeState: Chord type:`, state.ui.chordType);
       switch (state.ui.chordType) {
         case 'above':
           selectedPaths = pathsAbove;
@@ -313,11 +292,7 @@ export const useTreeState = (audioActions?: AudioActions) => {
       }, 2000);
       
       // Play selected chord type if there are paths
-      if (selectedPaths.length > 0) {
-        console.log(`🎵 TreeState: Playing ${state.ui.chordType} chord with notes:`, selectedChordNotes);
-        console.log(`🎵 TreeState: audioActions available:`, !!audioActions);
-        console.log(`🎵 TreeState: playChord available:`, !!audioActions?.playChord);
-        
+      if (selectedPaths.length > 0) {        
         if (audioActions?.playChord) {
           console.log(`🎵 TreeState: Calling playChord...`);
           const sName = sephirah.name.charAt(0).toUpperCase() + sephirah.name.slice(1);

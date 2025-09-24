@@ -4,6 +4,7 @@ export interface NowPlayingEntry {
   id: string;
   source: string;        // "Keter (Below)" or "Path 22"
   notes: string[];       // ["C", "E", "G"]
+  detectedChord?: string | null; // Detected chord name (e.g., "C major")
   startTime: number;
   duration: number;
 }
