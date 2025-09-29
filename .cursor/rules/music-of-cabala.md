@@ -289,11 +289,27 @@ The Tree contains three structural triangles often treated as "reflections":
 - **Middle**: (Hesed–Gevurah–Tiferet)  
 - **Lower**: (Netzach–Hod–Yesod)
 
-**For Four Worlds Approach:**
+**For Four Worlds Approach: Reflection Method**
 This "reflection" can be handled in several ways:
 
 For a given supernal triangle triad, the next triad down is either the relative minor, 
 relative major, major to the left, or major to the right in the @circle-of-fifths.png.
+
+Take as a concrete example, the "North" compass slice of the circle of 5ths contains
+three major keys: F, C, and G, with corresponding relative minors of Dm, Am, and Em
+
+Suppose the supernal triad is chosen to be Am.  One possible "reflection" would be
+Am -> C (to the relative major).  Another would be Am -> Em (the next minor to the
+right).  A third possible would be Am -> Dm (the next minor to the left).  This 
+"reflection" can be carried on down the tree, so each of the following choices of
+triads for the three tree-triangles would be valid:
+
+* Am -> C -> G
+* Am -> Dm -> F
+* Am -> Em -> G
+* Am -> C -> F
+
+(And so on; many other possibilities exist depending on the supernal triad chosen)
 
 **For All-12 Approach:**
 - Use circle-of-fifths neighbors (e.g., E♭ → B♭ → F)
@@ -337,11 +353,16 @@ provided that the constraints are respected, any assignment of choice is accepta
 #### 8.3A Four Worlds Assignment
 
 1. First, list all 6 possible triads from the world's 9-tone palette
-2. Assign one of the 6 triads to the Supernal Triangle
-3. Use the "reflection" approach above to assign remaining 2 triangles (Moral, Astral)
-4. Assign remaining paths with an eye towards maximizing the number of distinct intervals
-represented across the entire scheme
-5. Check your work: list and evaluate all critical constraints
+2. Assign one of the 6 triads to the Supernal Triangle. You may make your choice, or choose
+at random from the options.
+3. Use the "reflection" approach using the "Reflection Method" in section 7.2; choose a tone triad for the Moral Triad
+4. Use the "reflection" approach again to choose a tone triad for the Astral Triad.
+5. Pause and check your work: name the three "tree triangle" chords and ensure they are 
+3 of the 6 triads in the key set.
+6. Make a list of notes from the 9-tone palette that have not yet been used
+7. Assign those notes in whatever order you wish to the remaining paths that are not yet
+assigned. 
+8. Check your work: list and evaluate all critical constraints
 
 #### 8.3B All-12 Coverage Assignment
 
