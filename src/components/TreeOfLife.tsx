@@ -30,7 +30,9 @@ const TreeOfLifeInner: React.FC = () => {
     patchedPaths,
     selectedWorld,
     viewMode,
-    chordType
+    chordType,
+    editMode,
+    customNotes
   } = useTreeState(audioActions);
 
   const getCurrentWorldImages = () => {
@@ -79,6 +81,8 @@ const TreeOfLifeInner: React.FC = () => {
               onSystemChange={actions.changeMusicalSystem}
               musicalSystems={musicalSystems}
               world={selectedWorld}
+              editMode={editMode}
+              onToggleEditMode={actions.toggleEditMode}
             />
           </div>
         </div>
@@ -129,6 +133,8 @@ const TreeOfLifeInner: React.FC = () => {
                   onPathClick={actions.handlePathClick}
                   isPinned={pinnedState.path?.pathNumber === path.pathNumber}
                   isHighlighted={highlightedPaths.has(path.pathNumber)}
+                  editMode={editMode}
+                  onNoteChange={actions.updateCustomNote}
                 />
               );
             })}

@@ -12,13 +12,17 @@ interface MusicSystemPickerProps {
   onSystemChange: (systemKey: string) => void;
   musicalSystems: Record<string, MusicalSystem>;
   world: string;
+  editMode: boolean;
+  onToggleEditMode: () => void;
 }
 
 const MusicSystemPicker: React.FC<MusicSystemPickerProps> = ({ 
   selectedSystem, 
   onSystemChange, 
   musicalSystems,
-  world
+  world,
+  editMode,
+  onToggleEditMode
 }) => {
   const [currentSelection, setCurrentSelection] = useState(selectedSystem);
   
@@ -75,6 +79,18 @@ const MusicSystemPicker: React.FC<MusicSystemPickerProps> = ({
           </option>
         ))}
       </select>
+      
+      <div className="control-container control-container--horizontal" style={{ marginTop: '10px' }}>
+        <label className="picker-label" style={{ marginRight: '10px' }}>
+          Edit Mode:
+        </label>
+        <input
+          type="checkbox"
+          checked={editMode}
+          onChange={onToggleEditMode}
+          className="edit-mode-toggle"
+        />
+      </div>
     </div>
   );
 };

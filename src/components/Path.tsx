@@ -1,6 +1,7 @@
 import React from 'react';
 import type { PathData } from '../types/treeOfLife';
 import { useTouchEvents } from '../hooks/useTouchEvents';
+import PathNoteEditor from './PathNoteEditor';
 
 interface PathProps {
   from: { x: number; y: number };
@@ -13,9 +14,11 @@ interface PathProps {
   onPathClick: (pathData: PathData) => void;
   isPinned: boolean;
   isHighlighted?: boolean;
+  editMode?: boolean;
+  onNoteChange?: (pathNumber: number, note: string) => void;
 }
 
-const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, onHover, onLeave, onPathClick, isPinned, isHighlighted = false }) => {
+const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, onHover, onLeave, onPathClick, isPinned, isHighlighted = false, editMode = false, onNoteChange }) => {
   const midX = (from.x + to.x) / 2;
   const midY = (from.y + to.y) / 2;
 
@@ -115,19 +118,31 @@ const Path: React.FC<PathProps> = ({ from, to, stroke, strokeWidth, metadata, on
         strokeWidth={getStrokeWidth()}
         className={`tree-path ${isPinned ? 'pinned' : ''} ${isHighlighted ? 'highlighted' : ''}`}
       />
-      {/* Hebrew letter caption */}
-      <text
-        x={labelX}
-        y={labelY}
-        textAnchor="middle"
-        dominantBaseline="central"
-        className="path-letter"
-        fill={isHighlighted ? "#ffd700" : "#ffffff"}
-        fontSize="16"
-        fontWeight="bold"
-      >
-        {metadata.hebrewLetter}
-      </text>
+      {/* Hebrew letter caption or note editor */}
+      {editMode ? (
+        onNoteChange ? (
+          <PathNoteEditor
+            pathNumber={metadata.pathNumber}
+            currentNote={metadata.musicalNote}
+            onNoteChange={onNoteChange}
+            x={labelX}
+            y={labelY}
+          />
+        ) : null
+      ) : (
+        <text
+          x={labelX}
+          y={labelY}
+          textAnchor="middle"
+          dominantBaseline="central"
+          className="path-letter"
+          fill={isHighlighted ? "#ffd700" : "#ffffff"}
+          fontSize="16"
+          fontWeight="bold"
+        >
+          {metadata.hebrewLetter}
+        </text>
+      )}
     </g>
   );
 };
