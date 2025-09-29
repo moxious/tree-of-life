@@ -351,13 +351,17 @@ export const useTreeState = (audioActions?: AudioActions) => {
     }, []),
 
     toggleEditMode: useCallback(() => {
-      setState(prev => ({
-        ...prev,
-        musical: {
-          ...prev.musical,
-          editMode: !prev.musical.editMode
-        }
-      }));
+      setState(prev => {
+        const newEditMode = !prev.musical.editMode;
+        console.log('🎵 Toggling edit mode from', prev.musical.editMode, 'to', newEditMode);
+        return {
+          ...prev,
+          musical: {
+            ...prev.musical,
+            editMode: newEditMode
+          }
+        };
+      });
     }, []),
 
     updateCustomNote: useCallback((pathNumber: number, note: string) => {

@@ -24,7 +24,7 @@ const PathNoteEditor: React.FC<PathNoteEditorProps> = ({
   };
 
   return (
-    <foreignObject x={x - 20} y={y - 10} width="40" height="20">
+    <foreignObject x={x - 25} y={y - 12} width="50" height="24">
       <select
         value={currentNote}
         onChange={handleNoteChange}
@@ -37,7 +37,9 @@ const PathNoteEditor: React.FC<PathNoteEditorProps> = ({
           backgroundColor: 'white',
           color: '#333',
           textAlign: 'center',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          padding: '2px',
+          boxSizing: 'border-box'
         }}
         className="path-note-editor"
       >

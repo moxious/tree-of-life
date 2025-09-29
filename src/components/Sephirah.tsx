@@ -27,6 +27,7 @@ interface SephirahProps {
   onSephirahClick: (sephirah: SephirahData) => void;
   isPinned: boolean;
   onMultiTouchStart?: (event: React.TouchEvent, sephirah: SephirahData) => void;
+  editMode?: boolean;
 }
 
 const Sephirah: React.FC<SephirahProps> = ({ 
@@ -42,7 +43,8 @@ const Sephirah: React.FC<SephirahProps> = ({
   onLeave,
   onSephirahClick,
   isPinned,
-  onMultiTouchStart
+  onMultiTouchStart,
+  editMode = false
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const transitionTimeoutRef = useRef<number | null>(null);
@@ -75,6 +77,17 @@ const Sephirah: React.FC<SephirahProps> = ({
       onMultiTouchStart(event, { name, metadata, worldColors });
     }
   };
+
+  // Debug logging
+  if (name === 'daath') {
+    console.log('🎵 Daath component - editMode:', editMode, 'name:', name);
+  }
+
+  // Hide Daath in edit mode to allow access to paths behind it
+  if (editMode && name === 'daath') {
+    console.log('🎵 Hiding Daath in edit mode');
+    return null;
+  }
 
   // Only implement new hover logic for card mode
   if (viewMode !== 'card') {

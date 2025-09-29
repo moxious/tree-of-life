@@ -35,6 +35,9 @@ const TreeOfLifeInner: React.FC = () => {
     customNotes
   } = useTreeState(audioActions);
 
+  // Debug logging for editMode
+  console.log('🎵 TreeOfLife editMode:', editMode);
+
   const getCurrentWorldImages = () => {
     const world = worlds[selectedWorld as keyof typeof worlds];
     if (!world) return {};
@@ -140,24 +143,32 @@ const TreeOfLifeInner: React.FC = () => {
             })}
             
             {/* Render circles */}
-            {Object.entries(sephirot).map(([key, sephirah]) => (
-              <Sephirah
-                key={key}
-                name={key}
-                position={sephirah.position}
-                color={sephirah.color}
-                image={currentImages[key as keyof typeof currentImages] || sephirah.image}
-                radius={styling.circleRadius}
-                viewMode={viewMode}
-                metadata={sephirah.metadata}
-                worldColors={sephirah.in}
-                onHover={actions.handleSephirahHover}
-                onLeave={actions.handleSephirahLeave}
-                onSephirahClick={actions.handleSephirahClick}
-                isPinned={pinnedState.sephirah?.name === key}
-                onMultiTouchStart={multiTouch.handleTouchStart}
-              />
-            ))}
+            {Object.entries(sephirot).map(([key, sephirah]) => {
+              // Debug logging for Daath
+              if (key === 'daath') {
+                console.log('🎵 TreeOfLife rendering Daath with editMode:', editMode);
+              }
+              
+              return (
+                <Sephirah
+                  key={key}
+                  name={key}
+                  position={sephirah.position}
+                  color={sephirah.color}
+                  image={currentImages[key as keyof typeof currentImages] || sephirah.image}
+                  radius={styling.circleRadius}
+                  viewMode={viewMode}
+                  metadata={sephirah.metadata}
+                  worldColors={sephirah.in}
+                  onHover={actions.handleSephirahHover}
+                  onLeave={actions.handleSephirahLeave}
+                  onSephirahClick={actions.handleSephirahClick}
+                  isPinned={pinnedState.sephirah?.name === key}
+                  onMultiTouchStart={multiTouch.handleTouchStart}
+                  editMode={editMode}
+                />
+              );
+            })}
           </svg>
         </div>
         
