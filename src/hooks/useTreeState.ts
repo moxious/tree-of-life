@@ -28,6 +28,8 @@ interface TreeState {
   musical: {
     selectedSystem: string;
     patchedPaths: PathData[];
+    editMode: boolean;
+    customNotes: Record<number, string>;
   };
   ui: {
     selectedWorld: string;
@@ -56,6 +58,9 @@ interface TreeActions {
   
   // Musical system actions
   changeMusicalSystem: (systemKey: string) => void;
+  toggleEditMode: () => void;
+  updateCustomNote: (pathNumber: number, note: string) => void;
+  clearCustomNotes: () => void;
   
   // UI actions
   changeSelectedWorld: (world: string) => void;
@@ -88,7 +93,9 @@ export const useTreeState = (audioActions?: AudioActions) => {
     },
     musical: { 
       selectedSystem: 'Four_Worlds_Briah_Complete', 
-      patchedPaths: [] 
+      patchedPaths: [],
+      editMode: false,
+      customNotes: {}
     },
     ui: {
       selectedWorld: 'briah',
@@ -116,8 +123,19 @@ export const useTreeState = (audioActions?: AudioActions) => {
       );
     }
 
-    return patchMusicalNotes(treeConfig, currentSystem);
-  }, [state.musical.selectedSystem]);
+    // Create a system with custom notes merged in
+    const systemWithCustomNotes = {
+      ...currentSystem,
+      assignments: {
+        ...currentSystem.assignments,
+        ...Object.fromEntries(
+          Object.entries(state.musical.customNotes).map(([pathNumber, note]) => [pathNumber, note])
+        )
+      }
+    };
+
+    return patchMusicalNotes(treeConfig, systemWithCustomNotes);
+  }, [state.musical.selectedSystem, state.musical.customNotes]);
 
   // Update patched paths when musical system changes
   const patchedPaths = patchedConfig.paths;
@@ -326,7 +344,68 @@ export const useTreeState = (audioActions?: AudioActions) => {
         ...prev,
         musical: {
           ...prev.musical,
-          selectedSystem: systemKey
+          selectedSystem: systemKey,
+          customNotes: {} // Clear custom notes when switching systems
+        }
+      }));
+    }, []),
+
+    toggleEditMode: useCallback(() => {
+      setState(prev => {
+        const newEditMode = !prev.musical.editMode;
+        console.log('🎵 Toggling edit mode from', prev.musical.editMode, 'to', newEditMode);
+        return {
+          ...prev,
+          musical: {
+            ...prev.musical,
+            editMode: newEditMode
+          }
+        };
+      });
+    }, []),
+
+    updateCustomNote: useCallback((pathNumber: number, note: string) => {
+      setState(prev => {
+        const newCustomNotes = {
+          ...prev.musical.customNotes,
+          [pathNumber]: note
+        };
+        
+        // Generate console output for custom musical system
+        const currentSystem = (musicalSystems as Record<string, any>)[prev.musical.selectedSystem];
+        if (currentSystem) {
+          const customSystem = {
+            [`Custom_System_${Date.now()}`]: {
+              description: "Custom musical system created by user",
+              references: [],
+              system: `Custom System - ${currentSystem.system} - ${new Date().toISOString()}`,
+              assignments: {
+                ...currentSystem.assignments,
+                ...Object.fromEntries(
+                  Object.entries(newCustomNotes).map(([pathNum, note]) => [pathNum, note])
+                )
+              }
+            }
+          };
+          console.log('🎵 Custom Musical System:', JSON.stringify(customSystem, null, 2));
+        }
+        
+        return {
+          ...prev,
+          musical: {
+            ...prev.musical,
+            customNotes: newCustomNotes
+          }
+        };
+      });
+    }, []),
+
+    clearCustomNotes: useCallback(() => {
+      setState(prev => ({
+        ...prev,
+        musical: {
+          ...prev.musical,
+          customNotes: {}
         }
       }));
     }, []),
@@ -402,6 +481,8 @@ export const useTreeState = (audioActions?: AudioActions) => {
     chordNotes: updatedState.highlighting.chordNotes,
     selectedMusicalSystem: updatedState.musical.selectedSystem,
     patchedPaths: updatedState.musical.patchedPaths,
+    editMode: updatedState.musical.editMode,
+    customNotes: updatedState.musical.customNotes,
     selectedWorld: updatedState.ui.selectedWorld,
     viewMode: updatedState.ui.viewMode,
     chordType: updatedState.ui.chordType

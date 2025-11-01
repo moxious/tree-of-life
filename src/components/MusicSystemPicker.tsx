@@ -60,7 +60,7 @@ const MusicSystemPicker: React.FC<MusicSystemPickerProps> = ({
   const filtered = filterMusicalSystems(musicalSystems, world);
 
   return (
-    <div className="control-container control-container--vertical control-container--full-width">
+    <div className="music-system-picker">
       <label className="picker-label">
         Musical System:
       </label>
