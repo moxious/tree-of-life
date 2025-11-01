@@ -13,7 +13,7 @@ const CombinedPicker: React.FC<CombinedPickerProps> = ({
   onWorldChange, 
   worlds,
   viewMode, 
-  onViewModeChange 
+  onViewModeChange
 }) => {
   const worldOrder = [
     { key: 'assiah', transliteration: 'Assiah' },
@@ -28,7 +28,7 @@ const CombinedPicker: React.FC<CombinedPickerProps> = ({
   ];
 
   return (
-    <div className="combined-picker">
+    <div className="control-container control-container--vertical control-container--fit-content combined-picker">
       {/* World Selector Button Group */}
       <div className="picker-group">
         {/* <div className="picker-label">World</div> */}

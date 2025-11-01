@@ -3,12 +3,11 @@ import treeConfig from '../treeOfLifeConfig.json';
 import musicalSystems from '../musicalSystems.json';
 import InfoPanel from './InfoPanel';
 import CombinedPicker from './CombinedPicker';
-import ChordPicker from './ChordPicker';
 import MusicSystemPicker from './MusicSystemPicker';
-import MusicControl from './MusicControl';
 import NowPlaying from './NowPlaying';
 import Sephirah from './Sephirah';
 import Path from './Path';
+import Switch from './Switch';
 import { AudioProvider, useAudio } from '../contexts/AudioContext';
 import AudioErrorBoundary from './AudioErrorBoundary';
 import { useTreeState } from '../hooks/useTreeState';
@@ -18,7 +17,7 @@ import type { PathData } from '../types/treeOfLife';
 // Inner component that uses audio context
 const TreeOfLifeInner: React.FC = () => {
   const { sephirot, styling, worlds } = treeConfig;
-  const { actions: audioActions } = useAudio();
+  const { state: audioState, actions: audioActions } = useAudio();
 
   // Use unified hook for all state management with audio actions
   const {
@@ -31,8 +30,7 @@ const TreeOfLifeInner: React.FC = () => {
     selectedWorld,
     viewMode,
     chordType,
-    editMode,
-    customNotes
+    editMode
   } = useTreeState(audioActions);
 
   // Debug logging for editMode
@@ -63,9 +61,7 @@ const TreeOfLifeInner: React.FC = () => {
         {/* <WorldInfo world={currentWorld} /> */}
         
         <div className="controls">
-          <MusicControl />
-          
-          <CombinedPicker
+        <CombinedPicker
             selectedWorld={selectedWorld}
             onWorldChange={actions.changeSelectedWorld}
             worlds={worlds}
@@ -73,24 +69,79 @@ const TreeOfLifeInner: React.FC = () => {
             onViewModeChange={actions.changeViewMode}
           />
 
-          <div className="chord-picker-container">
-            <ChordPicker
-              chordType={chordType}
-              onChordTypeChange={actions.changeChordType}
-            />
-
+          <div className="control-container control-container--vertical control-container--full-width">
+            {/* Toggles Row: Audio and Edit */}
+            <div className="toggles-row">
+              <div className="sound-toggle">
+                <label className="picker-label">
+                  Audio:
+                </label>
+                <Switch
+                  checked={audioState.soundEnabled}
+                  onChange={audioActions.setSoundEnabled}
+                  aria-label="Toggle audio on or off"
+                />
+              </div>
+              <div className="edit-toggle">
+                <label className="picker-label">
+                  Edit:
+                </label>
+                <Switch
+                  checked={editMode}
+                  onChange={actions.toggleEditMode}
+                  aria-label="Toggle edit mode"
+                />
+              </div>
+            </div>
+            
+            {/* Error Display */}
+            {audioState.error && (
+              <div className="audio-error">
+                <span className="error-text">Audio Error: {audioState.error}</span>
+                <button onClick={audioActions.clearError} className="clear-error-btn">×</button>
+              </div>
+            )}
+            
             <MusicSystemPicker
               selectedSystem={selectedMusicalSystem}
               onSystemChange={actions.changeMusicalSystem}
               musicalSystems={musicalSystems}
               world={selectedWorld}
-              editMode={editMode}
-              onToggleEditMode={actions.toggleEditMode}
             />
+            
+            {/* Chord Selector */}
+            <div className="chord-selector">
+              <div className="button-group">
+                <button
+                  className={`world-button ${chordType === 'above' ? 'active' : ''}`}
+                  onClick={() => actions.changeChordType('above')}
+                  title="Above chord"
+                >
+                  <span className="world-english">↑</span>
+                  <span className="world-english">ABOVE</span>
+                </button>
+                <button
+                  className={`world-button ${chordType === 'below' ? 'active' : ''}`}
+                  onClick={() => actions.changeChordType('below')}
+                  title="Below chord"
+                >
+                  <span className="world-english">↓</span>
+                  <span className="world-english">BELOW</span>
+                </button>
+                <button
+                  className={`world-button ${chordType === 'triad' ? 'active' : ''}`}
+                  onClick={() => actions.changeChordType('triad')}
+                  title="Triad chord"
+                >
+                  <span className="world-english">△</span>
+                  <span className="world-english">TRIAD</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         
-        <NowPlaying />
+        {audioState.soundEnabled && <NowPlaying />}
       </div>
 
       <div className="app-main">
