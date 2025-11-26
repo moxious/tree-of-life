@@ -3,8 +3,9 @@
 
 import * as Tone from 'tone';
 import type { AudioConfig, IAudioService, Voice } from '../types/audio';
-import { generateOctaveFrequencies, normalizeNoteName } from '../utils/musicalNotes';
+import { generateOctaveFrequencies, normalizeNoteName, calculateFrequency } from '../utils/musicalNotes';
 import { getTouchCapabilities } from '../utils/deviceDetection';
+import { getChordVoicing, type VoicedNote } from '../utils/voicing';
 
 // Maximum number of simultaneous voices to prevent clipping
 const MAX_SIMULTANEOUS_VOICES = 12;
@@ -192,11 +193,14 @@ export class AudioService implements IAudioService {
 
     try {
       const chordConfig = config.chord;
-      const octaves = this.createOctaveRange(chordConfig.octaves, chordConfig.baseOctave);
       const timestamp = Date.now();
       
       const uniqueNotes = [...new Set(noteNames.map(note => normalizeNoteName(note)))];
       console.log('🎵 AudioService: Playing chord with unique notes:', uniqueNotes);
+      
+      // Calculate voicing to distribute notes across octaves
+      const voicedNotes = getChordVoicing(uniqueNotes);
+      console.log('🎵 AudioService: Voicing:', voicedNotes);
       
       // Create effects chain for chord
       const chordEffects = this.createEffectsChain({
@@ -205,8 +209,16 @@ export class AudioService implements IAudioService {
         chorus: chordConfig.chorus
       });
       
-      const playNoteAtTime = (noteName: string, delayMs: number = 0) => {
-        const frequencies = generateOctaveFrequencies(noteName, octaves);
+      const playVoicedNoteAtTime = (voicedNote: VoicedNote, delayMs: number = 0) => {
+        const { note, relativeOctave } = voicedNote;
+        
+        // Calculate octaves for this specific note based on voicing
+        // We shift the base octave by the relative octave determined by the voicing logic
+        const noteBaseOctave = chordConfig.baseOctave + relativeOctave;
+        const octaves = this.createOctaveRange(chordConfig.octaves, noteBaseOctave);
+        
+        // Generate frequencies for each octave layer of this note
+        const frequencies = octaves.map(oct => calculateFrequency(note, oct));
         
         frequencies.forEach((frequency, index) => {
           const maxVoices = this.deviceCapabilities.isIOS ? MAX_SIMULTANEOUS_VOICES_IOS : MAX_SIMULTANEOUS_VOICES;
@@ -216,7 +228,7 @@ export class AudioService implements IAudioService {
           }
           
           const octave = octaves[index];
-          const voiceId = this.createVoiceId(`${noteName}-chord`, octave, timestamp + delayMs);
+          const voiceId = this.createVoiceId(`${note}-chord`, octave, timestamp + delayMs);
           
           const voice = this.createOscillator(frequency, {
             ...config,
@@ -244,16 +256,16 @@ export class AudioService implements IAudioService {
         });
       };
       
-      // Play notes based on chord style
+      // Play notes based on chord style using voiced notes
       if (chordConfig.style === 'simultaneous') {
-        uniqueNotes.forEach(noteName => playNoteAtTime(noteName));
+        voicedNotes.forEach(voicedNote => playVoicedNoteAtTime(voicedNote));
       } else if (chordConfig.style === 'arpeggio') {
-        uniqueNotes.forEach((noteName, index) => {
-          playNoteAtTime(noteName, index * chordConfig.arpeggioDelay);
+        voicedNotes.forEach((voicedNote, index) => {
+          playVoicedNoteAtTime(voicedNote, index * chordConfig.arpeggioDelay);
         });
       } else if (chordConfig.style === 'roll') {
-        uniqueNotes.forEach((noteName, index) => {
-          playNoteAtTime(noteName, index * chordConfig.rollDelay);
+        voicedNotes.forEach((voicedNote, index) => {
+          playVoicedNoteAtTime(voicedNote, index * chordConfig.rollDelay);
         });
       }
     } catch (error) {
