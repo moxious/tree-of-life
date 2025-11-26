@@ -31,7 +31,7 @@ export const useTouchEvents = ({
   const touchStartTime = useRef<number>(0);
   const touchMoved = useRef<boolean>(false);
   const touchStartPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const leaveTimeout = useRef<number | null>(null);
+  const leaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleTouchStart = useCallback((event: React.TouchEvent) => {
     if (preventDefault) {

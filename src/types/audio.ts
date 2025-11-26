@@ -69,6 +69,7 @@ export interface AudioState {
   nowPlaying: NowPlayingEntry[];
   activeVoices: Set<string>;
   error: string | null;
+  currentPresetId: string;
 }
 
 // Audio service actions interface
@@ -76,6 +77,7 @@ export interface AudioActions {
   playNote: (note: string, source: string) => Promise<void>;
   playChord: (notes: string[], source: string) => Promise<void>;
   setSoundEnabled: (enabled: boolean) => void;
+  setPreset: (presetId: string) => void;
   stopAllSounds: () => void;
   clearError: () => void;
 }
@@ -87,18 +89,16 @@ export interface AudioContextValue {
   config: AudioConfig;
 }
 
-// Voice tracking interface for internal use
-export interface Voice {
-  oscillator: any; // Tone.Oscillator
-  envelope: any;   // Tone.Envelope
-  gainNode: any;   // Tone.Gain
-}
+// Note: Voice-related types (SynthVoice, EffectsChain, VoiceConfig, etc.)
+// are now in src/services/Synthesizer.ts for modular synth configuration
 
 // Audio service class interface
 export interface IAudioService {
   initialize(): Promise<boolean>;
   playNote(noteName: string, config: AudioConfig): Promise<void>;
   playChord(noteNames: string[], config: AudioConfig): Promise<void>;
+  setPreset(presetId: string): void;
+  getCurrentPresetId(): string;
   stopAllVoices(): void;
   cleanup(): void;
   isInitialized(): boolean;

@@ -5,6 +5,7 @@ import React, { createContext, useContext, useReducer, useCallback, useEffect, u
 import type { AudioContextValue, AudioState, AudioActions, AudioConfig, NowPlayingEntry } from '../types/audio';
 import { AudioService } from '../services/AudioService';
 import { detectChordName, normalizeNotesForDetection, validateNotes } from '../utils/chordDetection';
+import { DEFAULT_PRESET_ID } from '../config/synthPresets';
 
 // Default audio configuration
 const defaultAudioConfig: AudioConfig = {
@@ -64,6 +65,7 @@ type AudioAction =
   | { type: 'SET_INITIALIZED'; payload: boolean }
   | { type: 'SET_PLAYING'; payload: boolean }
   | { type: 'SET_SOUND_ENABLED'; payload: boolean }
+  | { type: 'SET_PRESET'; payload: string }
   | { type: 'ADD_NOW_PLAYING'; payload: NowPlayingEntry }
   | { type: 'REMOVE_NOW_PLAYING'; payload: string }
   | { type: 'SET_ACTIVE_VOICES'; payload: Set<string> }
@@ -77,7 +79,8 @@ const initialAudioState: AudioState = {
   soundEnabled: false,
   nowPlaying: [],
   activeVoices: new Set(),
-  error: null
+  error: null,
+  currentPresetId: DEFAULT_PRESET_ID
 };
 
 // Audio state reducer
@@ -93,6 +96,9 @@ const audioReducer = (state: AudioState, action: AudioAction): AudioState => {
       break;
     case 'SET_SOUND_ENABLED':
       newState = { ...state, soundEnabled: action.payload };
+      break;
+    case 'SET_PRESET':
+      newState = { ...state, currentPresetId: action.payload };
       break;
     case 'ADD_NOW_PLAYING':
       newState = { ...state, nowPlaying: [...state.nowPlaying, action.payload] };
@@ -160,7 +166,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
 }) => {
   const [state, dispatch] = useReducer(audioReducer, initialAudioState);
   const audioServiceRef = useRef<AudioService | null>(null);
-  const cleanupTimeoutsRef = useRef<Map<string, number>>(new Map());
+  const cleanupTimeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const stateRef = useRef<AudioState>(state);
 
   // Keep stateRef updated with current state
@@ -323,6 +329,15 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     console.log('🎵 AudioContext: setSoundEnabled completed');
   }, [state.isInitialized, state.soundEnabled, initializeAudioIfNeeded]);
 
+  // Set synth preset
+  const setPreset = useCallback((presetId: string) => {
+    if (audioServiceRef.current) {
+      audioServiceRef.current.setPreset(presetId);
+    }
+    dispatch({ type: 'SET_PRESET', payload: presetId });
+    console.log('🎵 AudioContext: Preset changed to:', presetId);
+  }, []);
+
   // Stop all sounds
   const stopAllSounds = useCallback(() => {
     if (audioServiceRef.current) {
@@ -341,6 +356,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     playNote,
     playChord,
     setSoundEnabled,
+    setPreset,
     stopAllSounds,
     clearError
   };

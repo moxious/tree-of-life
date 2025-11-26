@@ -1,10 +1,27 @@
 // Pure AudioService class - No React dependencies
-// Handles all Tone.js audio operations
+// Handles all Tone.js audio operations and voice lifecycle management
 
 import * as Tone from 'tone';
-import type { AudioConfig, IAudioService, Voice } from '../types/audio';
-import { generateOctaveFrequencies, normalizeNoteName } from '../utils/musicalNotes';
+import type { AudioConfig, IAudioService } from '../types/audio';
+import type { SynthPreset } from '../types/synthPresets';
+import { generateOctaveFrequencies, normalizeNoteName, calculateFrequency } from '../utils/musicalNotes';
 import { getTouchCapabilities } from '../utils/deviceDetection';
+import { getChordVoicing, type VoicedNote } from '../utils/voicing';
+import { getPreset, DEFAULT_PRESET_ID } from '../config/synthPresets';
+import {
+  createVoice,
+  createEffectsChain,
+  createVoiceFromPreset,
+  disposeVoice,
+  disposeEffects,
+  disposePolymorphicVoice,
+  triggerPolymorphicAttackRelease,
+  applyDynamicGain,
+  type SynthVoice,
+  type PolymorphicVoice,
+  type EffectsChain,
+  type DeviceOptions
+} from './Synthesizer';
 
 // Maximum number of simultaneous voices to prevent clipping
 const MAX_SIMULTANEOUS_VOICES = 12;
@@ -12,15 +29,14 @@ const MAX_SIMULTANEOUS_VOICES_IOS = 8; // Lower limit for iOS devices
 
 export class AudioService implements IAudioService {
   private isInitializedFlag = false;
-  private effects: {
-    chorus: Tone.Chorus;
-    reverb: Tone.Reverb;
-    gain: Tone.Gain;
-    limiter: Tone.Limiter;
-  } | null = null;
-  private voices = new Map<string, Voice>();
+  private effects: EffectsChain | null = null;
+  private voices = new Map<string, SynthVoice>();
+  private polymorphicVoices = new Map<string, PolymorphicVoice>();
   private activeVoices = new Set<string>();
   private deviceCapabilities = getTouchCapabilities();
+  private deviceOptions: DeviceOptions = { isIOS: getTouchCapabilities().isIOS };
+  private currentPreset: SynthPreset = getPreset(DEFAULT_PRESET_ID);
+  private currentPresetId: string = DEFAULT_PRESET_ID;
 
   // Pure function to create octave range
   private createOctaveRange(octaves: number, baseOctave: number): number[] {
@@ -33,61 +49,6 @@ export class AudioService implements IAudioService {
     );
   }
 
-  // Pure function to create audio effects chain
-  private createEffectsChain(config: AudioConfig) {
-    // iOS-specific optimizations
-    const isIOSDevice = this.deviceCapabilities.isIOS;
-    
-    const chorus = new Tone.Chorus({
-      frequency: config.chorus.frequency,
-      delayTime: config.chorus.delayTime,
-      depth: config.chorus.depth,
-      wet: config.chorus.enabled ? (isIOSDevice ? 0.5 : 1) : 0 // Reduce chorus on iOS for performance
-    });
-
-    const reverb = new Tone.Reverb({
-      decay: config.reverb.roomSize,
-      wet: config.reverb.enabled ? (isIOSDevice ? config.reverb.wet * 0.7 : config.reverb.wet) : 0 // Reduce reverb on iOS
-    });
-
-    // iOS devices may need lower gain to prevent clipping
-    const masterGain = isIOSDevice ? 0.15 : 0.2;
-    const gain = new Tone.Gain(masterGain);
-    
-    // More aggressive limiting on iOS
-    const limiterThreshold = isIOSDevice ? -6 : -3;
-    const limiter = new Tone.Limiter(limiterThreshold);
-
-    // Chain: chorus -> reverb -> gain -> limiter -> destination
-    chorus.connect(reverb);
-    reverb.connect(gain);
-    gain.connect(limiter);
-    limiter.toDestination();
-
-    return { chorus, reverb, gain, limiter };
-  }
-
-  // Pure function to create oscillator for a specific frequency
-  private createOscillator(frequency: number, config: AudioConfig): Voice {
-    const oscillator = new Tone.Oscillator({
-      frequency,
-      type: config.waveform
-    });
-
-    const envelope = new Tone.Envelope({
-      attack: config.envelope.attack,
-      decay: config.envelope.decay,
-      sustain: config.envelope.sustain,
-      release: config.envelope.release
-    });
-
-    const gainNode = new Tone.Gain(config.gain);
-    oscillator.connect(gainNode);
-    envelope.connect(gainNode.gain);
-
-    return { oscillator, envelope, gainNode };
-  }
-
   // Pure function to calculate voice ID for tracking
   private createVoiceId(noteName: string, octave: number, timestamp: number): string {
     return `${noteName}-${octave}-${timestamp}`;
@@ -96,15 +57,7 @@ export class AudioService implements IAudioService {
   // Pure function to update master gain based on active voices
   private updateMasterGain(): void {
     if (this.effects) {
-      const activeVoiceCount = this.activeVoices.size;
-      const isIOSDevice = this.deviceCapabilities.isIOS;
-      
-      // More aggressive gain reduction on iOS
-      const baseGain = isIOSDevice ? 0.15 : 0.2;
-      const reductionPerVoice = isIOSDevice ? 0.03 : 0.02;
-      const dynamicGain = Math.max(0.05, baseGain - (activeVoiceCount - 1) * reductionPerVoice);
-      
-      this.effects.gain.gain.value = dynamicGain;
+      applyDynamicGain(this.effects, this.activeVoices.size, this.deviceOptions);
     }
   }
 
@@ -112,14 +65,31 @@ export class AudioService implements IAudioService {
   private cleanupVoice(voiceId: string): void {
     const voice = this.voices.get(voiceId);
     if (voice) {
-      voice.oscillator.stop();
-      voice.oscillator.dispose();
-      voice.envelope.dispose();
-      voice.gainNode.dispose();
+      disposeVoice(voice);
       this.voices.delete(voiceId);
     }
+    
+    // Also check for polymorphic voices
+    const polyVoice = this.polymorphicVoices.get(voiceId);
+    if (polyVoice) {
+      disposePolymorphicVoice(polyVoice);
+      this.polymorphicVoices.delete(voiceId);
+    }
+    
     this.activeVoices.delete(voiceId);
     this.updateMasterGain();
+  }
+
+  // Set the current synth preset
+  setPreset(presetId: string): void {
+    this.currentPresetId = presetId;
+    this.currentPreset = getPreset(presetId);
+    console.log('🎵 AudioService: Preset changed to:', this.currentPreset.name);
+  }
+
+  // Get the current preset ID
+  getCurrentPresetId(): string {
+    return this.currentPresetId;
   }
 
   // Initialize audio context
@@ -145,7 +115,7 @@ export class AudioService implements IAudioService {
     }
 
     if (!this.effects) {
-      this.effects = this.createEffectsChain(config);
+      this.effects = createEffectsChain(config, this.deviceOptions);
     }
 
     try {
@@ -158,7 +128,11 @@ export class AudioService implements IAudioService {
         const octave = octaves[index];
         const voiceId = this.createVoiceId(normalizedNote, octave, timestamp);
         
-        const voice = this.createOscillator(frequency, config);
+        const voice = createVoice(frequency, {
+          waveform: config.waveform,
+          envelope: config.envelope,
+          gain: config.gain
+        });
         voice.gainNode.connect(this.effects!.gain);
         
         this.voices.set(voiceId, voice);
@@ -179,7 +153,7 @@ export class AudioService implements IAudioService {
     }
   }
 
-  // Play a chord (multiple notes)
+  // Play a chord (multiple notes) using the current synth preset
   async playChord(noteNames: string[], config: AudioConfig): Promise<void> {
     if (!this.isInitializedFlag) {
       await this.initialize();
@@ -192,21 +166,31 @@ export class AudioService implements IAudioService {
 
     try {
       const chordConfig = config.chord;
-      const octaves = this.createOctaveRange(chordConfig.octaves, chordConfig.baseOctave);
       const timestamp = Date.now();
+      const preset = this.currentPreset;
       
       const uniqueNotes = [...new Set(noteNames.map(note => normalizeNoteName(note)))];
-      console.log('🎵 AudioService: Playing chord with unique notes:', uniqueNotes);
+      console.log('🎵 AudioService: Playing chord with preset:', preset.name, 'notes:', uniqueNotes);
       
-      // Create effects chain for chord
-      const chordEffects = this.createEffectsChain({
-        ...config,
-        reverb: chordConfig.reverb,
-        chorus: chordConfig.chorus
-      });
+      // Calculate voicing to distribute notes across octaves
+      const voicedNotes = getChordVoicing(uniqueNotes);
+      console.log('🎵 AudioService: Voicing:', voicedNotes);
       
-      const playNoteAtTime = (noteName: string, delayMs: number = 0) => {
-        const frequencies = generateOctaveFrequencies(noteName, octaves);
+      // Create effects chain using preset effects configuration
+      const chordEffects = createEffectsChain(
+        { reverb: preset.effects.reverb, chorus: preset.effects.chorus },
+        this.deviceOptions
+      );
+      
+      const playVoicedNoteAtTime = (voicedNote: VoicedNote, delayMs: number = 0) => {
+        const { note, relativeOctave } = voicedNote;
+        
+        // Calculate octaves for this specific note based on voicing
+        const noteBaseOctave = chordConfig.baseOctave + relativeOctave;
+        const octaves = this.createOctaveRange(chordConfig.octaves, noteBaseOctave);
+        
+        // Generate frequencies for each octave layer of this note
+        const frequencies = octaves.map(oct => calculateFrequency(note, oct));
         
         frequencies.forEach((frequency, index) => {
           const maxVoices = this.deviceCapabilities.isIOS ? MAX_SIMULTANEOUS_VOICES_IOS : MAX_SIMULTANEOUS_VOICES;
@@ -216,44 +200,46 @@ export class AudioService implements IAudioService {
           }
           
           const octave = octaves[index];
-          const voiceId = this.createVoiceId(`${noteName}-chord`, octave, timestamp + delayMs);
+          const voiceId = this.createVoiceId(`${note}-chord`, octave, timestamp + delayMs);
           
-          const voice = this.createOscillator(frequency, {
-            ...config,
-            ...chordConfig
-          });
+          // Create polymorphic voice using the preset
+          const polyVoice = createVoiceFromPreset(preset, frequency);
           
-          voice.gainNode.connect(chordEffects.gain);
-          this.voices.set(voiceId, voice);
+          // Connect to effects chain
+          polyVoice.gainNode.connect(chordEffects.gain);
+          this.polymorphicVoices.set(voiceId, polyVoice);
           this.activeVoices.add(voiceId);
           this.updateMasterGain();
           
-          voice.oscillator.start();
+          // Trigger the voice with preset envelope timing
+          const duration = preset.envelope.attack + preset.envelope.decay + 
+                          (chordConfig.duration / 1000) + preset.envelope.release;
           
           if (chordConfig.style === 'simultaneous') {
-            voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
+            triggerPolymorphicAttackRelease(polyVoice, frequency, chordConfig.duration / 1000);
           } else {
             setTimeout(() => {
-              voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
+              triggerPolymorphicAttackRelease(polyVoice, frequency, chordConfig.duration / 1000);
             }, delayMs);
           }
           
+          // Schedule cleanup after full envelope completes
           setTimeout(() => {
             this.cleanupVoice(voiceId);
-          }, chordConfig.duration + 2000);
+          }, (duration * 1000) + delayMs + 500);
         });
       };
       
-      // Play notes based on chord style
+      // Play notes based on chord style using voiced notes
       if (chordConfig.style === 'simultaneous') {
-        uniqueNotes.forEach(noteName => playNoteAtTime(noteName));
+        voicedNotes.forEach(voicedNote => playVoicedNoteAtTime(voicedNote));
       } else if (chordConfig.style === 'arpeggio') {
-        uniqueNotes.forEach((noteName, index) => {
-          playNoteAtTime(noteName, index * chordConfig.arpeggioDelay);
+        voicedNotes.forEach((voicedNote, index) => {
+          playVoicedNoteAtTime(voicedNote, index * chordConfig.arpeggioDelay);
         });
       } else if (chordConfig.style === 'roll') {
-        uniqueNotes.forEach((noteName, index) => {
-          playNoteAtTime(noteName, index * chordConfig.rollDelay);
+        voicedNotes.forEach((voicedNote, index) => {
+          playVoicedNoteAtTime(voicedNote, index * chordConfig.rollDelay);
         });
       }
     } catch (error) {
@@ -265,12 +251,15 @@ export class AudioService implements IAudioService {
   // Stop all voices
   stopAllVoices(): void {
     this.voices.forEach((voice) => {
-      voice.oscillator.stop();
-      voice.oscillator.dispose();
-      voice.envelope.dispose();
-      voice.gainNode.dispose();
+      disposeVoice(voice);
     });
     this.voices.clear();
+    
+    this.polymorphicVoices.forEach((voice) => {
+      disposePolymorphicVoice(voice);
+    });
+    this.polymorphicVoices.clear();
+    
     this.activeVoices.clear();
   }
 
@@ -278,10 +267,7 @@ export class AudioService implements IAudioService {
   cleanup(): void {
     this.stopAllVoices();
     if (this.effects) {
-      this.effects.chorus.dispose();
-      this.effects.reverb.dispose();
-      this.effects.gain.dispose();
-      this.effects.limiter.dispose();
+      disposeEffects(this.effects);
       this.effects = null;
     }
     this.isInitializedFlag = false;

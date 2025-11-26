@@ -4,6 +4,7 @@ import musicalSystems from '../musicalSystems.json';
 import InfoPanel from './InfoPanel';
 import CombinedPicker from './CombinedPicker';
 import MusicSystemPicker from './MusicSystemPicker';
+import SynthPicker from './SynthPicker';
 import NowPlaying from './NowPlaying';
 import Sephirah from './Sephirah';
 import Path from './Path';
@@ -34,7 +35,7 @@ const TreeOfLifeInner: React.FC = () => {
   } = useTreeState(audioActions);
 
   // Debug logging for editMode
-  console.log('🎵 TreeOfLife editMode:', editMode);
+  // console.log('🎵 TreeOfLife editMode:', editMode);
 
   const getCurrentWorldImages = () => {
     const world = worlds[selectedWorld as keyof typeof worlds];
@@ -107,6 +108,11 @@ const TreeOfLifeInner: React.FC = () => {
               onSystemChange={actions.changeMusicalSystem}
               musicalSystems={musicalSystems}
               world={selectedWorld}
+            />
+
+            <SynthPicker
+              currentPreset={audioState.currentPresetId}
+              onPresetChange={audioActions.setPreset}
             />
             
             {/* Chord Selector */}
@@ -195,10 +201,6 @@ const TreeOfLifeInner: React.FC = () => {
             
             {/* Render circles */}
             {Object.entries(sephirot).map(([key, sephirah]) => {
-              // Debug logging for Daath
-              if (key === 'daath') {
-                console.log('🎵 TreeOfLife rendering Daath with editMode:', editMode);
-              }
               
               return (
                 <Sephirah
