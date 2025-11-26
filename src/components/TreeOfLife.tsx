@@ -4,6 +4,7 @@ import musicalSystems from '../musicalSystems.json';
 import InfoPanel from './InfoPanel';
 import CombinedPicker from './CombinedPicker';
 import MusicSystemPicker from './MusicSystemPicker';
+import SynthPicker from './SynthPicker';
 import NowPlaying from './NowPlaying';
 import Sephirah from './Sephirah';
 import Path from './Path';
@@ -107,6 +108,11 @@ const TreeOfLifeInner: React.FC = () => {
               onSystemChange={actions.changeMusicalSystem}
               musicalSystems={musicalSystems}
               world={selectedWorld}
+            />
+
+            <SynthPicker
+              currentPreset={audioState.currentPresetId}
+              onPresetChange={audioActions.setPreset}
             />
             
             {/* Chord Selector */}

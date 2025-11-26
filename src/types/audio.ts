@@ -69,6 +69,7 @@ export interface AudioState {
   nowPlaying: NowPlayingEntry[];
   activeVoices: Set<string>;
   error: string | null;
+  currentPresetId: string;
 }
 
 // Audio service actions interface
@@ -76,6 +77,7 @@ export interface AudioActions {
   playNote: (note: string, source: string) => Promise<void>;
   playChord: (notes: string[], source: string) => Promise<void>;
   setSoundEnabled: (enabled: boolean) => void;
+  setPreset: (presetId: string) => void;
   stopAllSounds: () => void;
   clearError: () => void;
 }
@@ -95,6 +97,8 @@ export interface IAudioService {
   initialize(): Promise<boolean>;
   playNote(noteName: string, config: AudioConfig): Promise<void>;
   playChord(noteNames: string[], config: AudioConfig): Promise<void>;
+  setPreset(presetId: string): void;
+  getCurrentPresetId(): string;
   stopAllVoices(): void;
   cleanup(): void;
   isInitialized(): boolean;

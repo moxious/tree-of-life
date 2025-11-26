@@ -2,6 +2,12 @@
 // Pure factory functions for creating Tone.js synthesizer components
 
 import * as Tone from 'tone';
+import type {
+  SynthPreset,
+  FMEngineConfig,
+  LayeredEngineConfig,
+  OscillatorEngineConfig
+} from '../types/synthPresets';
 
 // ============================================================================
 // Types
@@ -53,6 +59,16 @@ export interface EffectsConfig {
 
 export interface DeviceOptions {
   readonly isIOS: boolean;
+}
+
+// Polymorphic voice that can hold different synth engine types
+export interface PolymorphicVoice {
+  readonly voices: Array<{
+    synth: Tone.Synth | Tone.FMSynth;
+    envelope?: Tone.Envelope;
+  }>;
+  readonly filter?: Tone.Filter;
+  readonly gainNode: Tone.Gain;
 }
 
 // ============================================================================
@@ -184,5 +200,171 @@ export const applyDynamicGain = (
   options: DeviceOptions = { isIOS: false }
 ): void => {
   effects.gain.gain.value = calculateDynamicGain(activeVoiceCount, options);
+};
+
+// ============================================================================
+// Preset-Based Voice Creation
+// ============================================================================
+
+/**
+ * Creates a polymorphic voice from a synth preset
+ * Supports oscillator, FM, and layered engine types
+ */
+export const createVoiceFromPreset = (
+  preset: SynthPreset,
+  frequency: number
+): PolymorphicVoice => {
+  const gainNode = new Tone.Gain(0.3);
+  const voices: PolymorphicVoice['voices'] = [];
+  let filter: Tone.Filter | undefined;
+
+  // Create filter if specified
+  if (preset.filter) {
+    filter = new Tone.Filter({
+      type: preset.filter.type,
+      frequency: preset.filter.frequency,
+      Q: preset.filter.Q
+    });
+  }
+
+  const config = preset.engineConfig;
+
+  if (config.type === 'fm') {
+    // FM Synthesis
+    const fmConfig = config as FMEngineConfig;
+    const synth = new Tone.FMSynth({
+      harmonicity: fmConfig.harmonicity,
+      modulationIndex: fmConfig.modulationIndex,
+      oscillator: { type: fmConfig.oscillatorType },
+      modulation: { type: fmConfig.modulationType },
+      envelope: {
+        attack: preset.envelope.attack,
+        decay: preset.envelope.decay,
+        sustain: preset.envelope.sustain,
+        release: preset.envelope.release
+      },
+      modulationEnvelope: {
+        attack: fmConfig.modulationEnvelope.attack,
+        decay: fmConfig.modulationEnvelope.decay,
+        sustain: fmConfig.modulationEnvelope.sustain,
+        release: fmConfig.modulationEnvelope.release
+      }
+    });
+    synth.frequency.value = frequency;
+    
+    if (filter) {
+      synth.connect(filter);
+      filter.connect(gainNode);
+    } else {
+      synth.connect(gainNode);
+    }
+    
+    voices.push({ synth });
+  } else if (config.type === 'layered') {
+    // Layered Oscillators
+    const layeredConfig = config as LayeredEngineConfig;
+    
+    layeredConfig.layers.forEach(layer => {
+      // Calculate frequency with octave shift
+      const layerFrequency = frequency * Math.pow(2, layer.octaveShift);
+      
+      const synth = new Tone.Synth({
+        oscillator: { type: layer.waveform },
+        envelope: {
+          attack: preset.envelope.attack,
+          decay: preset.envelope.decay,
+          sustain: preset.envelope.sustain,
+          release: preset.envelope.release
+        }
+      });
+      
+      // Apply detune (in cents)
+      synth.detune.value = layer.detune;
+      synth.frequency.value = layerFrequency;
+      
+      // Create individual gain for layer mixing
+      const layerGain = new Tone.Gain(layer.gain);
+      synth.connect(layerGain);
+      
+      if (filter) {
+        layerGain.connect(filter);
+      } else {
+        layerGain.connect(gainNode);
+      }
+      
+      voices.push({ synth });
+    });
+    
+    // Connect filter to output if present
+    if (filter) {
+      filter.connect(gainNode);
+    }
+  } else {
+    // Basic Oscillator
+    const oscConfig = config as OscillatorEngineConfig;
+    const synth = new Tone.Synth({
+      oscillator: { type: oscConfig.waveform },
+      envelope: {
+        attack: preset.envelope.attack,
+        decay: preset.envelope.decay,
+        sustain: preset.envelope.sustain,
+        release: preset.envelope.release
+      }
+    });
+    synth.frequency.value = frequency;
+    
+    if (filter) {
+      synth.connect(filter);
+      filter.connect(gainNode);
+    } else {
+      synth.connect(gainNode);
+    }
+    
+    voices.push({ synth });
+  }
+
+  return { voices, filter, gainNode };
+};
+
+/**
+ * Triggers attack on a polymorphic voice
+ */
+export const triggerPolymorphicAttack = (voice: PolymorphicVoice, frequency: number): void => {
+  voice.voices.forEach(v => {
+    if (v.synth instanceof Tone.FMSynth) {
+      v.synth.triggerAttack(frequency);
+    } else {
+      v.synth.triggerAttack(frequency);
+    }
+  });
+};
+
+/**
+ * Triggers attack and release on a polymorphic voice
+ */
+export const triggerPolymorphicAttackRelease = (
+  voice: PolymorphicVoice,
+  frequency: number,
+  duration: number | string
+): void => {
+  voice.voices.forEach(v => {
+    v.synth.triggerAttackRelease(frequency, duration);
+  });
+};
+
+/**
+ * Disposes of a polymorphic voice and releases its resources
+ */
+export const disposePolymorphicVoice = (voice: PolymorphicVoice): void => {
+  voice.voices.forEach(v => {
+    v.synth.dispose();
+    if (v.envelope) {
+      v.envelope.dispose();
+    }
+  });
+  if (voice.filter) {
+    voice.filter.dispose();
+  }
+  voice.gainNode.dispose();
 };
 

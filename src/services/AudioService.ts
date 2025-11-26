@@ -3,16 +3,22 @@
 
 import * as Tone from 'tone';
 import type { AudioConfig, IAudioService } from '../types/audio';
+import type { SynthPreset } from '../types/synthPresets';
 import { generateOctaveFrequencies, normalizeNoteName, calculateFrequency } from '../utils/musicalNotes';
 import { getTouchCapabilities } from '../utils/deviceDetection';
 import { getChordVoicing, type VoicedNote } from '../utils/voicing';
+import { getPreset, DEFAULT_PRESET_ID } from '../config/synthPresets';
 import {
   createVoice,
   createEffectsChain,
+  createVoiceFromPreset,
   disposeVoice,
   disposeEffects,
+  disposePolymorphicVoice,
+  triggerPolymorphicAttackRelease,
   applyDynamicGain,
   type SynthVoice,
+  type PolymorphicVoice,
   type EffectsChain,
   type DeviceOptions
 } from './Synthesizer';
@@ -25,9 +31,12 @@ export class AudioService implements IAudioService {
   private isInitializedFlag = false;
   private effects: EffectsChain | null = null;
   private voices = new Map<string, SynthVoice>();
+  private polymorphicVoices = new Map<string, PolymorphicVoice>();
   private activeVoices = new Set<string>();
   private deviceCapabilities = getTouchCapabilities();
   private deviceOptions: DeviceOptions = { isIOS: getTouchCapabilities().isIOS };
+  private currentPreset: SynthPreset = getPreset(DEFAULT_PRESET_ID);
+  private currentPresetId: string = DEFAULT_PRESET_ID;
 
   // Pure function to create octave range
   private createOctaveRange(octaves: number, baseOctave: number): number[] {
@@ -59,8 +68,28 @@ export class AudioService implements IAudioService {
       disposeVoice(voice);
       this.voices.delete(voiceId);
     }
+    
+    // Also check for polymorphic voices
+    const polyVoice = this.polymorphicVoices.get(voiceId);
+    if (polyVoice) {
+      disposePolymorphicVoice(polyVoice);
+      this.polymorphicVoices.delete(voiceId);
+    }
+    
     this.activeVoices.delete(voiceId);
     this.updateMasterGain();
+  }
+
+  // Set the current synth preset
+  setPreset(presetId: string): void {
+    this.currentPresetId = presetId;
+    this.currentPreset = getPreset(presetId);
+    console.log('🎵 AudioService: Preset changed to:', this.currentPreset.name);
+  }
+
+  // Get the current preset ID
+  getCurrentPresetId(): string {
+    return this.currentPresetId;
   }
 
   // Initialize audio context
@@ -124,7 +153,7 @@ export class AudioService implements IAudioService {
     }
   }
 
-  // Play a chord (multiple notes)
+  // Play a chord (multiple notes) using the current synth preset
   async playChord(noteNames: string[], config: AudioConfig): Promise<void> {
     if (!this.isInitializedFlag) {
       await this.initialize();
@@ -138,17 +167,18 @@ export class AudioService implements IAudioService {
     try {
       const chordConfig = config.chord;
       const timestamp = Date.now();
+      const preset = this.currentPreset;
       
       const uniqueNotes = [...new Set(noteNames.map(note => normalizeNoteName(note)))];
-      console.log('🎵 AudioService: Playing chord with unique notes:', uniqueNotes);
+      console.log('🎵 AudioService: Playing chord with preset:', preset.name, 'notes:', uniqueNotes);
       
       // Calculate voicing to distribute notes across octaves
       const voicedNotes = getChordVoicing(uniqueNotes);
       console.log('🎵 AudioService: Voicing:', voicedNotes);
       
-      // Create effects chain for chord using the Synthesizer module
+      // Create effects chain using preset effects configuration
       const chordEffects = createEffectsChain(
-        { reverb: chordConfig.reverb, chorus: chordConfig.chorus },
+        { reverb: preset.effects.reverb, chorus: preset.effects.chorus },
         this.deviceOptions
       );
       
@@ -156,7 +186,6 @@ export class AudioService implements IAudioService {
         const { note, relativeOctave } = voicedNote;
         
         // Calculate octaves for this specific note based on voicing
-        // We shift the base octave by the relative octave determined by the voicing logic
         const noteBaseOctave = chordConfig.baseOctave + relativeOctave;
         const octaves = this.createOctaveRange(chordConfig.octaves, noteBaseOctave);
         
@@ -173,31 +202,31 @@ export class AudioService implements IAudioService {
           const octave = octaves[index];
           const voiceId = this.createVoiceId(`${note}-chord`, octave, timestamp + delayMs);
           
-          // Create voice using the Synthesizer module
-          const voice = createVoice(frequency, {
-            waveform: chordConfig.waveform,
-            envelope: chordConfig.envelope,
-            gain: chordConfig.gain
-          });
+          // Create polymorphic voice using the preset
+          const polyVoice = createVoiceFromPreset(preset, frequency);
           
-          voice.gainNode.connect(chordEffects.gain);
-          this.voices.set(voiceId, voice);
+          // Connect to effects chain
+          polyVoice.gainNode.connect(chordEffects.gain);
+          this.polymorphicVoices.set(voiceId, polyVoice);
           this.activeVoices.add(voiceId);
           this.updateMasterGain();
           
-          voice.oscillator.start();
+          // Trigger the voice with preset envelope timing
+          const duration = preset.envelope.attack + preset.envelope.decay + 
+                          (chordConfig.duration / 1000) + preset.envelope.release;
           
           if (chordConfig.style === 'simultaneous') {
-            voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
+            triggerPolymorphicAttackRelease(polyVoice, frequency, chordConfig.duration / 1000);
           } else {
             setTimeout(() => {
-              voice.envelope.triggerAttackRelease(chordConfig.duration / 1000);
+              triggerPolymorphicAttackRelease(polyVoice, frequency, chordConfig.duration / 1000);
             }, delayMs);
           }
           
+          // Schedule cleanup after full envelope completes
           setTimeout(() => {
             this.cleanupVoice(voiceId);
-          }, chordConfig.duration + 2000);
+          }, (duration * 1000) + delayMs + 500);
         });
       };
       
@@ -225,6 +254,12 @@ export class AudioService implements IAudioService {
       disposeVoice(voice);
     });
     this.voices.clear();
+    
+    this.polymorphicVoices.forEach((voice) => {
+      disposePolymorphicVoice(voice);
+    });
+    this.polymorphicVoices.clear();
+    
     this.activeVoices.clear();
   }
 
