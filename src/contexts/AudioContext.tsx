@@ -166,7 +166,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
 }) => {
   const [state, dispatch] = useReducer(audioReducer, initialAudioState);
   const audioServiceRef = useRef<AudioService | null>(null);
-  const cleanupTimeoutsRef = useRef<Map<string, number>>(new Map());
+  const cleanupTimeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
   const stateRef = useRef<AudioState>(state);
 
   // Keep stateRef updated with current state

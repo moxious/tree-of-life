@@ -18,7 +18,7 @@ export const useMultiTouch = ({
   maxTouchDelay = 500
 }: MultiTouchOptions) => {
   const activeTouches = useRef<Map<number, { sephirah: SephirahData; timestamp: number }>>(new Map());
-  const multiTouchTimeout = useRef<number | null>(null);
+  const multiTouchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleTouchStart = useCallback((event: React.TouchEvent, sephirah: SephirahData) => {
     // Prevent default to avoid scrolling and other touch behaviors

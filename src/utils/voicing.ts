@@ -60,6 +60,15 @@ export const getChordVoicing = (notes: string[]): VoicedNote[] => {
       // Move minor 2nds (b9) up to avoid clash with root
       
       // Simplify semitones to 0-11 range for interval class
+      // Handle case where semitones might be undefined
+      if (semitones === undefined) {
+        return {
+          note,
+          relativeOctave,
+          interval
+        };
+      }
+      
       const intervalClass = semitones % 12;
       
       // Check for b2/b9 (semitone 1) - highly dissonant with root
