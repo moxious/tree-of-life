@@ -1,6 +1,6 @@
 import * as Tonal from '@tonaljs/tonal';
 import { Note, World, Triad, TreeState, GeneratedSystem, GeneratedChord } from './types';
-import { WORLDS, TREE_TRIAD_DEFS, SEPHIRAH_CHORDS, TRIAD_SLOTS, PATHS } from './constants';
+import { WORLDS, TREE_TRIAD_DEFS, SEPHIRAH_CHORDS, TRIAD_SLOTS, PATHS, TriadSlot } from './constants';
 
 // Helper to normalize notes for comparison
 function normalize(note: Note): string {
@@ -141,7 +141,7 @@ export function solve(worldName: string): GeneratedSystem {
           
           // Identify Slots
           // Shuffle slots to try different positions
-          const slots = shuffle(TRIAD_SLOTS);
+          const slots: TriadSlot[] = shuffle(TRIAD_SLOTS);
           
           // Try to fit missing triads into slots
           // This is a mini-CSP
@@ -238,6 +238,14 @@ export function solve(worldName: string): GeneratedSystem {
           
           if (finalTriadsFound.size < 6) {
                throw new Error(`Missing triads: Found ${finalTriadsFound.size}/6`);
+          }
+          
+          // Verify all 9 palette tones are used
+          const finalUsedTones = new Set(Object.values(assignments).map(n => normalize(n)));
+          const paletteTones = new Set(world.palette.map(n => normalize(n)));
+          const missingTones = [...paletteTones].filter(t => !finalUsedTones.has(t));
+          if (missingTones.length > 0) {
+               throw new Error(`Missing palette tones: ${missingTones.join(', ')}`);
           }
           
           // If we got here, we have a valid system!
