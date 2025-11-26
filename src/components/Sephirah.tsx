@@ -78,10 +78,6 @@ const Sephirah: React.FC<SephirahProps> = ({
     }
   };
 
-  // Debug logging
-  if (name === 'daath') {
-    console.log('🎵 Daath component - editMode:', editMode, 'name:', name);
-  }
 
   // Hide Daath in edit mode to allow access to paths behind it
   if (editMode && name === 'daath') {

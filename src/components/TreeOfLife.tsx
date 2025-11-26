@@ -195,10 +195,6 @@ const TreeOfLifeInner: React.FC = () => {
             
             {/* Render circles */}
             {Object.entries(sephirot).map(([key, sephirah]) => {
-              // Debug logging for Daath
-              if (key === 'daath') {
-                console.log('🎵 TreeOfLife rendering Daath with editMode:', editMode);
-              }
               
               return (
                 <Sephirah
