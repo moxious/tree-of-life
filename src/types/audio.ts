@@ -87,12 +87,8 @@ export interface AudioContextValue {
   config: AudioConfig;
 }
 
-// Voice tracking interface for internal use
-export interface Voice {
-  oscillator: any; // Tone.Oscillator
-  envelope: any;   // Tone.Envelope
-  gainNode: any;   // Tone.Gain
-}
+// Note: Voice-related types (SynthVoice, EffectsChain, VoiceConfig, etc.)
+// are now in src/services/Synthesizer.ts for modular synth configuration
 
 // Audio service class interface
 export interface IAudioService {

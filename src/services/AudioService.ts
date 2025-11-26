@@ -1,11 +1,21 @@
 // Pure AudioService class - No React dependencies
-// Handles all Tone.js audio operations
+// Handles all Tone.js audio operations and voice lifecycle management
 
 import * as Tone from 'tone';
-import type { AudioConfig, IAudioService, Voice } from '../types/audio';
+import type { AudioConfig, IAudioService } from '../types/audio';
 import { generateOctaveFrequencies, normalizeNoteName, calculateFrequency } from '../utils/musicalNotes';
 import { getTouchCapabilities } from '../utils/deviceDetection';
 import { getChordVoicing, type VoicedNote } from '../utils/voicing';
+import {
+  createVoice,
+  createEffectsChain,
+  disposeVoice,
+  disposeEffects,
+  applyDynamicGain,
+  type SynthVoice,
+  type EffectsChain,
+  type DeviceOptions
+} from './Synthesizer';
 
 // Maximum number of simultaneous voices to prevent clipping
 const MAX_SIMULTANEOUS_VOICES = 12;
@@ -13,15 +23,11 @@ const MAX_SIMULTANEOUS_VOICES_IOS = 8; // Lower limit for iOS devices
 
 export class AudioService implements IAudioService {
   private isInitializedFlag = false;
-  private effects: {
-    chorus: Tone.Chorus;
-    reverb: Tone.Reverb;
-    gain: Tone.Gain;
-    limiter: Tone.Limiter;
-  } | null = null;
-  private voices = new Map<string, Voice>();
+  private effects: EffectsChain | null = null;
+  private voices = new Map<string, SynthVoice>();
   private activeVoices = new Set<string>();
   private deviceCapabilities = getTouchCapabilities();
+  private deviceOptions: DeviceOptions = { isIOS: getTouchCapabilities().isIOS };
 
   // Pure function to create octave range
   private createOctaveRange(octaves: number, baseOctave: number): number[] {
@@ -34,61 +40,6 @@ export class AudioService implements IAudioService {
     );
   }
 
-  // Pure function to create audio effects chain
-  private createEffectsChain(config: AudioConfig) {
-    // iOS-specific optimizations
-    const isIOSDevice = this.deviceCapabilities.isIOS;
-    
-    const chorus = new Tone.Chorus({
-      frequency: config.chorus.frequency,
-      delayTime: config.chorus.delayTime,
-      depth: config.chorus.depth,
-      wet: config.chorus.enabled ? (isIOSDevice ? 0.5 : 1) : 0 // Reduce chorus on iOS for performance
-    });
-
-    const reverb = new Tone.Reverb({
-      decay: config.reverb.roomSize,
-      wet: config.reverb.enabled ? (isIOSDevice ? config.reverb.wet * 0.7 : config.reverb.wet) : 0 // Reduce reverb on iOS
-    });
-
-    // iOS devices may need lower gain to prevent clipping
-    const masterGain = isIOSDevice ? 0.15 : 0.2;
-    const gain = new Tone.Gain(masterGain);
-    
-    // More aggressive limiting on iOS
-    const limiterThreshold = isIOSDevice ? -6 : -3;
-    const limiter = new Tone.Limiter(limiterThreshold);
-
-    // Chain: chorus -> reverb -> gain -> limiter -> destination
-    chorus.connect(reverb);
-    reverb.connect(gain);
-    gain.connect(limiter);
-    limiter.toDestination();
-
-    return { chorus, reverb, gain, limiter };
-  }
-
-  // Pure function to create oscillator for a specific frequency
-  private createOscillator(frequency: number, config: AudioConfig): Voice {
-    const oscillator = new Tone.Oscillator({
-      frequency,
-      type: config.waveform
-    });
-
-    const envelope = new Tone.Envelope({
-      attack: config.envelope.attack,
-      decay: config.envelope.decay,
-      sustain: config.envelope.sustain,
-      release: config.envelope.release
-    });
-
-    const gainNode = new Tone.Gain(config.gain);
-    oscillator.connect(gainNode);
-    envelope.connect(gainNode.gain);
-
-    return { oscillator, envelope, gainNode };
-  }
-
   // Pure function to calculate voice ID for tracking
   private createVoiceId(noteName: string, octave: number, timestamp: number): string {
     return `${noteName}-${octave}-${timestamp}`;
@@ -97,15 +48,7 @@ export class AudioService implements IAudioService {
   // Pure function to update master gain based on active voices
   private updateMasterGain(): void {
     if (this.effects) {
-      const activeVoiceCount = this.activeVoices.size;
-      const isIOSDevice = this.deviceCapabilities.isIOS;
-      
-      // More aggressive gain reduction on iOS
-      const baseGain = isIOSDevice ? 0.15 : 0.2;
-      const reductionPerVoice = isIOSDevice ? 0.03 : 0.02;
-      const dynamicGain = Math.max(0.05, baseGain - (activeVoiceCount - 1) * reductionPerVoice);
-      
-      this.effects.gain.gain.value = dynamicGain;
+      applyDynamicGain(this.effects, this.activeVoices.size, this.deviceOptions);
     }
   }
 
@@ -113,10 +56,7 @@ export class AudioService implements IAudioService {
   private cleanupVoice(voiceId: string): void {
     const voice = this.voices.get(voiceId);
     if (voice) {
-      voice.oscillator.stop();
-      voice.oscillator.dispose();
-      voice.envelope.dispose();
-      voice.gainNode.dispose();
+      disposeVoice(voice);
       this.voices.delete(voiceId);
     }
     this.activeVoices.delete(voiceId);
@@ -146,7 +86,7 @@ export class AudioService implements IAudioService {
     }
 
     if (!this.effects) {
-      this.effects = this.createEffectsChain(config);
+      this.effects = createEffectsChain(config, this.deviceOptions);
     }
 
     try {
@@ -159,7 +99,11 @@ export class AudioService implements IAudioService {
         const octave = octaves[index];
         const voiceId = this.createVoiceId(normalizedNote, octave, timestamp);
         
-        const voice = this.createOscillator(frequency, config);
+        const voice = createVoice(frequency, {
+          waveform: config.waveform,
+          envelope: config.envelope,
+          gain: config.gain
+        });
         voice.gainNode.connect(this.effects!.gain);
         
         this.voices.set(voiceId, voice);
@@ -202,12 +146,11 @@ export class AudioService implements IAudioService {
       const voicedNotes = getChordVoicing(uniqueNotes);
       console.log('🎵 AudioService: Voicing:', voicedNotes);
       
-      // Create effects chain for chord
-      const chordEffects = this.createEffectsChain({
-        ...config,
-        reverb: chordConfig.reverb,
-        chorus: chordConfig.chorus
-      });
+      // Create effects chain for chord using the Synthesizer module
+      const chordEffects = createEffectsChain(
+        { reverb: chordConfig.reverb, chorus: chordConfig.chorus },
+        this.deviceOptions
+      );
       
       const playVoicedNoteAtTime = (voicedNote: VoicedNote, delayMs: number = 0) => {
         const { note, relativeOctave } = voicedNote;
@@ -230,9 +173,11 @@ export class AudioService implements IAudioService {
           const octave = octaves[index];
           const voiceId = this.createVoiceId(`${note}-chord`, octave, timestamp + delayMs);
           
-          const voice = this.createOscillator(frequency, {
-            ...config,
-            ...chordConfig
+          // Create voice using the Synthesizer module
+          const voice = createVoice(frequency, {
+            waveform: chordConfig.waveform,
+            envelope: chordConfig.envelope,
+            gain: chordConfig.gain
           });
           
           voice.gainNode.connect(chordEffects.gain);
@@ -277,10 +222,7 @@ export class AudioService implements IAudioService {
   // Stop all voices
   stopAllVoices(): void {
     this.voices.forEach((voice) => {
-      voice.oscillator.stop();
-      voice.oscillator.dispose();
-      voice.envelope.dispose();
-      voice.gainNode.dispose();
+      disposeVoice(voice);
     });
     this.voices.clear();
     this.activeVoices.clear();
@@ -290,10 +232,7 @@ export class AudioService implements IAudioService {
   cleanup(): void {
     this.stopAllVoices();
     if (this.effects) {
-      this.effects.chorus.dispose();
-      this.effects.reverb.dispose();
-      this.effects.gain.dispose();
-      this.effects.limiter.dispose();
+      disposeEffects(this.effects);
       this.effects = null;
     }
     this.isInitializedFlag = false;
