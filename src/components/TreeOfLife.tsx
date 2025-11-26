@@ -34,7 +34,7 @@ const TreeOfLifeInner: React.FC = () => {
   } = useTreeState(audioActions);
 
   // Debug logging for editMode
-  console.log('🎵 TreeOfLife editMode:', editMode);
+  // console.log('🎵 TreeOfLife editMode:', editMode);
 
   const getCurrentWorldImages = () => {
     const world = worlds[selectedWorld as keyof typeof worlds];
