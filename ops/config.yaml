@@ -1,0 +1,55 @@
+# ops/config.yaml -- edit these to adjust your system
+# See ops/derivation.md for WHY each choice was made
+
+dimensions:
+  granularity: atomic
+  organization: flat
+  linking: explicit+implicit
+  processing: heavy
+  navigation: 3-tier
+  maintenance: condition-based
+  schema: moderate
+  automation: full
+
+features:
+  semantic-search: true          # requires qmd: npm install -g @tobilu/qmd
+  processing-pipeline: true
+  sleep-processing: false
+  voice-capture: false
+
+processing_tier: auto    # auto | 1 | 2 | 3 | 4
+
+processing:
+  depth: standard          # deep | standard | quick
+  chaining: suggested      # manual | suggested | automatic
+  extraction:
+    selectivity: moderate  # strict | moderate | permissive
+    categories:
+      - claims
+      - patterns
+      - background-context
+      - contradictions
+      - open-questions
+      - methodology-notes
+      - design-patterns
+  verification:
+    description_test: true
+    schema_check: true
+    link_check: true
+  reweave:
+    scope: related         # related | broad | full
+    frequency: after_create
+
+provenance: full  # full | minimal | off
+
+personality:
+  enabled: false  # neutral-helpful default
+
+research:
+  primary: exa-deep-research        # best available research tool
+  fallback: exa-web-search          # fallback if primary unavailable
+  last_resort: web-search           # always available
+  default_depth: moderate           # light | moderate | deep
+
+pipeline:
+  processing_mode: interactive  # interactive | orchestrated | compressed
