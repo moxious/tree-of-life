@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "generate-csp": "tsx grok-csp-with-backtracking/src/cli.ts",
     "generate-constraint": "tsx gpt51codex-constraints/src/cli.ts",
-    "gemini3-hybrid": "tsx gemini3-hybrid/cli.ts"
+    "gemini3-hybrid": "tsx gemini3-hybrid/cli.ts",
+    "render-stacked-tree": "tsx scripts/render-stacked-tree/render.ts"
   },
   "dependencies": {
     "@tonaljs/tonal": "^4.10.0",
