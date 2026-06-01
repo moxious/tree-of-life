@@ -15,7 +15,7 @@
         "y": 50
       },
       "color": "#ffffff",
-      "image": "images/briah-keter.png",
+      "image": "images-v2/briah-keter.png",
       "in": {
         "assiah": {
           "color": "white, flecked with gold"
@@ -46,7 +46,7 @@
         "y": 150
       },
       "color": "#e3e3e3",
-      "image": "images/briah-hockmah.png",
+      "image": "images-v2/briah-hockmah.png",
       "in": {
         "assiah": {
           "color": "white, flecked with red, blue, and yellow"
@@ -77,7 +77,7 @@
         "y": 150
       },
       "color": "#d1d1d1",
-      "image": "images/briah-binah.png",
+      "image": "images-v2/briah-binah.png",
       "in": {
         "assiah": {
           "color": "gray, flecked with pink"
@@ -139,7 +139,7 @@
         "y": 300
       },
       "color": "#b8b8b8",
-      "image": "images/briah-hesed.png",
+      "image": "images-v2/briah-hesed.png",
       "in": {
         "assiah": {
           "color": "deep azure, flecked with yellow"
@@ -170,7 +170,7 @@
         "y": 300
       },
       "color": "#a0a0a0",
-      "image": "images/briah-gevurah.png",
+      "image": "images-v2/briah-gevurah.png",
       "in": {
         "assiah": {
           "color": "red, flecked with black"
@@ -201,7 +201,7 @@
         "y": 375
       },
       "color": "#888888",
-      "image": "images/briah-tiferet.png",
+      "image": "images-v2/briah-tiferet.png",
       "in": {
         "assiah": {
           "color": "golden amber"
@@ -232,7 +232,7 @@
         "y": 450
       },
       "color": "#707070",
-      "image": "images/briah-netzach.png",
+      "image": "images-v2/briah-netzach.png",
       "in": {
         "assiah": {
           "color": "olive, flecked with gold"
@@ -263,7 +263,7 @@
         "y": 450
       },
       "color": "#585858",
-      "image": "images/briah-hod.png",
+      "image": "images-v2/briah-hod.png",
       "in": {
         "assiah": {
           "color": "yellowish black, flecked with white"
@@ -294,7 +294,7 @@
         "y": 525
       },
       "color": "#404040",
-      "image": "images/briah-yesod.png",
+      "image": "images-v2/briah-yesod.png",
       "in": {
         "assiah": {
           "color": "citrine, flecked with azure"
@@ -325,7 +325,7 @@
         "y": 620
       },
       "color": "#282828",
-      "image": "images/briah-malkuth.png",
+      "image": "images-v2/briah-malkuth.png",
       "in": {
         "assiah": {
           "color": "black rayed with yellow"
@@ -350,17 +350,17 @@
         "description": "Pure divinity and emanation"
       },
       "images": {
-        "keter": "images/atziluth-keter.png",
-        "hockmah": "images/atziluth-hockmah.png",
-        "binah": "images/atziluth-binah.png",
+        "keter": "images-v2/atziluth-keter.png",
+        "hockmah": "images-v2/atziluth-hockmah.png",
+        "binah": "images-v2/atziluth-binah.png",
         "daath": null,
-        "hesed": "images/atziluth-hesed.png",
-        "gevurah": "images/atziluth-gevurah.png",
-        "tiferet": "images/atziluth-tiferet.png",
-        "netzach": "images/atziluth-netzach.png",
-        "hod": "images/atziluth-hod.png",
-        "yesod": "images/atziluth-yesod.png",
-        "malkuth": "images/atziluth-malkuth.png"
+        "hesed": "images-v2/atziluth-hesed.png",
+        "gevurah": "images-v2/atziluth-gevurah.png",
+        "tiferet": "images-v2/atziluth-tiferet.png",
+        "netzach": "images-v2/atziluth-netzach.png",
+        "hod": "images-v2/atziluth-hod.png",
+        "yesod": "images-v2/atziluth-yesod.png",
+        "malkuth": "images-v2/atziluth-malkuth.png"
       },
       "tarotCards": {
         "keter": "images/rws-tarot/wands/RWSa-W-0A.png",
@@ -383,17 +383,17 @@
         "description": "Pure intellect and creation"
       },
       "images": {
-        "keter": "images/briah-keter.png",
-        "hockmah": "images/briah-hockmah.png",
-        "binah": "images/briah-binah.png",
+        "keter": "images-v2/briah-keter.png",
+        "hockmah": "images-v2/briah-hockmah.png",
+        "binah": "images-v2/briah-binah.png",
         "daath": null,
-        "hesed": "images/briah-hesed.png",
-        "gevurah": "images/briah-gevurah.png",
-        "tiferet": "images/briah-tiferet.png",
-        "netzach": "images/briah-netzach.png",
-        "hod": "images/briah-hod.png",
-        "yesod": "images/briah-yesod.png",
-        "malkuth": "images/briah-malkuth.png"
+        "hesed": "images-v2/briah-hesed.png",
+        "gevurah": "images-v2/briah-gevurah.png",
+        "tiferet": "images-v2/briah-tiferet.png",
+        "netzach": "images-v2/briah-netzach.png",
+        "hod": "images-v2/briah-hod.png",
+        "yesod": "images-v2/briah-yesod.png",
+        "malkuth": "images-v2/briah-malkuth.png"
       },
       "tarotCards": {
         "keter": "images/rws-tarot/cups/RWSa-C-0A.png",
@@ -416,17 +416,17 @@
         "description": "Emotion and psychological formation"
       },
       "images": {
-        "keter": "images/yetzirah-keter.png",
-        "hockmah": "images/yetzirah-hockmah.png",
-        "binah": "images/yetzirah-binah.png",
+        "keter": "images-v2/yetzirah-keter.png",
+        "hockmah": "images-v2/yetzirah-hockmah.png",
+        "binah": "images-v2/yetzirah-binah.png",
         "daath": null,
-        "hesed": "images/yetzirah-hesed.png",
-        "gevurah": "images/yetzirah-gevurah.png",
-        "tiferet": "images/yetzirah-tiferet.png",
-        "netzach": "images/yetzirah-netzach.png",
-        "hod": "images/yetzirah-hod.png",
-        "yesod": "images/yetzirah-yesod.png",
-        "malkuth": "images/yetzirah-malkuth.png"
+        "hesed": "images-v2/yetzirah-hesed.png",
+        "gevurah": "images-v2/yetzirah-gevurah.png",
+        "tiferet": "images-v2/yetzirah-tiferet.png",
+        "netzach": "images-v2/yetzirah-netzach.png",
+        "hod": "images-v2/yetzirah-hod.png",
+        "yesod": "images-v2/yetzirah-yesod.png",
+        "malkuth": "images-v2/yetzirah-malkuth.png"
       },
       "tarotCards": {
         "keter": "images/rws-tarot/swords/RWSa-S-0A.png",
@@ -449,17 +449,17 @@
         "description": "The Material World - Physical manifestation and action"
       },
       "images": {
-        "keter": "images/assiah-keter.png",
-        "hockmah": "images/assiah-hockmah.png",
-        "binah": "images/assiah-binah.png",
+        "keter": "images-v2/assiah-keter.png",
+        "hockmah": "images-v2/assiah-hockmah.png",
+        "binah": "images-v2/assiah-binah.png",
         "daath": null,
-        "hesed": "images/assiah-hesed.png",
-        "gevurah": "images/assiah-gevurah.png",
-        "tiferet": "images/assiah-tiferet.png",
-        "netzach": "images/assiah-netzach.png",
-        "hod": "images/assiah-hod.png",
-        "yesod": "images/assiah-yesod.png",
-        "malkuth": "images/assiah-malkuth.png"
+        "hesed": "images-v2/assiah-hesed.png",
+        "gevurah": "images-v2/assiah-gevurah.png",
+        "tiferet": "images-v2/assiah-tiferet.png",
+        "netzach": "images-v2/assiah-netzach.png",
+        "hod": "images-v2/assiah-hod.png",
+        "yesod": "images-v2/assiah-yesod.png",
+        "malkuth": "images-v2/assiah-malkuth.png"
       },
       "tarotCards": {
         "keter": "images/rws-tarot/pentacles/RWSa-P-0A.png",
