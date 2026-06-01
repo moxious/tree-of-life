@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .chain-of-thought
+
+# Ars Contexta vault session logs — locally generated, not part of the app
+ops/sessions/
+
